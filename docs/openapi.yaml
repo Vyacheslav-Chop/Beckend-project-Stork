@@ -27,9 +27,9 @@ paths:
     get:
       $ref: ../swagger/paths/emotions/get.yaml
 
-# /auth/refresh:
-#   post:
-#     $ref: ../swagger/paths/auth/refresh.yaml
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
 
 components:
   securitySchemes:
