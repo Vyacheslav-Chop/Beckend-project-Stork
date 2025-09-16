@@ -17,10 +17,15 @@ tags:
     description: Operations for managing user profiles.
   - name: Week
     description: Operations related to weekly plans or summaries.
+  - name: Emotions
+    description: Operations for managing emotions
 servers:
   - url: http://localhost:3000
   # - url: https://nodejs-hw-mongodb-c3yu.onrender.com
-# paths:
+paths:
+  /api/emotions:
+    get:
+      $ref: ../swagger/paths/emotions/get.yaml
 
 
 components:
