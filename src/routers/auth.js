@@ -6,7 +6,7 @@ import { registerUserController } from '../controllers/auth.js';
 const authRouter = Router();
 
 authRouter.post(
-  'auth/register',
+  '/register',
   validateBody(registerUserValidationSchema),
   registerUserController,
 );
