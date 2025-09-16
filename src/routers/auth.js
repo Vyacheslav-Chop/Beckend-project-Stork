@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
-import { registerUserController } from '../controllers/auth.js';
 import { registerUserValidationSchema } from '../validation/auth.js';
+import {
+  refreshUserSessionController,
+  registerUserController,
+} from '../controllers/auth.js';
 
 const authRouter = Router();
 
@@ -10,5 +13,5 @@ authRouter.post(
   validateBody(registerUserValidationSchema),
   registerUserController,
 );
-
+authRouter.post('/refresh', refreshUserSessionController);
 export default authRouter;
