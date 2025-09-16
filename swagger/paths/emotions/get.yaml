@@ -1,0 +1,48 @@
+tags:
+  - Emotions
+summary: Get list of emotions
+operationId: getAllEmotions
+description: Retrieve a list of all emotions available in the system.
+security: []
+
+responses:
+  '200':
+    description: A list of emotions
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found emotions!
+            data:
+              type: object
+              required:
+                - emotions
+              properties:
+                emotions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - title
+                    properties:
+                      _id:
+                        type: string
+                        example: 6895bd86a5c677999ed2ae14
+                      title:
+                        type: string
+                        example: Апатія
+  '500':
+    $ref: '../../components/responses/500.yaml'
+  '400':
+    $ref: ../../components/responses/400.yaml
