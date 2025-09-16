@@ -31,6 +31,11 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+  /api/diaries/{diaryId}:
+    patch:
+      $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
+
+
 components:
   securitySchemes:
     bearerAuth:
