@@ -1,4 +1,4 @@
-description: Conflict - user with this email already exists
+description: Bad request - validation or general client error
 content:
   application/json:
     schema:
@@ -10,15 +10,15 @@ content:
       properties:
         status:
           type: integer
-          example: 409
-      message:
+          example: 400
+        message:
           type: string
-          example: ConflictError
-      data:
+          example: Bad request
+        data:
           type: object
           required:
-      message:
-        properties:
-        message:
-        type: string
-        example: "This action cannot be performed"
+            - message
+          properties:
+            message:
+              type: string
+              example: "Validation failed or invalid request data"

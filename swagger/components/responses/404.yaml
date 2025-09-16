@@ -1,6 +1,4 @@
-# swagger/components/responses/401.yaml
-
-description: Unauthorized error
+description: Resource not found
 content:
   application/json:
     schema:
@@ -12,10 +10,10 @@ content:
       properties:
         status:
           type: integer
-          example: 401
+          example: 404
         message:
           type: string
-          example: UnauthorizedError
+          example: NotFoundError
         data:
           type: object
           required:
@@ -23,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Unauthorized access'
+              example: 'Resource not found'
