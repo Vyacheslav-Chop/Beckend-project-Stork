@@ -13,6 +13,5 @@ authRouter.post(
   validateBody(registerUserValidationSchema),
   registerUserController,
 );
-
-export default authRouter;
 authRouter.post('/refresh', refreshUserSessionController);
+export default authRouter;

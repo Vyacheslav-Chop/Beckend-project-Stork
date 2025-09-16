@@ -22,6 +22,9 @@ servers:
   # - url: https://nodejs-hw-mongodb-c3yu.onrender.com
 # paths:
 
+# /auth/refresh:
+#   post:
+#     $ref: ../swagger/paths/auth/refresh.yaml
 
 components:
   securitySchemes:
