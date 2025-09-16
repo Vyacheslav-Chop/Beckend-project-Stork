@@ -1,0 +1,30 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: MomJourney API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: API for managing tasks, diaries, users, and authentication for the MomJourney app.
+tags:
+  - name: Auth
+    description: Operations for user registration, login, and authentication management.
+  - name: Diaries
+    description: Operations for managing diaries.
+  - name: Tasks
+    description: Operations for managing tasks.
+  - name: Users
+    description: Operations for managing user profiles.
+  - name: Week
+    description: Operations related to weekly plans or summaries.
+servers:
+  - url: http://localhost:3000
+  # - url: https://nodejs-hw-mongodb-c3yu.onrender.com
+# paths:
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
