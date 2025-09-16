@@ -1,4 +1,4 @@
-description: Conflict
+description: Conflict - user with this email already exists
 content:
   application/json:
     schema:
@@ -6,10 +6,19 @@ content:
       required:
         - status
         - message
+        - data
       properties:
         status:
           type: integer
           example: 409
-        message:
+      message:
           type: string
-          example: 'User with this email already registered!'
+          example: ConflictError
+      data:
+          type: object
+          required:
+      message:
+        properties:
+        message:
+        type: string
+        example: "This action cannot be performed"
