@@ -40,7 +40,7 @@ export const authenticate = async (req, res) => {
         throw createHttpError(401, 'User, associated with session, not found');
     }
 
-    req.user = User;
+    req.user = user;
 
     next();
 };
