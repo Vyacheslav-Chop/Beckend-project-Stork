@@ -5,6 +5,7 @@ import {
   refreshUserSessionController,
   registerUserController,
 } from '../controllers/auth.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const authRouter = Router();
 
@@ -13,5 +14,5 @@ authRouter.post(
   validateBody(registerUserValidationSchema),
   registerUserController,
 );
-authRouter.post('/refresh', refreshUserSessionController);
+authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 export default authRouter;
