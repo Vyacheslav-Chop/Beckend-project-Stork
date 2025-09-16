@@ -4,18 +4,18 @@ import taskRouter from "./tasks.js";
 import userRouter from "./users.js";
 import diaryRouter from "./diaries.js";
 import weekRouter from "./week.js";
-import { authenticate } from '../middlewares/authenticate.js';
+
 
 const router = Router();
 
 router.use('/auth', authRouter);
 
-router.use('/tasks', authenticate, taskRouter);
+router.use('/tasks', taskRouter);
 
-router.use('/users', authenticate, userRouter);
+router.use('/users', userRouter);
 
-router.use('/diaries', authenticate, diaryRouter);
+router.use('/diaries', diaryRouter);
 
-router.use('/weeks', authenticate, weekRouter);
+router.use('/weeks', weekRouter);
 
 export default router;
