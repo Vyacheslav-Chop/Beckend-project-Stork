@@ -6,6 +6,7 @@ import diaryRouter from "./diaries.js";
 import weekRouter from "./weeks.js";
 import emotionRouter from "./emotions.js";
 
+
 const router = Router();
 
 router.use('/auth', authRouter);
