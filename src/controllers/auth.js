@@ -33,7 +33,7 @@ export const refreshUserSessionController = async (req, res) => {
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
-  setupSession(session, res);
+  setupSession(res, session);
 
   res.json({
     status: 200,

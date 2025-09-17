@@ -31,6 +31,10 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+  /api/auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+
 components:
   securitySchemes:
     bearerAuth:
