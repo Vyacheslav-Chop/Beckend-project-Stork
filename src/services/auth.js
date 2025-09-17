@@ -44,3 +44,16 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
     ...newSession,
   });
 };
+
+export const loginUser = async (payload) => {
+  const user = await User.findOne({ email: payload.email });
+
+  if (!user) throw createHttpError(401, 'User not found');
+
+  const isPasswordValid = await bcrypt.compare(payload.password, user.password);
+  if (!isPasswordValid) throw createHttpError(401, 'Unauthorized');
+
+  await SessionModel.deleteOne({ userId: user._id });
+
+  return SessionModel.create(createSession(user._id));
+};

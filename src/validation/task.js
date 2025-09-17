@@ -5,7 +5,7 @@ import {
   isDoneValidation,
 } from './helpers.js';
 
-const curDate = new Date().toISOString().slice(0, 10);
+const curDate = new Date();
 
 export const createTaskValidationSchema = Joi.object({
   name: nameTaskValidation().messages({

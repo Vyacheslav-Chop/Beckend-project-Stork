@@ -23,3 +23,5 @@ export const titleDieryValidation = () => Joi.string().min(1).max(64);
 
 export const descriptionDiaryValidation = () => Joi.string().min(1).max(1000);
 
+export const weekPregnancyValidation = () =>
+  Joi.string().integer().min(1).max(42);

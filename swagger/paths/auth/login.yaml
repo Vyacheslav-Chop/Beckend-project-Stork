@@ -1,0 +1,53 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: 'Login user'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User email'
+            type: string
+            example: 'ivanivanenko@example.com'
+          password:
+            description: 'User password'
+            type: string
+            example: 'vldfmvvdfjgdfg'
+responses:
+  '201':
+    description: Successfully registered a user!
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: 65ca67e7ae7f10c88b598384
+                name:
+                  type: string
+                  example: 'Ivan Ivanenko'
+                email:
+                  type: string
+                  example: 'ivanivanenko@example.com'
+  '400':
+    $ref: '../../components/responses/400.yaml'

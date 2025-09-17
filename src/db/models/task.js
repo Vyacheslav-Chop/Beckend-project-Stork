@@ -9,7 +9,7 @@ const taskSchema = new Schema(
       maxlength: 96,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     isDone: {
@@ -28,4 +28,4 @@ const taskSchema = new Schema(
   },
 );
 
-export const Task = model('tasks', taskSchema);
+export const TaskModel = model('tasks', taskSchema);
