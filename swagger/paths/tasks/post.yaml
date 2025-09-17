@@ -21,7 +21,7 @@ requestBody:
             example: 'Buy milk'
             description: The name of the task
           date:
-            type: string
+            type: date
             example: '2025-09-18'
             description: date is in format YYYY-MM-DD
           isDone:
