@@ -10,3 +10,10 @@ export const updateDiaryById = async (diaryId, payload) => {
 
   return diary;
 };
+export const deleteDiaryById = async (diaryId, userId) => {
+  const diary = await DiaryModel.findOneAndDelete({
+    _id: diaryId,
+    userId,
+  });
+  return diary;
+};

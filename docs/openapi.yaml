@@ -42,6 +42,8 @@ paths:
   /api/diaries/{diaryId}:
     patch:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/diaries/{diaryId}/delete.yaml
 
   /api/tasks:
     post:
