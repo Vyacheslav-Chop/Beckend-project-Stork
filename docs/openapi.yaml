@@ -32,6 +32,11 @@ paths:
       $ref: ../swagger/paths/auth/refresh.yaml
 
 
+  /api/users/avatar:
+    put:
+      $ref: ../swagger/paths/users/updateAvatar.yaml
+
+
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml

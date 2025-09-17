@@ -80,7 +80,25 @@
                         "emotions": {
                           "type": "array",
                           "items": {
+
+                            "type": "object",
+                            "required": [
+                              "_id",
+                              "title"
+                            ],
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "6895bd86a5c677999ed2ae14"
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "Апатія"
+                              }
+                            }
+
                             "$ref": "#/components/schemas/emotion"
+
                           }
                         }
                       }
@@ -186,6 +204,16 @@
         }
       }
     },
+
+    "/api/users/avatar": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user avatar",
+        "operationId": "updateUserAvatar",
+        "description": "Updates the authenticated user's avatar by uploading a new image to Cloudinary.",
+
     "/api/diaries/{diaryId}": {
       "patch": {
         "tags": [
@@ -194,11 +222,28 @@
         "summary": "Update diary",
         "operationId": "updateDiary",
         "description": "Update an existing diary entry by its ID. Only the user who created the diary (userId) can update it.",
+
         "security": [
           {
             "bearerAuth": []
           }
         ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "avatar"
+                ],
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The image file to upload as the user's avatar."
+
         "parameters": [
           {
             "in": "path",
@@ -231,6 +276,7 @@
                     "type": "string",
                     "description": "Diary content",
                     "example": "Today I felt very productive and motivated."
+
                   }
                 }
               }
@@ -239,7 +285,11 @@
         },
         "responses": {
           "200": {
+
+            "description": "Successfully updated the user's avatar.",
+
             "description": "Successfully updated a diary entry",
+
             "content": {
               "application/json": {
                 "schema": {
@@ -256,10 +306,35 @@
                     },
                     "message": {
                       "type": "string",
+
+                      "example": "Successfully updated avatar!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64a67e7ae7f10c88b598384"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@example.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg"
+                        }
+                      }
+
                       "example": "Successfully updated a diary!"
                     },
                     "data": {
                       "$ref": "#/components/schemas/diary"
+
                     }
                   }
                 }
@@ -272,6 +347,8 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
+
+
           "404": {
             "$ref": "#/components/responses/404"
           }
@@ -342,6 +419,7 @@
           "409": {
             "$ref": "#/components/responses/409"
           },
+
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -356,6 +434,8 @@
         "scheme": "bearer"
       }
     },
+
+
     "schemas": {
       "emotion": {
         "type": "object",
@@ -472,6 +552,7 @@
         }
       }
     },
+
     "responses": {
       "400": {
         "description": "Bad request due to validation error",
@@ -543,6 +624,9 @@
                   "properties": {
                     "message": {
                       "type": "string",
+
+                      "example": "Access token expired"
+
                       "example": "Unauthorized access"
                     }
                   }
@@ -618,6 +702,7 @@
                     "message": {
                       "type": "string",
                       "example": "Validation failed or invalid request data"
+
                     }
                   }
                 }
