@@ -31,10 +31,13 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+
   /api/diaries/{diaryId}:
     patch:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
-
 
 components:
   securitySchemes:
