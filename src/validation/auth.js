@@ -6,9 +6,9 @@ import {
 } from './helpers.js';
 
 export const registerUserValidationSchema = Joi.object({
-  name: nameValidation.required(),
-  email: emailValidation.required(),
-  password: passwordValidation.required(),
+  name: nameValidation().required(),
+  email: emailValidation().required(),
+  password: passwordValidation().required(),
 });
 export const loginUserSchema = Joi.object({
   email: emailValidation().required(),
