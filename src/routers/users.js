@@ -9,7 +9,7 @@ const userRouter = Router();
 userRouter.use('/', authenticate);
 
 userRouter.put(
-  '/api/users/avatar',
+  '/avatar',
   upload.single('avatar'),
   ctrlWrapper(uploadUserPhotoController),
 );
