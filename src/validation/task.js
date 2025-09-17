@@ -20,3 +20,8 @@ export const createTaskValidationSchema = Joi.object({
   }),
   isDone: isDoneValidation(),
 });
+
+
+export const getAllTasksValidationSchema = Joi.object({
+  isDone: Joi.boolean().optional(),
+});
