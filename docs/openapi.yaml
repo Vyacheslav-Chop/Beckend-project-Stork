@@ -35,6 +35,10 @@ paths:
     put:
       $ref: ../swagger/paths/users/updateAvatar.yaml
 
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
@@ -54,7 +58,6 @@ paths:
   /api/tasks:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
-      
 
 components:
   securitySchemes:
