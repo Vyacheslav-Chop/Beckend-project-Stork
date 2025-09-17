@@ -31,11 +31,9 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
-
   /api/users/avatar:
     put:
       $ref: ../swagger/paths/users/updateAvatar.yaml
-
 
   /api/auth/login:
     post:
@@ -49,6 +47,8 @@ paths:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
 
+  /api/weeks/{week}:
+    $ref: ../swagger/paths/weeks/get.yaml
 
 components:
   securitySchemes:
