@@ -31,6 +31,9 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+  /api/users/avatar:
+    put:
+      $ref: ../swagger/paths/users/updateAvatar.yaml
 components:
   securitySchemes:
     bearerAuth:
