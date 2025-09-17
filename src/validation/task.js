@@ -1,0 +1,22 @@
+import Joi from 'joi';
+import {
+  nameTaskValidation,
+  dateValidation,
+  isDoneValidation,
+} from './helpers.js';
+
+const curDate = new Date().toISOString().slice(0, 10);
+
+export const createTaskValidationSchema = Joi.object({
+  name: nameTaskValidation().messages({
+    'string.min': 'Name should have a minimum length of {#limit}',
+    'string.max': 'Name should have a maximum length of {#limit}',
+    'any.required': 'Name is a required field',
+  }),
+  date: dateValidation(curDate).messages({
+    'string.pattern.base': 'Date must be in YYYY-MM-DD format',
+    'any.required': 'Date is a required field',
+    'string.min': 'Date cannot be before today',
+  }),
+  isDone: isDoneValidation(),
+});
