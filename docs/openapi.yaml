@@ -26,11 +26,11 @@ paths:
   /api/emotions:
     get:
       $ref: ../swagger/paths/emotions/get.yaml
-
-  /api/auth/refresh:
-    post:
-      $ref: ../swagger/paths/auth/refresh.yaml
-
+      
+  /api/users:
+    get: 
+      $ref: ../swagger/paths/users/getUser.yaml   
+      
   /api/users/avatar:
     put:
       $ref: ../swagger/paths/users/updateAvatar.yaml
@@ -38,6 +38,10 @@ paths:
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
+      
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
 
   /api/diaries/{diaryId}:
     patch:
@@ -47,9 +51,10 @@ paths:
     get:
       $ref: ../swagger/paths/diaries/get.yaml
 
-  /api/tasks/:
+  /api/tasks:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
+      
 
 components:
   securitySchemes:
