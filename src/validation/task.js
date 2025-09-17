@@ -22,8 +22,8 @@ export const createTaskValidationSchema = Joi.object({
 });
 
 
-export const updateTaskValidationSchema = Joi.Object({
-  isDone: isDoneValidation().required.messages(
+export const updateTaskValidationSchema = Joi.object({
+  isDone: isDoneValidation().required().messages(
     { "any.required": "isDone is a required field", }
   )
 });

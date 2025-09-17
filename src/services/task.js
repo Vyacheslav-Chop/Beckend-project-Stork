@@ -9,12 +9,14 @@ export const createTask = async (payload) => {
 
 
 export const updateTaskStatus = async (taskId, userId, isDone) => {
-  const task = await TaskModel.findOneAndUpdate(
-    { _id: taskId, userId },
-    { isDone },
-    { new: True }
-    
-  );
+  const task = await TaskModel.findOne({ _id: taskId, userId });
 
+  if (!task) {
+    throw new Error('Task not found!');
+  }
+
+  task.isDone = !task.isDone;
+  
+  await task.save();
   return task;
 };

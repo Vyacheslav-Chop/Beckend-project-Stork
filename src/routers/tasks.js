@@ -16,7 +16,7 @@ taskRouter.post(
 );
 
 taskRouter.patch(
-  '/tasks/:id/status',
+  '/:id/status',
   validateBody(updateTaskValidationSchema),
   ctrlWrapper(updateTaskStatusController),
 );
