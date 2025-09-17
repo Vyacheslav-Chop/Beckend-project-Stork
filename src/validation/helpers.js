@@ -7,7 +7,7 @@ export const emailValidation = () => Joi.string().email();
 export const passwordValidation = () => Joi.string().min(6).max(30);
 
 export const nameTaskValidation = () => Joi.string().min(1).max(96).required();
-export const dateValidation = (curDate) => Joi.date().min(curDate).required();
+export const dateValidation = (curDate) => Joi.string().min(curDate).required();
 export const isDoneValidation = () => Joi.boolean().default(false);
 
 export const objectIdValidation = () =>
@@ -22,4 +22,3 @@ export const objectIdValidation = () =>
 export const titleDieryValidation = () => Joi.string().min(1).max(64);
 
 export const descriptionDiaryValidation = () => Joi.string().min(1).max(1000);
-

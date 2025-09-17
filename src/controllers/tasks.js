@@ -1,12 +1,8 @@
-import { createTaskController as createTaskService } from '../services/task.js';
+import { createTask } from '../services/task';
 
 export const createTaskController = async (req, res, next) => {
-  try {
-    const { name, date, isDone } = req.body;
-    const owner = req.user._id;
-    const task = await createTaskService({ name, date, isDone, owner });
-    res.status(201).json(task);
-  } catch (error) {
-    next(error);
-  }
+  const task = await createTask({ ...req.body, useId: req.user._id });
+  res
+    .status(201)
+    .json({ status: 200, message: 'Task created successfully', data: task });
 };

@@ -10,7 +10,7 @@ content:
       properties:
         status:
           type: integer
-          example: 400
+          example: 409
         message:
           type: string
           example: Bad request
@@ -21,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: "Validation failed or invalid request data"
+              example: 'Validation failed or invalid request data'
