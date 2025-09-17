@@ -1,26 +1,18 @@
 import createHttpError from 'http-errors';
-import { User } from '../db/models/user.js';
+import { updateUserById } from '../services/user.js';
 
-export const updateUserController = async (req, res, next) => {
-    try {
-        const { id } = req.user;
-        const updateData = req.body;
+export const updateUserByIdController = async (req, res, next) => {
+    const { userId } = req.params;
 
-        const updateUser = await User.findbyIdAndUpdate(id, updateData, {
-            new: true,
-            runValidators: true,
-        });
+    const user = await updateUserById(userId, req.body);
 
-        if (!updateUser) {
-            throw createHttpError(404, "User not found");
-        }
-
-        res.json({
-            status: 200,
-            message: "User updated successfully",
-            data: updatedUser,
-        });
-    } catch (error) {
-        next(error);
+    if (!user) {
+        return next(createHttpError(404, "User not found"));
     }
+
+    res.json({
+        status: 200,
+        message: "User updated successfully",
+        data: updateUser,
+    });
 };

@@ -1,16 +1,19 @@
 import { Router } from 'express';
-import { updateUserController } from "../controllers/users.js";
-import { updateUserSchema } from '../validation/user';
 import { authenticate } from '../middlewares/authenticate.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { updateUserByIdController } from "../controllers/users.js";
 import { validateBody } from '../middlewares/validateBody.js';
+import { updateUserSchema } from '../validation/user';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const userRouter = Router();
-
 userRouter.use('/', authenticate);
-userRouter.patch('/',
-    authenticate,
+
+userRouter.patch('/:userId',
+    isValidId('userId'),
     validateBody(updateUserSchema),
-    updateUserController);
+    ctrlWrapper(updateUserByIdController),
+);
 
 
 export default userRouter;
