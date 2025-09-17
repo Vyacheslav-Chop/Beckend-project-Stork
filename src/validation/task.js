@@ -20,3 +20,10 @@ export const createTaskValidationSchema = Joi.object({
   }),
   isDone: isDoneValidation(),
 });
+
+
+export const updateTaskValidationSchema = Joi.Object({
+  isDone: isDoneValidation().required.messages(
+    { "any.required": "isDone is a required field", }
+  )
+});
