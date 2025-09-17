@@ -35,6 +35,9 @@ paths:
     patch:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
 
+  /api/tasks/:
+    post:
+      $ref: ../swagger/paths/tasks/post.yaml
 
 components:
   securitySchemes:
