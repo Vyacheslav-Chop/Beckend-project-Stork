@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { getWeeksMomStatesController } from '../controllers/weeks.js';
+import { getWeeksMomStatesController, geetWeekPublic } from '../controllers/weeks.js';
+
 
 const weekRouter = Router();
+
+weekRouter.get('/public', geetWeekPublic);
 
 weekRouter.use(authenticate);
 

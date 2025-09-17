@@ -12,3 +12,8 @@ export const updateDiaryValidationSchema = Joi.object({
     'string.max': 'Description should have at most {#limit} characters',
   }),
 });
+
+export const getDiariesQuerySchema = Joi.object({
+  sortBy: Joi.string().valid('createdAt', 'updatedAt').default('createdAt'),
+  order: Joi.string().valid('asc', 'desc').default('desc'),
+});
