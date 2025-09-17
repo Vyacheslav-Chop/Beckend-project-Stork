@@ -5,8 +5,6 @@ export const updateUserById = async (userId, payload) => {
         new: true,
         runValidators: true,
     })
-        .populate('category')
-        .populate('userId');
 
     return user;
 };
