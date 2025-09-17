@@ -2,15 +2,21 @@ import { Schema, model } from 'mongoose';
 
 const taskSchema = new Schema(
   {
-    nameTask: {
+    name: {
       type: String,
       required: true,
+      minlength: 1,
+      maxlength: 96,
     },
-    dataTask: {
-      type: String,
+    date: {
+      type: Date,
       required: true,
     },
-    owner: {
+    isDone: {
+      type: Boolean,
+      default: false,
+    },
+    userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
@@ -22,4 +28,4 @@ const taskSchema = new Schema(
   },
 );
 
-export const Task = model('task', taskSchema);
+export const Task = model('tasks', taskSchema);
