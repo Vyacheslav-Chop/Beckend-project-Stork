@@ -10,3 +10,10 @@ export const updateDiaryById = async (diaryId, payload) => {
 
   return diary;
 };
+
+export const getDiaries = async (userId, { sortBy, order }) => {
+  const sort = { [sortBy]: order === 'asc' ? 1 : -1 };
+  const items = await DiaryModel.find({ userId }).sort(sort).lean();
+  return items;
+};
+
