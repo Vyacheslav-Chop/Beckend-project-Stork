@@ -14,7 +14,7 @@ export const createSession = (userId) => {
   };
 };
 
-export const setupSession = (session, res) => {
+export const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
