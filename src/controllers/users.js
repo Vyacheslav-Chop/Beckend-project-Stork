@@ -17,8 +17,6 @@ export const getUserController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Successfully found user!',
-    id: user._id,
-    username: user.username,
-    email: user.email,
+    data: user,
   });
 };
