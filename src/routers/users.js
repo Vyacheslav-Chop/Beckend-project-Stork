@@ -7,6 +7,6 @@ const userRouter = Router();
 
 userRouter.use('/', authenticate);
 
-userRouter.get('/users', authenticate, ctrlWrapper(getUserController));
+userRouter.get('/', ctrlWrapper(getUserController));
 
 export default userRouter;
