@@ -31,6 +31,9 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
 
   /api/auth/login:
     post:
@@ -43,7 +46,6 @@ paths:
   /api/tasks/:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
-
 
 components:
   securitySchemes:
