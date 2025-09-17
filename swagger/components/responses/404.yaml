@@ -1,4 +1,4 @@
-description: Bad request - validation or general client error
+description: Resource not found
 content:
   application/json:
     schema:
@@ -10,10 +10,10 @@ content:
       properties:
         status:
           type: integer
-          example: 400
+          example: 404
         message:
           type: string
-          example: Bad request
+          example: NotFoundError
         data:
           type: object
           required:
@@ -21,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: "Validation failed or invalid request data"
+              example: 'Resource not found'
