@@ -17,13 +17,8 @@ export const getDiaries = async (userId, { sortBy, order }) => {
   return items;
 };
 
-import { DiaryModel } from '../db/models/diary.js';
-
-export const createDiary = async (payload, userId) => {
-  const diary = await DiaryModel.create({
-    ...payload,
-    userId,
-  });
+export const createDiary = async (payload) => {
+  const diary = await DiaryModel.create(payload);
 
   return diary;
 };

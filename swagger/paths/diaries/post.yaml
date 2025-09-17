@@ -24,7 +24,7 @@ requestBody:
             example: 64f2b5e8a9c123456789abcd
           description:
             type: string
-            example: Today I felt the first baby kick ❤️
+            example: Today I felt the first baby kick.
 responses:
   '201':
     description: Successfully created a diary entry

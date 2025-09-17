@@ -1,9 +1,5 @@
 import createHttpError from 'http-errors';
-import {
-  updateDiaryById,
-  getDiaries,
-  createDiaryController,
-} from '../services/diary.js';
+import { updateDiaryById, getDiaries, createDiary } from '../services/diary.js';
 
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
@@ -37,8 +33,10 @@ export const getDiariesController = async (req, res, next) => {
 };
 
 export const createDiaryController = async (req, res, next) => {
-  const userId = req.user._id;
-  const diary = await createDiary(req.body, userId);
+  const diary = await createDiary({
+    ...req.body,
+    userId: req.user._id,
+  });
 
   res.status(201).json({
     status: 201,
