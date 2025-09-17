@@ -31,6 +31,11 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
 
+
+  /api/auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+
   /api/diaries/{diaryId}:
     patch:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
@@ -38,6 +43,7 @@ paths:
   /api/tasks/:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
+
 
 components:
   securitySchemes:
