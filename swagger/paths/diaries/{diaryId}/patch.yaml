@@ -1,0 +1,59 @@
+tags:
+  - Diaries
+summary: Update diary
+operationId: updateDiary
+description: Update an existing diary entry by its ID. Only the user who created the diary (userId) can update it.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: diaryId
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            description: Diary title
+            example: My first diary entry
+          category:
+            type: string
+            description: Emotion category ObjectId
+            example: 6895bd86a5c677999ed2ae14
+          description:
+            type: string
+            description: Diary content
+            example: Today I felt very productive and motivated.
+responses:
+  '200':
+    description: Successfully updated a diary entry
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated a diary!
+            data:
+              $ref: ../../../components/schemas/diary.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

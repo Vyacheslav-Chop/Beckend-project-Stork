@@ -10,7 +10,7 @@ export const updateDiaryByIdController = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: 'Successfully updated a diary',
+    message: 'Successfully updated a diary!',
     data: diary,
   });
 };

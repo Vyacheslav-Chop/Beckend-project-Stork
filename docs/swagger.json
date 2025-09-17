@@ -80,6 +80,7 @@
                         "emotions": {
                           "type": "array",
                           "items": {
+
                             "type": "object",
                             "required": [
                               "_id",
@@ -95,6 +96,9 @@
                                 "example": "Апатія"
                               }
                             }
+
+                            "$ref": "#/components/schemas/emotion"
+
                           }
                         }
                       }
@@ -200,6 +204,7 @@
         }
       }
     },
+
     "/api/users/avatar": {
       "put": {
         "tags": [
@@ -208,11 +213,22 @@
         "summary": "Update user avatar",
         "operationId": "updateUserAvatar",
         "description": "Updates the authenticated user's avatar by uploading a new image to Cloudinary.",
+
+    "/api/diaries/{diaryId}": {
+      "patch": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Update diary",
+        "operationId": "updateDiary",
+        "description": "Update an existing diary entry by its ID. Only the user who created the diary (userId) can update it.",
+
         "security": [
           {
             "bearerAuth": []
           }
         ],
+
         "requestBody": {
           "required": true,
           "content": {
@@ -227,6 +243,40 @@
                     "type": "string",
                     "format": "binary",
                     "description": "The image file to upload as the user's avatar."
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "diaryId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Diary title",
+                    "example": "My first diary entry"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Emotion category ObjectId",
+                    "example": "6895bd86a5c677999ed2ae14"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Diary content",
+                    "example": "Today I felt very productive and motivated."
+
                   }
                 }
               }
@@ -235,7 +285,11 @@
         },
         "responses": {
           "200": {
+
             "description": "Successfully updated the user's avatar.",
+
+            "description": "Successfully updated a diary entry",
+
             "content": {
               "application/json": {
                 "schema": {
@@ -252,6 +306,7 @@
                     },
                     "message": {
                       "type": "string",
+
                       "example": "Successfully updated avatar!"
                     },
                     "data": {
@@ -274,6 +329,12 @@
                           "example": "https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg"
                         }
                       }
+
+                      "example": "Successfully updated a diary!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/diary"
+
                     }
                   }
                 }
@@ -286,6 +347,79 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
+
+
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/tasks/": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "createTask",
+        "description": "priveate endpoint to create a task",
+        "operationId": "createTask",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "date"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Buy milk",
+                    "description": "The name of the task"
+                  },
+                  "date": {
+                    "type": "string",
+                    "example": "2025-09-18",
+                    "description": "date is in format YYYY-MM-DD"
+                  },
+                  "isDone": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Task completion status"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -300,6 +434,125 @@
         "scheme": "bearer"
       }
     },
+
+
+    "schemas": {
+      "emotion": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "6895bd86a5c677999ed2ae14"
+          },
+          "title": {
+            "type": "string",
+            "example": "Апатія"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64da56b7de7f10c88b598123"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@example.com"
+          }
+        }
+      },
+      "diary": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "description",
+          "category",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64da56b7de7f10c88b598123"
+          },
+          "title": {
+            "type": "string",
+            "example": "My first diary"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is a test diary"
+          },
+          "category": {
+            "$ref": "#/components/schemas/emotion"
+          },
+          "userId": {
+            "$ref": "#/components/schemas/user"
+          }
+        }
+      },
+      "Task": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "date",
+          "isDone",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650f1c2e2e8b2c001e8b4567"
+          },
+          "name": {
+            "type": "string",
+            "example": "Buy milk",
+            "description": "The name of the task"
+          },
+          "date": {
+            "type": "string",
+            "example": "2025-09-18",
+            "description": "date is in format YYYY-MM-DD"
+          },
+          "isDone": {
+            "type": "boolean",
+            "example": false,
+            "description": "Task completion status"
+          },
+          "userId": {
+            "type": "string",
+            "example": "650f1c2e2e8b2c001e8b1234"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17"
+          }
+        }
+      }
+    },
+
     "responses": {
       "400": {
         "description": "Bad request due to validation error",
@@ -371,7 +624,85 @@
                   "properties": {
                     "message": {
                       "type": "string",
+
                       "example": "Access token expired"
+
+                      "example": "Unauthorized access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Bad request - validation or general client error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad request"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed or invalid request data"
+
                     }
                   }
                 }

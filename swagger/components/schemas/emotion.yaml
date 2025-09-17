@@ -1,0 +1,11 @@
+type: object
+required:
+  - _id
+  - title
+properties:
+  _id:
+    type: string
+    example: 6895bd86a5c677999ed2ae14
+  title:
+    type: string
+    example: Апатія
