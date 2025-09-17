@@ -1,0 +1,53 @@
+tags:
+  - Diaries
+summary: Create diary
+operationId: createDiary
+description: Create a new diary entry. Private endpoint.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - title
+          - description
+          - category
+        properties:
+          title:
+            type: string
+            example: My pregnancy diary
+          category:
+            type: string
+            example: 64f2b5e8a9c123456789abcd
+          description:
+            type: string
+            example: Today I felt the first baby kick ❤️
+responses:
+  '201':
+    description: Successfully created a diary entry
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a diary!
+            data:
+              $ref: ../../../components/schemas/diary.yaml
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
