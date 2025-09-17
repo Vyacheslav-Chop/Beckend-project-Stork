@@ -1,4 +1,4 @@
-import { createTask } from '../services/task';
+import { createTask } from '../services/task.js';
 
 export const createTaskController = async (req, res, next) => {
   const task = await createTask({ ...req.body, useId: req.user._id });
