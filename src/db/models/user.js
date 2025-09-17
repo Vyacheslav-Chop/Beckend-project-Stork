@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { GENDER } from '../../constants/constants.js';
 
 const userSchema = new Schema(
   {
@@ -15,7 +16,19 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    dueData: {
+      type: Date,
+    },
+    babyGender: {
+      type: String,
+      enum: Object.values(GENDER),
+    },
+
+    avatar: {
+      type: String,
+    },
   },
+
   {
     timestamps: true,
     versionKey: false,
