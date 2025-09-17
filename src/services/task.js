@@ -1,7 +1,8 @@
-import { Task } from '../db/models/task.js';
+import { TaskModel } from "../db/models/task.js";
 
-export const createTask = async (taskData) => {
-  const { name, date, isDone = false, owner } = taskData;
-  const task = await Task.create({ name, date, isDone, owner });
+
+export const createTask = async (payload) => {
+  const task = await TaskModel.create(payload);
+
   return task;
 };

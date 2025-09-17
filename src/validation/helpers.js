@@ -22,4 +22,3 @@ export const objectIdValidation = () =>
 export const titleDieryValidation = () => Joi.string().min(1).max(64);
 
 export const descriptionDiaryValidation = () => Joi.string().min(1).max(1000);
-
