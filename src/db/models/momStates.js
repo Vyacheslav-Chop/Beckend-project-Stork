@@ -36,4 +36,4 @@ const momStatesSchema = new Schema(
   },
 );
 
-export const MomStates = model('momstates', momStatesSchema);
+export const MomStates = model('momStates', momStatesSchema);
