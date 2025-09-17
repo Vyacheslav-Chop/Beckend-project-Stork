@@ -11,26 +11,9 @@ export const updateDiaryById = async (diaryId, payload) => {
   return diary;
 };
 
-export const findPaginatedDiariesByUser = async (userId, { page, limit, sortBy, order }) => {
-  const filter = { userId };
+export const getDiaries = async (userId, { sortBy, order }) => {
   const sort = { [sortBy]: order === 'asc' ? 1 : -1 };
-  const skip = (page - 1) * limit;
-
-  const [items, total] = await Promise.all([
-    DiaryModel.find(filter)
-      .sort(sort)
-      .skip(skip)
-      .limit(limit)
-      .populate('category')
-      .populate('userId'),
-    DiaryModel.countDocuments(filter),
-  ]);
-
-  return {
-    page,
-    limit,
-    total,
-    totalPages: Math.ceil(total / limit) || 1,
-    results: items,
-  };
+  const items = await DiaryModel.find({ userId }).sort(sort).lean();
+  return items;
 };
+

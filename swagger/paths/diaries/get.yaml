@@ -1,19 +1,9 @@
 get:
   tags: [Diaries]
-  summary: Get user's diary entries (paginated)
+  summary: Get user's diary entries
   security:
     - bearerAuth: []
   parameters:
-    - name: page
-      in: query
-      required: false
-      schema: { type: integer, minimum: 1, default: 1 }
-      description: Page number
-    - name: limit
-      in: query
-      required: false
-      schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
-      description: Items per page
     - name: sortBy
       in: query
       required: false
@@ -30,7 +20,7 @@ get:
         default: desc
   responses:
     '200':
-      description: Paginated diary entries
+      description: List of diary entries
       content:
         application/json:
           schema:
@@ -39,16 +29,9 @@ get:
               status: { type: integer, example: 200 }
               message: { type: string, example: Successfully fetched diaries }
               data:
-                type: object
-                properties:
-                  page: { type: integer, example: 1 }
-                  limit: { type: integer, example: 10 }
-                  total: { type: integer, example: 42 }
-                  totalPages: { type: integer, example: 5 }
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Diary'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Diary'
     '401':
       $ref: '../../components/responses/401.yaml'
     '500':
