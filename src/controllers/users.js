@@ -2,21 +2,20 @@ import createHttpError from 'http-errors';
 import { uploadUserAvatar, getUser, updateUserById } from '../services/user.js';
 
 export const updateUserByIdController = async (req, res, next) => {
-    const { userId } = req.params;
+  const { userId } = req.params;
 
-    const user = await updateUserById(userId, req.body);
+  const user = await updateUserById(userId, req.body);
 
-    if (!user) {
-        return next(createHttpError(404, "User not found"));
-    }
+  if (!user) {
+    return next(createHttpError(404, 'User not found'));
+  }
 
-    res.json({
-        status: 200,
-        message: "User updated successfully",
-        data: updateUser,
-    });
+  res.json({
+    status: 200,
+    message: 'User updated successfully',
+    data: user,
+  });
 };
-
 
 export const getUserController = async (req, res) => {
   const userId = req.user._id;
@@ -38,7 +37,6 @@ export const getUserController = async (req, res) => {
   });
 };
 
-
 export const uploadUserPhotoController = async (req, res) => {
   const { user } = req;
   const file = req.file;
@@ -51,4 +49,3 @@ export const uploadUserPhotoController = async (req, res) => {
     data: updatedUser,
   });
 };
-

@@ -1,5 +1,5 @@
 import httpError from 'http-errors';
-import { createTask, updateTaskStatus, getAllTasks} from '../services/task.js';
+import { createTask, updateTaskStatus, getAllTasks } from '../services/task.js';
 
 export const createTaskController = async (req, res, next) => {
   const task = await createTask({ ...req.body, useId: req.user._id });
@@ -9,10 +9,11 @@ export const createTaskController = async (req, res, next) => {
 };
 
 export const getAllTasksController = async (req, res, next) => {
-  const userId = req.user?._id;
-  if (!userId) throw httpError(401, 'Unauthorized');
+  const owner = req.user?._id;
+  if (!owner) throw httpError(401, 'Unauthorized');
 
   const { isDone, order } = req.validatedQuery ?? {};
+
   const tasks = await getAllTasks({ userId, isDone, order });
 
   res.json({
@@ -23,20 +24,20 @@ export const getAllTasksController = async (req, res, next) => {
 };
 
 export const updateTaskStatusController = async (req, res, next) => {
-  const { id } = req.params;
-  const userId = req.user._id;
-  const task = await updateTaskStatus(id, userId);
+  const { taskId } = req.params;
+  const owner = req.user._id;
+  const task = await updateTaskStatus(taskId, owner);
 
   if (!task) {
     return res.status(404).json({
       status: 404,
-      message: "Task not found",
+      message: 'Task not found',
     });
   }
 
   res.status(200).json({
     status: 200,
-    message: "Task updated successfully",
+    message: 'Task updated successfully',
     data: task,
   });
 };
