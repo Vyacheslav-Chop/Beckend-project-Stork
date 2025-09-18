@@ -48,8 +48,7 @@ paths:
       $ref: ../swagger/paths/tasks/get.yaml
     post:
       $ref: ../swagger/paths/tasks/post.yaml
-
-  /api/users:
+      /api/users:
     get: $ref:../swagger/paths/users/getUser.yaml
 
 components:

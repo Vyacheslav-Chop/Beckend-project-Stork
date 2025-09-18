@@ -2,7 +2,7 @@ tags:
   - Tasks
 summary: getTasks
 description: |-
-  Private endpoint to get tasks grouped by **today** and **upcoming week** for the current user.
+  Private endpoint to get all tasks for the current user. Returns all tasks sorted by date = ascending
 
 operationId: getAllTasks
 security:
@@ -27,9 +27,24 @@ parameters:
         summary: Only uncompleted
         value: false
 
+  - in: query
+    name: order
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: asc
+    description: >
+      Sort direction by `date`. `asc` = ascending (default), `desc` = descending.
+    examples:
+      ascending:
+        value: asc
+      descending:
+        value: desc
+
 responses:
   '200':
-    description: Tasks grouped by today and upcoming week
+    description: List of tasks sorted by date
     content:
       application/json:
         schema:
@@ -44,14 +59,11 @@ responses:
             data:
               type: object
               properties:
-                today:
+                tasks:
                   type: array
                   items:
                     $ref: '../../components/schemas/Task.yaml'
-                upcomingWeek:
-                  type: array
-                  items:
-                    $ref: '../../components/schemas/Task.yaml'
+
         examples:
           bothStatuses:
             summary: No isDone passed - both true & false
@@ -59,7 +71,7 @@ responses:
               status: 200
               message: Tasks fetched successfully
               data:
-                today:
+                tasks:
                   - _id: '66f0aa1b66ef9c0aa1c0bb1'
                     name: 'Прийняти вітаміни'
                     date: '2025-09-22'
@@ -70,25 +82,13 @@ responses:
                     date: '2025-09-22'
                     isDone: true
                     userId: '66ef9c0aa1c0bb1'
-                upcomingWeek:
-                  - _id: '66f0bb1a66ef9c0aa1c0bb2'
-                    name: 'Відвідати плановий скринінг'
-                    date: '2025-09-23'
-                    isDone: false
-                    userId: '66ef9c0aa1c0bb1'
-                  - _id: '66f0bb1b...'
-                    name: '30-хвилинна прогулянка'
-                    date: '2025-09-24'
-                    isDone: true
-                    userId: '66f0bb1a66ef9c0aa1c0bb3'
           onlyCompleted:
             summary: isDone=true
             value:
               status: 200
               message: Tasks fetched successfully
               data:
-                today: []
-                upcomingWeek:
+                tasks:
                   - _id: '66f0bb1a66ef9c0aa1c0bb4'
                     name: 'Здати аналіз крові'
                     date: '2025-09-25'
@@ -100,13 +100,12 @@ responses:
               status: 200
               message: Tasks fetched successfully
               data:
-                today:
+                tasks:
                   - _id: '66f0bb1a66ef9c0aa1c0bb5'
                     name: 'Прийняти вітаміни'
                     date: '2025-09-22'
                     isDone: false
                     userId: '66ef9c0aa1c0bb1'
-                upcomingWeek: []
   '401':
     $ref: '../../components/responses/401.yaml'
   '500':

@@ -24,4 +24,5 @@ export const createTaskValidationSchema = Joi.object({
 
 export const getAllTasksValidationSchema = Joi.object({
   isDone: Joi.boolean().optional(),
+  order: Joi.string().valid('asc', 'desc').default('asc'),
 });
