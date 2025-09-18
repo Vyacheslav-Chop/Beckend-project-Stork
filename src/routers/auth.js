@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import { registerUserValidationSchema } from '../validation/auth.js';
 import {
+  registerUserValidationSchema,
+  loginUserSchema,
+} from '../validation/auth.js';
+import {
+  loginUserController,
   refreshUserSessionController,
   registerUserController,
   logoutUserController,
@@ -16,7 +20,15 @@ authRouter.post(
   validateBody(registerUserValidationSchema),
   ctrlWrapper(registerUserController),
 );
+
+authRouter.post(
+  '/login',
+  validateBody(loginUserSchema),
+  ctrlWrapper(loginUserController),
+);
+
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+
 
 authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 

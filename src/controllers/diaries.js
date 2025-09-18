@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { updateDiaryById } from '../services/diary.js';
+import { deleteDiaryById, updateDiaryById, getDiaries } from '../services/diary.js';
 
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
@@ -12,5 +12,32 @@ export const updateDiaryByIdController = async (req, res, next) => {
     status: 200,
     message: 'Successfully updated a diary!',
     data: diary,
+  });
+};
+
+export const deleteDiaryByIdController = async (req, res, next) => {
+  const { diaryId } = req.params;
+  const userId = req.user._id;
+  const diary = await deleteDiaryById(diaryId, userId);
+
+  if (!diary) return next(createHttpError(404, 'Diary not found'));
+
+  res.status(204).send();
+ };
+
+export const getDiariesController = async (req, res, next) => {
+  const userId = req.user._id;
+  const { sortBy = 'createdAt', order = 'desc' } = req.validatedQuery || {};
+
+  const diaries = await getDiaries(userId, { sortBy, order });
+
+  if (!diaries || diaries.length === 0) {
+    return next(createHttpError(404, 'Diaries not found'));
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully fetched diaries',
+    data: diaries,
   });
 };

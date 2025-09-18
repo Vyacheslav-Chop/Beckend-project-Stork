@@ -5,7 +5,7 @@ export const getAllEmotionsController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'uccessfully found emotions!',
+    message: 'Successfully found emotions!',
     data: {
       emotions,
     },
