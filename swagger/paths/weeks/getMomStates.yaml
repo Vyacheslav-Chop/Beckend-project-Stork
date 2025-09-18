@@ -1,0 +1,101 @@
+tags:
+  - Week
+summary: Get mom's body information
+operationId: getWeeksMomStates
+description: Retrieve information about the mom's body based on the week number or fetch all weeks data.
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: weekNumber
+    required: false
+    schema:
+      type: integer
+      example: 2
+    description: The week number to retrieve data for. If not provided, all weeks data will be returned.
+responses:
+  '200':
+    description: Successfully retrieved week data.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved week data
+            data:
+              oneOf:
+                - type: object
+                  properties:
+                    weekNumber:
+                      type: integer
+                      example: 2
+                    feelings:
+                      type: object
+                      properties:
+                        states:
+                          type: array
+                          items:
+                            type: string
+                          example:
+                            ['Прилив енергії', 'Підвищене лібідо', 'Овуляція']
+                        sensationDescr:
+                          type: string
+                          example: Наприкінці цього тижня, швидше за все, відбудеться овуляція...
+                    comfortTips:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          category:
+                            type: string
+                            example: Харчування
+                          tip:
+                            type: string
+                            example: Продовжуйте збалансовано харчуватися...
+                - type: array
+                  items:
+                    type: object
+                    properties:
+                      weekNumber:
+                        type: integer
+                        example: 2
+                      feelings:
+                        type: object
+                        properties:
+                          states:
+                            type: array
+                            items:
+                              type: string
+                            example:
+                              ['Прилив енергії', 'Підвищене лібідо', 'Овуляція']
+                          sensationDescr:
+                            type: string
+                            example: Наприкінці цього тижня, швидше за все, відбудеться овуляція...
+                      comfortTips:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            category:
+                              type: string
+                              example: Харчування
+                            tip:
+                              type: string
+                              example: Продовжуйте збалансовано харчуватися...
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

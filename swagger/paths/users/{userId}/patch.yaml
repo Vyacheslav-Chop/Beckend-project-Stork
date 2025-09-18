@@ -1,0 +1,56 @@
+tags:
+  - Users
+summary: Update user data
+operationId: updateUser
+description: Update user profile data (name, email, password). Only authorized users can update their own data.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+         name:
+           type: string
+           example: John Doe
+         email:
+           type: string
+           example: john@example.com
+         password:
+           type: string
+           example: "123456"
+responses:
+  '200':
+    description: User updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: User updated successfully
+            data:
+              $ref: ../../../components/schemas/user.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
