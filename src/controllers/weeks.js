@@ -1,9 +1,10 @@
 import { getWeeksMomStates } from '../services/week.js';
 import { getWeekData } from '../services/week.js';
 
+export const getWeekPublicController = async (req, res) => {
+  const { weekNumber } = 20;
+  const data = await getWeekData(weekNumber);
 
-export const getWeekPublicController = (req, res, next) => {
-  const data = getWeekData();
   res.json({
     status: 200,
     message: 'The week has been successfully loaded.',
@@ -13,7 +14,7 @@ export const getWeekPublicController = (req, res, next) => {
 
 export const getWeeksMomStatesController = async (req, res) => {
   const { weekNumber } = req.query;
-  
+
   const data = await getWeeksMomStates(weekNumber ? Number(weekNumber) : null);
 
   res.json({
@@ -24,4 +25,3 @@ export const getWeeksMomStatesController = async (req, res) => {
     data,
   });
 };
-

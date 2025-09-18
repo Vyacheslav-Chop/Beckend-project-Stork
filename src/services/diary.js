@@ -26,3 +26,8 @@ export const getDiaries = async (userId, { sortBy, order }) => {
 };
 
 
+export const createDiary = async (payload) => {
+  const diary = await DiaryModel.create(payload);
+
+  return diary;
+};
