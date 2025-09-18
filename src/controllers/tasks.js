@@ -13,12 +13,13 @@ export const getAllTasksController = async (req, res, next) => {
   if (!owner) throw httpError(401, 'Unauthorized');
 
   const { isDone, order } = req.validatedQuery ?? {};
-  const { tasks } = await getAllTasks({ owner, isDone, order });
+
+  const tasks = await getAllTasks({ userId, isDone, order });
 
   res.json({
     status: 200,
     message: 'Tasks fetched successfully',
-    data: { tasks },
+    data: tasks
   });
 };
 

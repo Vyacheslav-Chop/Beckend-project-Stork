@@ -12,7 +12,7 @@ export const getAllTasks = async ({ owner, isDone, order = 'asc' }) => {
 
   const tasks = await TaskModel.find(outcome).sort({ date: orderDirection });
 
-  return { tasks };
+  return tasks;
 };
 
 export const updateTaskStatus = async (taskId, owner, isDone) => {

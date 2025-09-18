@@ -2,7 +2,7 @@ tags:
   - Tasks
 summary: getTasks
 description: |-
-  Private endpoint to get all tasks for the current user. Returns all tasks sorted by date = ascending
+  Private endpoint to get all tasks. Returns all tasks sorted by date = ascending
 
 operationId: getAllTasks
 security:
@@ -59,53 +59,7 @@ responses:
             data:
               type: object
               properties:
-                tasks:
-                  type: array
-                  items:
-                    $ref: '../../components/schemas/Task.yaml'
-
-        examples:
-          bothStatuses:
-            summary: No isDone passed - both true & false
-            value:
-              status: 200
-              message: Tasks fetched successfully
-              data:
-                tasks:
-                  - _id: '66f0aa1b66ef9c0aa1c0bb1'
-                    name: 'Прийняти вітаміни'
-                    date: '2025-09-22'
-                    isDone: false
-                    userId: '66ef9c0aa1c0bb1'
-                  - _id: '66f0aa1c66ef9c0aa1c0bb2'
-                    name: 'Нагадування: запис на скринінг'
-                    date: '2025-09-22'
-                    isDone: true
-                    userId: '66ef9c0aa1c0bb1'
-          onlyCompleted:
-            summary: isDone=true
-            value:
-              status: 200
-              message: Tasks fetched successfully
-              data:
-                tasks:
-                  - _id: '66f0bb1a66ef9c0aa1c0bb4'
-                    name: 'Здати аналіз крові'
-                    date: '2025-09-25'
-                    isDone: true
-                    userId: '66ef9c0aa1c0bb1'
-          onlyUncompleted:
-            summary: isDone=false
-            value:
-              status: 200
-              message: Tasks fetched successfully
-              data:
-                tasks:
-                  - _id: '66f0bb1a66ef9c0aa1c0bb5'
-                    name: 'Прийняти вітаміни'
-                    date: '2025-09-22'
-                    isDone: false
-                    userId: '66ef9c0aa1c0bb1'
+                $ref: '../../components/schemas/Task.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
   '500':
