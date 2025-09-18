@@ -35,6 +35,10 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
@@ -43,17 +47,7 @@ responses:
               type: string
               example: Successfully registered a user!
             data:
-              type: object
-              properties:
-                id:
-                  type: string
-                  example: 65ca67e7ae7f10c88b598384
-                name:
-                  type: string
-                  example: 'Ivan Ivanenko'
-                email:
-                  type: string
-                  example: 'ivanivanenko@example.com'
+              $ref: ../../components/schemas/user.yaml
   '409':
     $ref: '../../components/responses/409.yaml'
   '400':

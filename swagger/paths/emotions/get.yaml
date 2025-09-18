@@ -24,14 +24,9 @@ responses:
               type: string
               example: Successfully found emotions!
             data:
-              type: object
-              required:
-                - emotions
-              properties:
-                emotions:
-                  type: array
-                  items:
-                    $ref: ../../components/schemas/emotion.yaml
+              type: array
+              items:
+                $ref: ../../components/schemas/emotion.yaml
   '500':
     $ref: '../../components/responses/500.yaml'
   '400':
