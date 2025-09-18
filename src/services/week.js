@@ -4,7 +4,6 @@ import { MomStates } from '../db/models/momStates.js';
 import {
   calculateCurrentWeek,
   calculateDaysToBirth,
-  default_week,
 } from '../helpers/week.js';
 
 export const getWeeksMomStates = async (weekNumber) => {
@@ -24,10 +23,10 @@ export const getWeeksMomStates = async (weekNumber) => {
   return allWeeksData;
 };
 
-export const getPublicWeekData = async (weekNumber = default_week) => {
+export const getPublicWeekData = async (weekNumber = 20) => {
   const notAuthInfo = {
     analogy: 'Банан',
-    weekNumber: default_week,
+    weekNumber: 20,
     babySize: 25.6,
     babyWeight: 300,
     image: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp',
