@@ -9,6 +9,7 @@ const diarySchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: 'emotions',
+      required: true,
     },
     description: {
       type: String,

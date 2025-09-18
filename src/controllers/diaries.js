@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { deleteDiaryById, updateDiaryById, getDiaries } from '../services/diary.js';
+import { deleteDiaryById, updateDiaryById, getDiaries, createDiary } from '../services/diary.js';
 
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
@@ -39,5 +39,18 @@ export const getDiariesController = async (req, res, next) => {
     status: 200,
     message: 'Successfully fetched diaries',
     data: diaries,
+  });
+};
+
+export const createDiaryController = async (req, res, next) => {
+  const diary = await createDiary({
+    ...req.body,
+    userId: req.user._id,
+  });
+
+  res.status(201).json({
+    status: 201,
+    message: 'Diary created successfully',
+    data: diary,
   });
 };

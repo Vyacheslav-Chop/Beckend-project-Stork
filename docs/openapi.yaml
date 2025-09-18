@@ -47,6 +47,10 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
       
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+      
   /api/diaries:
     get:
       $ref: ../swagger/paths/diaries/get.yaml
@@ -64,7 +68,7 @@ paths:
   /api/weeks/mother-body:
     get:
       $ref: ../swagger/paths/weeks/getMomStates.yaml
-
+      
 components:
   securitySchemes:
     bearerAuth:

@@ -5,10 +5,12 @@ import {
   deleteDiaryByIdController,
   updateDiaryByIdController,
   getDiariesController,
+  createDiaryController,
 } from '../controllers/diaries.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import {
   updateDiaryValidationSchema,
+  createDiaryValidationSchema,
   getDiariesQuerySchema,
 } from '../validation/diary.js';
 import { isValidId } from '../middlewares/isValidId.js';
@@ -17,6 +19,12 @@ import { validateQuery } from '../middlewares/validateQuery.js';
 const diaryRouter = Router();
 
 diaryRouter.use('/', authenticate);
+
+diaryRouter.post(
+  '/',
+  validateBody(createDiaryValidationSchema),
+  ctrlWrapper(createDiaryController),
+);
 
 diaryRouter.get(
   '/',
