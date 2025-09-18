@@ -67,6 +67,10 @@ paths:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
 
+  /api/weeks/public:
+    get:
+      $ref: ../swagger/paths/weeks/getPublicWeek.yaml
+
   /api/weeks/mother-body:
     get:
       $ref: ../swagger/paths/weeks/getMomStates.yaml
