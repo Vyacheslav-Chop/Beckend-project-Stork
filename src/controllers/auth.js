@@ -1,10 +1,10 @@
 import { setupSession } from '../helpers/auth.js';
 import {
+  loginUser,
   refreshUserSession,
   registerUser,
   logoutUser,
 } from '../services/auth.js';
-import createHttpError from 'http-errors';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -15,6 +15,21 @@ export const registerUserController = async (req, res) => {
     data: user,
   });
 };
+
+export const loginUserController = async (req, res) => {
+  const session = await loginUser(req.body);
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in an user!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
+
 export const refreshUserSessionController = async (req, res) => {
   const session = await refreshUserSession({
     sessionId: req.cookies.sessionId,
@@ -31,18 +46,9 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-export const logoutUserController = async (req, res, next) => {
-  try {
-    const { _id: sessionId } = req.session;
-    if (!sessionId) {
-      return next(createHttpError(401, 'Session not found.'));
-    }
-
-    await logoutUser(sessionId);
-    res.clearCookie('sessionId');
-    res.clearCookie('refreshToken');
-    res.status(204).send();
-  } catch (error) {
-    next(error);
-  }
+export const logoutUserController = async (req, res) => {
+  if (req.cookies.sessionId) await logoutUser(req.cookies.sessionId);
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+  res.status(204).send();
 };

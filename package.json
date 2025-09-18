@@ -49,8 +49,6 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.6",
     "pino-http": "^10.5.0",
-    "swagger-ui-express": "^5.0.1",
-    "yup": "^1.7.0",
-    "zustand": "^5.0.8"
+    "swagger-ui-express": "^5.0.1"
   }
 }
