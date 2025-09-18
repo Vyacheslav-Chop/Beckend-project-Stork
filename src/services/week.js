@@ -2,6 +2,17 @@ import createHttpError from 'http-errors';
 import { BabyStatesModel } from '../db/models/babyStates.js';
 import { MomStates } from '../db/models/momStates.js';
 
+export const getBabyStateByWeek = async (req, res) => {
+  const { weekNumber } = req.query;
+
+  const babyState = await BabyStatesModel.findOne({ weekNumber });
+
+  if (!babyState) {
+    throw createHttpError(404, `Not  found data for week ${weekNumber}`);
+  }
+  return babyState;
+};
+
 export const getWeeksMomStates = async (weekNumber) => {
   if (weekNumber) {
     const weekData = await MomStates.findOne({
@@ -54,10 +65,13 @@ export const getPrivateWeekData = (week, dueDate) => {
   if (dueDate) {
     const today = new Date();
     const endDate = new Date(dueDate);
-    daysToBirth = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
+    daysToBirth = Math.max(
+      0,
+      Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)),
+    );
   } else {
     const maxWeeks = 42;
     daysToBirth = (maxWeeks - week) * 7;
   }
   return { ...data, daysToBirth };
-}
+};

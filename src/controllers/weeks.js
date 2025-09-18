@@ -1,20 +1,15 @@
-
 import createHttpError from 'http-errors';
 import { BabyStateModel } from '../db/models/babyStates.js';
 import { getWeeksMomStates, getWeekData } from '../services/week.js';
 
-export const getBabyStateByWeek = async (req, res, next) => {
-  const { week } = req.params;
+export const getBabyStateByWeekController = async (req, res) => {
+  const { weekNumber } = req.query;
 
-  const babyState = await BabyStateModel.findOne({ weekNumber: Number(week) });
-
-  if (!babyState) {
-    throw createHttpError(404, `No data found for week ${week}`);
-  }
+  const babyState = await BabyStateModel.getBabyStateByWeek(weekNumber);
 
   res.json({
     status: 200,
-    message: `Successfully fetched baby development data for week ${week}`,
+    message: 'The week has been successfully loaded.',
     data: babyState,
   });
 };
@@ -46,14 +41,14 @@ export const getWeeksMomStatesController = async (req, res) => {
 
 export const getWeekPrivate = (req, res, next) => {
   try {
-    const user = req.user
+    const user = req.user;
 
     if (!user) {
       throw createHttpError(401, 'Unauthorized');
     }
 
-   const { dueData } = user;
-   const weekFromQuery = Number(req.query.weekNumber); 
+    const { dueData } = user;
+    const weekFromQuery = Number(req.query.weekNumber);
 
     let currentWeek;
 
@@ -62,7 +57,9 @@ export const getWeekPrivate = (req, res, next) => {
     } else if (dueData) {
       const today = new Date();
       const endDate = new Date(dueData);
-      const diffWeeks = Math.floor((280 - (endDate - today) / (1000 * 60 * 60 * 24)) / 7);
+      const diffWeeks = Math.floor(
+        (280 - (endDate - today) / (1000 * 60 * 60 * 24)) / 7,
+      );
       currentWeek = diffWeeks > 0 ? diffWeeks : 1;
     } else {
       currentWeek = user.week || 20;
@@ -79,4 +76,3 @@ export const getWeekPrivate = (req, res, next) => {
     next(err);
   }
 };
-

@@ -9,8 +9,7 @@ export const weekParamSchema = Joi.object({
     'number.max': 'Week cannot be more than 42',
     'any.required': 'Week parameter is required',
   }),
-
+});
 export const weekPregnancyValidationSchema = Joi.object({
   week: weekPregnancyValidation(),
-
 });
