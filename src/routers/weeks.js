@@ -8,7 +8,6 @@ import {
   getWeekPublicController,
   getBabyStateByWeekController,
   getWeekPrivateController,
-  getBabyStateByWeek,
 } from '../controllers/weeks.js';
 
 const weekRouter = Router();

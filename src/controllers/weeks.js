@@ -1,12 +1,11 @@
 import createHttpError from 'http-errors';
 
 import { BabyStateModel } from '../db/models/babyStates.js';
-import { getWeeksMomStates, 
-        getWeekData,
-         getPublicWeekData,
-        getBabyStateByWeekService,
-        getPrivateWeekData,
-       } from '../services/week.js';
+import {
+  getWeeksMomStates,
+  getPublicWeekData,
+  getPrivateWeekData,
+} from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
   const { weekNumber } = req.query;
@@ -42,7 +41,6 @@ export const getWeeksMomStatesController = async (req, res) => {
     data,
   });
 };
-
 
 export const getWeekPrivateController = async (req, res) => {
   const user = req.user;
