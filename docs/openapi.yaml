@@ -15,7 +15,7 @@ tags:
     description: Operations for managing tasks.
   - name: Users
     description: Operations for managing user profiles.
-  - name: Week
+  - name: Weeks
     description: Operations related to weekly plans or summaries.
   - name: Emotions
     description: Operations for managing emotions
@@ -26,7 +26,7 @@ paths:
   /api/emotions:
     get:
       $ref: ../swagger/paths/emotions/get.yaml
-      
+
   /api/users:
     get:
       $ref: ../swagger/paths/users/getUser.yaml
@@ -66,9 +66,6 @@ paths:
       $ref: ../swagger/paths/tasks/get.yaml
     post:
       $ref: ../swagger/paths/tasks/post.yaml
-
-  /api/weeks/{week}:
-    $ref: ../swagger/paths/weeks/get.yaml
 
   /api/weeks/mother-body:
     get:
