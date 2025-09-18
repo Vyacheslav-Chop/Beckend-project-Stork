@@ -20,6 +20,7 @@ export const registerUser = async (payload) => {
 
   return user;
 };
+
 export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   const session = await SessionModel.findOne({
     _id: sessionId,
@@ -43,6 +44,11 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
     userId: session.userId,
     ...newSession,
   });
+};
+
+
+export const logoutUser = async (sessionId) => {
+  await SessionModel.deleteOne({ _id: sessionId });
 };
 
 export const loginUser = async (payload) => {

@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { weekPregnancyValidation } from '../validation/helpers.js';
 
 export const weekParamSchema = Joi.object({
   week: Joi.number().integer().min(1).max(42).required().messages({
@@ -8,4 +9,8 @@ export const weekParamSchema = Joi.object({
     'number.max': 'Week cannot be more than 42',
     'any.required': 'Week parameter is required',
   }),
+
+export const weekPregnancyValidationSchema = Joi.object({
+  week: weekPregnancyValidation(),
+
 });

@@ -1,0 +1,39 @@
+tags:
+  - Diaries
+summary: Get user's diary entries
+operationId: getDiary
+security:
+  - bearerAuth: []
+parameters:
+  - name: sortBy
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [createdAt, updatedAt]
+      default: createdAt
+  - name: order
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: desc
+responses:
+  '200':
+    description: List of diary entries
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status: { type: integer, example: 200 }
+            message: { type: string, example: Successfully fetched diaries }
+            data:
+              type: array
+              items:
+                $ref: '../../components/schemas/diary.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

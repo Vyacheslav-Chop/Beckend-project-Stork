@@ -26,29 +26,53 @@ paths:
   /api/emotions:
     get:
       $ref: ../swagger/paths/emotions/get.yaml
-
-  /api/auth/refresh:
-    post:
-      $ref: ../swagger/paths/auth/refresh.yaml
+      
+  /api/users:
+    get:
+      $ref: ../swagger/paths/users/getUser.yaml
 
   /api/users/avatar:
     put:
       $ref: ../swagger/paths/users/updateAvatar.yaml
 
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
 
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+
+  /api/diaries:
+    get:
+      $ref: ../swagger/paths/diaries/get.yaml
+
   /api/diaries/{diaryId}:
     patch:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/diaries/{diaryId}/delete.yaml
 
-  /api/tasks/:
+  /api/tasks:
+    get:
+      $ref: ../swagger/paths/tasks/get.yaml
     post:
       $ref: ../swagger/paths/tasks/post.yaml
 
   /api/weeks/{week}:
     $ref: ../swagger/paths/weeks/get.yaml
+
+  /api/weeks/mother-body:
+    get:
+      $ref: ../swagger/paths/weeks/getMomStates.yaml
 
 components:
   securitySchemes:
