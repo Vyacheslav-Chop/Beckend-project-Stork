@@ -3,8 +3,7 @@ tags:
 summary: Login user
 operationId: loginUser
 description: 'Login user'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   required: true
   content:
@@ -30,6 +29,10 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
@@ -40,14 +43,10 @@ responses:
             data:
               type: object
               properties:
-                id:
+                accessToken:
                   type: string
-                  example: 65ca67e7ae7f10c88b598384
-                name:
-                  type: string
-                  example: 'Ivan Ivanenko'
-                email:
-                  type: string
-                  example: 'ivanivanenko@example.com'
+                  example: "abc123XYZtoken456fake"
   '400':
     $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
