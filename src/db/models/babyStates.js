@@ -15,4 +15,4 @@ const babyStateSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-export const BabyState = model('BabyState', babyStateSchema);
+export const BabyStateModel = model('BabyState', babyStateSchema);
