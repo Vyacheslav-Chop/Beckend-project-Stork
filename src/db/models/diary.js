@@ -15,7 +15,7 @@ const diarySchema = new Schema(
       type: String,
       required: true,
     },
-    userId: {
+    owner: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: 'users',
