@@ -1,4 +1,5 @@
 import { User } from '../db/models/user.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFile } from '../utils/saveFile.js';
 import createHttpError from 'http-errors';
 
@@ -16,17 +17,13 @@ export const getUser = async (userId) => {
   return user;
 };
 
-export const uploadUserPhoto = async (userId, file) => {
-  const user = await getUser(userId);
-  if (!user) {
-    throw createHttpError(404, 'User not found!');
-  }
+export const uploadUserAvatar = async (userId, file) => {
+  const avatarUrl = await saveFileToCloudinary(file);
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { avatar: avatarUrl },
+    { new: true, runValidators: true },
+  );
 
-  const filePath = await saveFile(file);
-
-  user.avatar = filePath;
-
-  await user.save();
-
-  return user;
+  return updatedUser;
 };

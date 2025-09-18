@@ -17,7 +17,7 @@ const userSchema = new Schema(
       required: true,
     },
     dueData: {
-      type: Date,
+      type: String,
       default: null,
     },
     babyGender: {

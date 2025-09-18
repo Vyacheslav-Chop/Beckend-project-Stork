@@ -9,7 +9,7 @@ export const updateUserSchema = Joi.object({
   name: nameValidation(),
   email: emailValidation(),
   babyGender: genderValidation(),
-  dueDate: Joi.string()
+  dueData: Joi.string()
     .pattern(/^\d{2}\.\d{2}\.\d{4}$/)
     .custom((value, helpers) => {
       const [day, month, year] = value.split('.').map(Number);
