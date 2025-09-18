@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-const babyStateSchema = new Schema({
+const babyStatesSchema = new Schema({
   analogy: {
     type: String,
   },
@@ -30,4 +30,4 @@ const babyStateSchema = new Schema({
   },
 });
 
-export const BabyStateModel = model('babyStates', babyStateSchema);
+export const BabyStatesModel = model('babyStates', babyStatesSchema);
