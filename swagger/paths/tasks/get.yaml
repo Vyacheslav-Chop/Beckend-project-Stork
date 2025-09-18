@@ -1,0 +1,66 @@
+tags:
+  - Tasks
+summary: getTasks
+description: |-
+  Private endpoint to get all tasks. Returns all tasks sorted by date = ascending
+
+operationId: getAllTasks
+security:
+  - bearerAuth: []
+
+parameters:
+  - in: query
+    name: isDone
+    required: false
+    schema:
+      type: boolean
+    description: >
+      Optional completion filter. When omitted, tasks with both `true` and `false` are returned.
+    examples:
+      all:
+        summary: Omit parameter (both true & false)
+        value: null
+      onlyCompleted:
+        summary: Only completed
+        value: true
+      onlyUncompleted:
+        summary: Only uncompleted
+        value: false
+
+  - in: query
+    name: order
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: asc
+    description: >
+      Sort direction by `date`. `asc` = ascending (default), `desc` = descending.
+    examples:
+      ascending:
+        value: asc
+      descending:
+        value: desc
+
+responses:
+  '200':
+    description: List of tasks sorted by date
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Tasks fetched successfully
+            data:
+              type: object
+              properties:
+                $ref: '../../components/schemas/Task.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

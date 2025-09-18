@@ -5,15 +5,26 @@ import {
   deleteDiaryByIdController,
   updateDiaryByIdController,
   getDiariesController,
+  createDiaryController,
 } from '../controllers/diaries.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { updateDiaryValidationSchema, getDiariesQuerySchema } from '../validation/diary.js';
+import {
+  updateDiaryValidationSchema,
+  createDiaryValidationSchema,
+  getDiariesQuerySchema,
+} from '../validation/diary.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateQuery } from '../middlewares/validateQuery.js';
 
 const diaryRouter = Router();
 
 diaryRouter.use('/', authenticate);
+
+diaryRouter.post(
+  '/',
+  validateBody(createDiaryValidationSchema),
+  ctrlWrapper(createDiaryController),
+);
 
 diaryRouter.get(
   '/',
@@ -29,6 +40,6 @@ diaryRouter.patch(
   ctrlWrapper(updateDiaryByIdController),
 );
 
-diaryRouter.delete(':/diaryId', ctrlWrapper(deleteDiaryByIdController));
+diaryRouter.delete('/:diaryId', ctrlWrapper(deleteDiaryByIdController));
 
 export default diaryRouter;

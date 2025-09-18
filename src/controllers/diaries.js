@@ -1,5 +1,10 @@
 import createHttpError from 'http-errors';
-import { deleteDiaryById, updateDiaryById, getDiaries } from '../services/diary.js';
+import {
+  deleteDiaryById,
+  updateDiaryById,
+  getDiaries,
+  createDiary,
+} from '../services/diary.js';
 
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
@@ -17,13 +22,13 @@ export const updateDiaryByIdController = async (req, res, next) => {
 
 export const deleteDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
-  const userId = req.user._id;
-  const diary = await deleteDiaryById(diaryId, userId);
+  const owner = req.user._id;
+  const diary = await deleteDiaryById(diaryId, owner);
 
   if (!diary) return next(createHttpError(404, 'Diary not found'));
 
   res.status(204).send();
- };
+};
 
 export const getDiariesController = async (req, res, next) => {
   const userId = req.user._id;
@@ -39,5 +44,18 @@ export const getDiariesController = async (req, res, next) => {
     status: 200,
     message: 'Successfully fetched diaries',
     data: diaries,
+  });
+};
+
+export const createDiaryController = async (req, res, next) => {
+  const diary = await createDiary({
+    ...req.body,
+    userId: req.user._id,
+  });
+
+  res.status(201).json({
+    status: 201,
+    message: 'Diary created successfully',
+    data: diary,
   });
 };

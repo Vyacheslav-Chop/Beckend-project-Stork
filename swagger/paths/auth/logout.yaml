@@ -1,0 +1,20 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: 'Logs out a user by deleting the current session.'
+security: []
+parameters:
+  - in: cookie
+    name: sessionId
+    required: true
+    schema:
+      type: string
+      example: '65e4decdd286b30065d54af9'
+    description: 'ID of the current session'
+responses:
+  '204':
+    description: 'Successfully logged out. Session deleted.'
+
+  '401':
+    $ref: '../../components/responses/401.yaml'

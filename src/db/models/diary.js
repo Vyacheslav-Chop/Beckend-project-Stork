@@ -9,12 +9,13 @@ const diarySchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: 'emotions',
+      required: true,
     },
     description: {
       type: String,
       required: true,
     },
-    userId: {
+    owner: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: 'users',
