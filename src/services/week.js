@@ -46,3 +46,18 @@ export const getWeekData = async (user, week) => {
 
   return { ...foundWeek };
 };
+
+export const getPrivateWeekData = (week, dueDate) => {
+  const data = getWeekData(week);
+
+  let daysToBirth;
+  if (dueDate) {
+    const today = new Date();
+    const endDate = new Date(dueDate);
+    daysToBirth = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
+  } else {
+    const maxWeeks = 42;
+    daysToBirth = (maxWeeks - week) * 7;
+  }
+  return { ...data, daysToBirth };
+}
