@@ -1,16 +1,15 @@
 import createHttpError from 'http-errors';
-
-import { BabyStateModel } from '../db/models/babyStates.js';
 import {
   getWeeksMomStates,
   getPublicWeekData,
   getPrivateWeekData,
+  getBabyStateByWeek,
 } from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
   const { weekNumber } = req.query;
 
-  const babyState = await BabyStateModel.getBabyStateByWeek(weekNumber);
+  const babyState = await getBabyStateByWeek(weekNumber);
 
   res.json({
     status: 200,
