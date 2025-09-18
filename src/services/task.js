@@ -15,7 +15,7 @@ export const getAllTasks = async ({ userId, isDone, order = 'asc' }) => {
     .find(outcome)
     .sort({ date: orderDirection });
 
-  return { tasks };
+  return tasks;
 };
 
 export const updateTaskStatus = async (taskId, userId, isDone) => {
