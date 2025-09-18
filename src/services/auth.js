@@ -21,36 +21,29 @@ export const registerUser = async (payload) => {
   return user;
 };
 
-export const refreshUserSession = async ( sessionId, refreshToken ) => {
+export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   const session = await SessionModel.findOne({
     _id: sessionId,
     refreshToken,
   });
-
   if (!session) {
     throw createHttpError(401, 'Session not found');
   }
 
   const isSessionTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
-
   if (isSessionTokenExpired) {
-    await SessionModel.findByIdAndDelete(sessionId);
     throw createHttpError(401, 'Session token expired');
   }
 
-  const user = await User.findById(session.userId);
+  const newSession = createSession();
 
-  if (!user) {
-    await SessionModel.findByIdAndDelete(sessionId);
-    throw createHttpError(401, 'Session not found');
-  }
+  await SessionModel.deleteOne({ _id: sessionId, refreshToken });
 
-  await SessionModel.findByIdAndDelete(sessionId);
-
-  const newSession = SessionModel.create(createSession(user._id));
-
-  return newSession;
+  return await SessionModel.create({
+    userId: session.userId,
+    ...newSession,
+  });
 };
 
 

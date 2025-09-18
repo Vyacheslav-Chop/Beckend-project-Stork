@@ -3,35 +3,13 @@ required:
   - _id
   - name
   - email
-  - dueDate
-  - babyGender
-  - avatar
-  - createdAt
-  - updatedAt
 properties:
   _id:
     type: string
-    example: 1234567890abcdef12345678
+    example: "64da56b7de7f10c88b598123"
   name:
     type: string
-    example: 'John Doe'
+    example: "John Doe"
   email:
     type: string
-    example: 'johndoe@example.com'
-  dueDate:
-    type: string
-    example: null
-  babyGender:
-    type: string
-    example: null
-  avatar:
-    type: string
-    example: null
-  createdAt:
-    type: string
-    format: date-time
-    example: '2025-01-01T12:00:00.000Z'
-  updatedAt:
-    type: string
-    format: date-time
-    example: '2025-01-01T12:00:00.000Z'
+    example: "john@example.com"
