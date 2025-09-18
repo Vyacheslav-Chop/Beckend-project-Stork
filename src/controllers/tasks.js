@@ -19,7 +19,7 @@ export const getAllTasksController = async (req, res, next) => {
   res.json({
     status: 200,
     message: 'Tasks fetched successfully',
-    data: tasks
+    data: tasks,
   });
 };
 
