@@ -18,14 +18,16 @@ const userSchema = new Schema(
     },
     dueData: {
       type: Date,
+      default: null,
     },
     babyGender: {
       type: String,
       enum: Object.values(GENDER),
+      default: null,
     },
-
     avatar: {
       type: String,
+      default: null,
     },
   },
 
