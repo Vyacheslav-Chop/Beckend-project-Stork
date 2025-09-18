@@ -2,18 +2,19 @@ import createHttpError from 'http-errors';
 import {
   getWeeksMomStates,
   getPublicWeekData,
-  getBabyStateByWeekService,
   getPrivateWeekData,
+  getBabyStateByWeek,
 } from '../services/week.js';
 
-export const getBabyStateByWeek = async (req, res) => {
-  const { week } = req.params;
-  const data = await getBabyStateByWeekService(week);
+export const getBabyStateByWeekController = async (req, res) => {
+  const { weekNumber } = req.query;
+
+  const babyState = await getBabyStateByWeek(weekNumber);
 
   res.json({
     status: 200,
-    message: `Successfully fetched baby development data for week ${week}`,
-    data,
+    message: 'The week has been successfully loaded.',
+    data: babyState,
   });
 };
 

@@ -14,12 +14,12 @@ export const getAllTasksController = async (req, res, next) => {
 
   const { isDone, order } = req.validatedQuery ?? {};
 
-  const tasks = await getAllTasks({ userId, isDone, order });
+  const tasks = await getAllTasks({ owner, isDone, order });
 
   res.json({
     status: 200,
     message: 'Tasks fetched successfully',
-    data: tasks
+    data: tasks,
   });
 };
 

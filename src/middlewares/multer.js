@@ -1,9 +1,11 @@
 import multer from 'multer';
-import { TEMP_UPLOAD_DIR } from '../constants/path.js';
+import path from 'path';
+
+const tempDir = path.join(process.cwd(), 'temp');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, TEMP_UPLOAD_DIR);
+    cb(null, tempDir);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();

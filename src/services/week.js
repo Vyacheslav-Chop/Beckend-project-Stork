@@ -1,10 +1,16 @@
 import createHttpError from 'http-errors';
 import { BabyStatesModel } from '../db/models/babyStates.js';
 import { MomStates } from '../db/models/momStates.js';
-import {
-  calculateCurrentWeek,
-  calculateDaysToBirth,
-} from '../helpers/week.js';
+import { calculateCurrentWeek, calculateDaysToBirth } from '../helpers/week.js';
+
+export const getBabyStateByWeek = async (weekNumber) => {
+  const babyState = await BabyStatesModel.findOne({ weekNumber });
+
+  if (!babyState) {
+    throw createHttpError(404, `Not  found data for week ${weekNumber}`);
+  }
+  return babyState;
+};
 
 export const getWeeksMomStates = async (weekNumber) => {
   if (weekNumber) {
@@ -36,18 +42,6 @@ export const getPublicWeekData = async (weekNumber = 20) => {
   };
 
   return notAuthInfo;
-};
-
-export const getBabyStateByWeekService = async (weekNumber) => {
-  const babyState = await BabyStatesModel.findOne({
-    weekNumber: Number(weekNumber),
-  });
-
-  if (!babyState) {
-    throw createHttpError(404, `No data found for week ${weekNumber}`);
-  }
-
-  return babyState;
 };
 
 export const getPrivateWeekData = async (user, weekFromQuery) => {

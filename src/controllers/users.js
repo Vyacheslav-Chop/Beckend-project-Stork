@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { uploadUserAvatar, getUser, updateUserById } from '../services/user.js';
+import { uploadUserPhoto, getUser, updateUserById } from '../services/user.js';
 
 export const updateUserByIdController = async (req, res, next) => {
   const { userId } = req.params;
@@ -38,14 +38,10 @@ export const getUserController = async (req, res) => {
 };
 
 export const uploadUserPhotoController = async (req, res) => {
-  const { user } = req;
-  const file = req.file;
-
-  const updatedUser = await uploadUserAvatar(user._id, file);
-
-  res.json({
+  const user = await uploadUserPhoto(req.user._id, req.file);
+  res.send({
     status: 200,
-    message: 'Successfully updated avatar!',
-    data: updatedUser,
+    message: 'Successfully uploaded a photo for the user!',
+    data: user,
   });
 };

@@ -1,5 +1,7 @@
 import { User } from '../db/models/user.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { saveFile } from '../utils/saveFile.js';
+import createHttpError from 'http-errors';
 
 export const updateUserById = async (userId, payload) => {
   const user = await User.findOneAndUpdate({ _id: userId }, payload, {
