@@ -13,5 +13,4 @@ export const weekParamSchema = Joi.object({
 
 export const weekPregnancyValidationSchema = Joi.object({
   week: weekPregnancyValidation(),
-
 });

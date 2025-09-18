@@ -6,6 +6,17 @@ import {
   calculateDaysToBirth,
 } from '../helpers/week.js';
 
+export const getBabyStateByWeek = async (req, res) => {
+  const { weekNumber } = req.query;
+
+  const babyState = await BabyStatesModel.findOne({ weekNumber });
+
+  if (!babyState) {
+    throw createHttpError(404, `Not  found data for week ${weekNumber}`);
+  }
+  return babyState;
+};
+
 export const getWeeksMomStates = async (weekNumber) => {
   if (weekNumber) {
     const weekData = await MomStates.findOne({
@@ -69,4 +80,5 @@ export const getPrivateWeekData = async (user, weekFromQuery) => {
     daysToBirth,
     isPersonalized: true,
   };
+
 };
