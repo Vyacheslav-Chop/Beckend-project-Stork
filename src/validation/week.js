@@ -10,6 +10,7 @@ export const weekParamSchema = Joi.object({
     'any.required': 'Week parameter is required',
   }),
 });
+
 export const weekPregnancyValidationSchema = Joi.object({
   week: weekPregnancyValidation(),
 });

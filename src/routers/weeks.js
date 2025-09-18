@@ -6,8 +6,9 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getWeeksMomStatesController,
   getWeekPublicController,
-  getWeekPrivate,
   getBabyStateByWeekController,
+  getWeekPrivateController,
+  getBabyStateByWeek,
 } from '../controllers/weeks.js';
 
 const weekRouter = Router();
@@ -15,14 +16,14 @@ const weekRouter = Router();
 weekRouter.get('/public', ctrlWrapper(getWeekPublicController));
 
 weekRouter.use(authenticate);
+
 weekRouter.get(
   '/baby-state',
   validateParams(weekParamSchema),
   ctrlWrapper(getBabyStateByWeekController),
 );
 
-weekRouter.get('/private', getWeekPrivate);
-
+weekRouter.get('/private', ctrlWrapper(getWeekPrivateController));
 weekRouter.get('/mother-body', ctrlWrapper(getWeeksMomStatesController));
 
 export default weekRouter;

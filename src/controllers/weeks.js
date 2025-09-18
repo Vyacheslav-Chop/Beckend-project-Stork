@@ -1,6 +1,12 @@
 import createHttpError from 'http-errors';
+
 import { BabyStateModel } from '../db/models/babyStates.js';
-import { getWeeksMomStates, getWeekData } from '../services/week.js';
+import { getWeeksMomStates, 
+        getWeekData,
+         getPublicWeekData,
+        getBabyStateByWeekService,
+        getPrivateWeekData,
+       } from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
   const { weekNumber } = req.query;
@@ -15,8 +21,7 @@ export const getBabyStateByWeekController = async (req, res) => {
 };
 
 export const getWeekPublicController = async (req, res) => {
-  const { weekNumber } = 20;
-  const data = await getWeekData(weekNumber);
+  const data = await getPublicWeekData();
 
   res.json({
     status: 200,
@@ -27,7 +32,6 @@ export const getWeekPublicController = async (req, res) => {
 
 export const getWeeksMomStatesController = async (req, res) => {
   const { weekNumber } = req.query;
-
   const data = await getWeeksMomStates(weekNumber ? Number(weekNumber) : null);
 
   res.json({
@@ -39,40 +43,18 @@ export const getWeeksMomStatesController = async (req, res) => {
   });
 };
 
-export const getWeekPrivate = (req, res, next) => {
-  try {
-    const user = req.user;
 
-    if (!user) {
-      throw createHttpError(401, 'Unauthorized');
-    }
-
-    const { dueData } = user;
-    const weekFromQuery = Number(req.query.weekNumber);
-
-    let currentWeek;
-
-    if (weekFromQuery && weekFromQuery >= 1 && weekFromQuery <= 42) {
-      currentWeek = weekFromQuery;
-    } else if (dueData) {
-      const today = new Date();
-      const endDate = new Date(dueData);
-      const diffWeeks = Math.floor(
-        (280 - (endDate - today) / (1000 * 60 * 60 * 24)) / 7,
-      );
-      currentWeek = diffWeeks > 0 ? diffWeeks : 1;
-    } else {
-      currentWeek = user.week || 20;
-    }
-
-    const data = getPrivateWeekData(currentWeek, dueData);
-
-    res.json({
-      status: 200,
-      message: 'The week has been successfully loaded.',
-      data,
-    });
-  } catch (err) {
-    next(err);
+export const getWeekPrivateController = async (req, res) => {
+  const user = req.user;
+  if (!req.user) {
+    throw createHttpError(404, 'Week data not found');
   }
+
+  const data = await getPrivateWeekData(user, Number(req.query.weekNumber));
+
+  res.json({
+    status: 200,
+    message: 'The week has been successfully loaded.',
+    data,
+  });
 };
