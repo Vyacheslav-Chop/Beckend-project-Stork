@@ -33,7 +33,7 @@ put:
                 type: string
                 example: Successfully uploaded a photo for the user!
               data:
-                $ref: '../../schemas/User.yaml'
+                $ref: '../../../components/schemas/user.yaml'
     '400':
       $ref: '../../components/responses/400.yaml'
     '401':

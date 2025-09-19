@@ -5,7 +5,6 @@ required:
   - email
   - dueDate
   - babyGender
-  - avatar
   - createdAt
   - updatedAt
 properties:
