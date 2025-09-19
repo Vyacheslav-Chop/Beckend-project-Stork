@@ -23,6 +23,7 @@ properties:
     example: null
   babyGender:
     type: string
+    enum: [male, female, unknown]
     example: null
   avatar:
     type: string

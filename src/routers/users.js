@@ -23,7 +23,7 @@ userRouter.patch(
 
 userRouter.get('/', ctrlWrapper(getUserController));
 
-userRouter.patch(
+userRouter.put(
   '/avatar',
   upload.single('avatar'),
   ctrlWrapper(uploadUserPhotoController),
