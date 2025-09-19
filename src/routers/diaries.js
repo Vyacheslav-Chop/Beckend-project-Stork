@@ -20,6 +20,8 @@ const diaryRouter = Router();
 
 diaryRouter.use('/', authenticate);
 
+diaryRouter.use('/:diaryId', isValidId('diaryId'));
+
 diaryRouter.post(
   '/',
   validateBody(createDiaryValidationSchema),
@@ -31,8 +33,6 @@ diaryRouter.get(
   validateQuery(getDiariesQuerySchema),
   ctrlWrapper(getDiariesController),
 );
-
-diaryRouter.use('/:diaryId', isValidId('diaryId'));
 
 diaryRouter.patch(
   '/:diaryId',

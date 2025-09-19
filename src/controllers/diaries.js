@@ -50,7 +50,7 @@ export const getDiariesController = async (req, res, next) => {
 export const createDiaryController = async (req, res, next) => {
   const diary = await createDiary({
     ...req.body,
-    userId: req.user._id,
+    owner: req.user._id,
   });
 
   res.status(201).json({

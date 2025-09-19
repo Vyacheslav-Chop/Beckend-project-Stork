@@ -16,6 +16,8 @@ properties:
     type: string
     example: This is a test diary
   category:
-    $ref: emotion.yaml
+    type: array
+    items:
+      $ref: emotion.yaml
   userId:
     $ref: user.yaml

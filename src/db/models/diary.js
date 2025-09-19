@@ -6,11 +6,13 @@ const diarySchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: 'emotions',
-      required: true,
-    },
+    category: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'emotions',
+        required: true,
+      },
+    ],
     description: {
       type: String,
       required: true,
