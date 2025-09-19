@@ -1,8 +1,8 @@
 tags:
   - Diaries
 summary: Delete diary by id
-operationId: deleteDiaryById
-description: 'Delete diary by id'
+operationId: deleteDiary
+description: 'Deletes a diary by its ID. Only the owner can delete their dairy.'
 security:
   - bearerAuth: []
 parameters:
@@ -13,25 +13,9 @@ parameters:
       type: string
       example: '65ca67e7ae7f10c88b598384'
 responses:
-  '200':
-    description: 'Delete diary by id'
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Successfully deleted diary with id 65ca67e7ae7f10c88b598384!
-            data:
-              type: object
-              $ref: '../../../components/schemas/diary.yaml'
+  '204':
+    description: 'Diary successfully deleted. No content returned.'
   '401':
     $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
