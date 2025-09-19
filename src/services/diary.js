@@ -13,11 +13,11 @@ export const updateDiaryById = async (diaryId, userId, payload) => {
 };
 
 export const deleteDiaryById = async (diaryId, owner) => {
-  const diary = await DiaryModel.findOneAndDelete({
+  await DiaryModel.findOneAndDelete({
     _id: diaryId,
     owner,
   });
-  return diary;
+
 };
 
 export const getDiaries = async (owner, { sortBy, order }) => {
