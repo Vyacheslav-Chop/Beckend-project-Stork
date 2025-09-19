@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 import { weekParamSchema } from '../validation/week.js';
-import { validateParams } from '../middlewares/validateParams.js';
+import { validateQuery } from '../middlewares/validateQuery.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getWeeksMomStatesController,
@@ -18,11 +18,15 @@ weekRouter.use(authenticate);
 
 weekRouter.get(
   '/baby-state',
-  validateParams(weekParamSchema),
+  validateQuery(weekParamSchema),
   ctrlWrapper(getBabyStateByWeekController),
 );
 
 weekRouter.get('/private', ctrlWrapper(getWeekPrivateController));
-weekRouter.get('/mother-body', ctrlWrapper(getWeeksMomStatesController));
+weekRouter.get(
+  '/mother-body',
+  validateQuery(weekParamSchema),
+  ctrlWrapper(getWeeksMomStatesController),
+);
 
 export default weekRouter;

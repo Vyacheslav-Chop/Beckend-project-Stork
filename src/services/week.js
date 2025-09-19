@@ -4,7 +4,11 @@ import { MomStates } from '../db/models/momStates.js';
 import { calculateCurrentWeek, calculateDaysToBirth } from '../helpers/week.js';
 
 export const getBabyStateByWeek = async (weekNumber) => {
-  const babyState = await BabyStatesModel.findOne({ weekNumber });
+  console.log('weekNumber:', weekNumber);
+
+  const babyState = await BabyStatesModel.find({ weekNumber });
+
+  console.log('babyState:', babyState);
 
   if (!babyState) {
     throw createHttpError(404, `Not  found data for week ${weekNumber}`);
@@ -13,20 +17,15 @@ export const getBabyStateByWeek = async (weekNumber) => {
 };
 
 export const getWeeksMomStates = async (weekNumber) => {
-  if (weekNumber) {
-    const weekData = await MomStates.findOne({
-      weekNumber: Number(weekNumber),
-    });
+  const weekData = await MomStates.findOne({
+    weekNumber: Number(weekNumber),
+  });
 
-    if (!weekData) {
-      throw createHttpError(404, `No data found for week ${weekNumber}`);
-    }
-
-    return weekData;
+  if (!weekData) {
+    throw createHttpError(404, `No data found for week ${weekNumber}`);
   }
 
-  const allWeeksData = await MomStates.find();
-  return allWeeksData;
+  return weekData;
 };
 
 export const getPublicWeekData = async (weekNumber = 20) => {

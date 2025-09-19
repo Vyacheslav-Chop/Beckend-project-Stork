@@ -34,9 +34,7 @@ export const getWeeksMomStatesController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: weekNumber
-      ? `Successfully retrieved data for week ${weekNumber}`
-      : 'Successfully retrieved all weeks data',
+    message: `Successfully retrieved data for week ${weekNumber}`,
     data,
   });
 };
