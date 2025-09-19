@@ -4,7 +4,7 @@ required:
   - title
   - description
   - category
-  - userId
+  - owner
 properties:
   _id:
     type: string
@@ -19,5 +19,6 @@ properties:
     type: array
     items:
       $ref: emotion.yaml
-  userId:
-    $ref: user.yaml
+  owner:
+    type: string
+    example: 64da56b7de7f10c88b598124
