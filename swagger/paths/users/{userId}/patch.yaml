@@ -1,8 +1,7 @@
 tags:
   - Users
-summary: Update user data
-operationId: updateUser
-description: Update user profile data (name, email, password). Only authorized users can update their own data.
+summary: Update user by ID
+description: Updates user's profile data (name, email, babyGender, dueDate).
 security:
   - bearerAuth: []
 parameters:
@@ -11,7 +10,7 @@ parameters:
     required: true
     schema:
       type: string
-      example: '65ca67e7ae7f10c88b598384'
+    description: User ID
 requestBody:
   required: true
   content:
@@ -19,15 +18,21 @@ requestBody:
       schema:
         type: object
         properties:
-         name:
-           type: string
-           example: John Doe
-         email:
-           type: string
-           example: john@example.com
-         password:
-           type: string
-           example: "123456"
+          name:
+            type: string
+            example: 'Hanna'
+          email:
+            type: string
+            format: email
+            example: 'hanna@gmail.com'
+          babyGender:
+            type: string
+            enum: [male, female, unknown]
+            example: 'female'
+          dueDate:
+            type: string
+            format: date
+            example: '20.10.2020'
 responses:
   '200':
     description: User updated successfully
@@ -48,9 +53,11 @@ responses:
               example: User updated successfully
             data:
               $ref: ../../../components/schemas/user.yaml
-  '401':
-    $ref: '../../../components/responses/401.yaml'
   '400':
-    $ref: '../../../components/responses/400.yaml'
+    $ref: ../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
   '404':
     $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
