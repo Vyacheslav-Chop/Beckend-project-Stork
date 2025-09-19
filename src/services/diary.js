@@ -28,5 +28,5 @@ export const getDiaries = async (owner, { sortBy, order }) => {
 export const createDiary = async (payload) => {
   const diary = await DiaryModel.create(payload);
 
-  return diary;
+  return diary.populate('category');
 };

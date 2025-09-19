@@ -20,8 +20,12 @@ requestBody:
             type: string
             example: My pregnancy diary
           category:
-            type: string
-            example: 64f2b5e8a9c123456789abcd
+            type: array
+            items:
+              type: string
+              example: 64f2b5e8a9c123456789abcd
+            minItems: 1
+            description: Array of emotion IDs (ObjectIds from the emotions collection). Can select multiple emotions.
           description:
             type: string
             example: Today I felt the first baby kick.
@@ -44,10 +48,33 @@ responses:
               type: string
               example: Successfully created a diary!
             data:
-              $ref: ../../../components/schemas/diary.yaml
+              type: object
+              required:
+                - _id
+                - title
+                - description
+                - category
+                - userId
+              properties:
+                _id:
+                  type: string
+                  example: 64f2b5e8a9c123456789abcd
+                title:
+                  type: string
+                  example: My first diary
+                description:
+                  type: string
+                  example: This is a test diary
+                category:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/emotion.yaml
+                userId:
+                  type: string
+                  example: 64f2b5e8a9c123456789abcd
   '400':
-    $ref: '../../../components/responses/400.yaml'
+    $ref: '../../components/responses/400.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../components/responses/500.yaml'
