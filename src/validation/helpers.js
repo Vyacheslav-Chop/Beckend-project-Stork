@@ -8,7 +8,35 @@ export const emailValidation = () => Joi.string().email().max(64);
 export const passwordValidation = () => Joi.string().min(8).max(128);
 
 export const nameTaskValidation = () => Joi.string().min(1).max(96).required();
-export const dateValidation = (curDate) => Joi.date().min(curDate).required();
+export const dateValidation = (curDate) => {
+  const datePattern = /^\d{2}\.\d{2}\.\d{4}$/;
+
+  return Joi.string()
+    .pattern(datePattern)
+    .required()
+    .custom((value, helpers) => {
+      const [day, month, year] = value.split('.').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+
+      if (
+        dateObj.getFullYear() !== year ||
+        dateObj.getMonth() !== month - 1 ||
+        dateObj.getDate() !== day
+      ) {
+        return helpers.message('Date must be a valid calendar date');
+      }
+
+      const today = new Date(curDate);
+      today.setHours(0, 0, 0, 0);
+
+      if (dateObj < today) {
+        return helpers.message('Date cannot be before today');
+      }
+
+      return value;
+    });
+};
+
 export const isDoneValidation = () => Joi.boolean().default(false);
 
 export const objectIdValidation = () =>

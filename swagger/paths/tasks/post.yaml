@@ -1,7 +1,7 @@
 tags:
   - Tasks
 summary: createTask
-description: priveate endpoint to create a task
+description: Private endpoint to create a new task.
 operationId: createTask
 security:
   - bearerAuth: []
@@ -22,9 +22,9 @@ requestBody:
             description: The name of the task
           date:
             type: string
-            format: date
-            example: '2025-09-18'
-            description: date is in format YYYY-MM-DD
+            example: '19.09.2025'
+            description: Date in format DD.MM.YYYY
+            pattern: '^\d{2}\.\d{2}\.\d{4}$'
           isDone:
             type: boolean
             example: false
@@ -41,7 +41,5 @@ responses:
     $ref: '../../components/responses/400.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
-  '409':
-    $ref: '../../components/responses/409.yaml'
   '500':
     $ref: '../../components/responses/500.yaml'
