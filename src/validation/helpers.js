@@ -57,3 +57,5 @@ export const weekPregnancyValidation = () =>
 
 export const genderValidation = () =>
   Joi.string().valid(...Object.values(GENDER));
+
+export const categoryValidation = () => Joi.array().items(objectIdValidation()).min(1);

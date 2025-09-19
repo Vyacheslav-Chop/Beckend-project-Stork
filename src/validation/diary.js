@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import {
+  categoryValidation,
   descriptionDiaryValidation,
-  objectIdValidation,
   titleDieryValidation,
 } from './helpers.js';
 
@@ -10,7 +10,7 @@ export const updateDiaryValidationSchema = Joi.object({
     'string.min': 'Title should have at least {#limit} characters',
     'string.max': 'Title should have at most {#limit} characters',
   }),
-  category: objectIdValidation(),
+  category: categoryValidation(),
   description: descriptionDiaryValidation().messages({
     'string.min': 'Description should have at least {#limit} characters',
     'string.max': 'Description should have at most {#limit} characters',
@@ -28,7 +28,7 @@ export const createDiaryValidationSchema = Joi.object({
     'string.min': 'Title should have at least {#limit} characters',
     'string.max': 'Title should have at most {#limit} characters',
   }),
-  category: objectIdValidation().required(),
+  category: categoryValidation().required(),
   description: descriptionDiaryValidation().required().messages({
     'any.required': 'Description is required',
     'string.min': 'Description should have at least {#limit} characters',
