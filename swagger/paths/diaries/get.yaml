@@ -8,6 +8,7 @@ parameters:
   - name: sortBy
     in: query
     required: false
+    description: Field to sort the diaries by
     schema:
       type: string
       enum: [createdAt, updatedAt]
@@ -15,6 +16,7 @@ parameters:
   - name: order
     in: query
     required: false
+    description: Sort order (ascending or descending)
     schema:
       type: string
       enum: [asc, desc]
