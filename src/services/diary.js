@@ -1,12 +1,13 @@
 import { DiaryModel } from '../db/models/diary.js';
 
-export const updateDiaryById = async (diaryId, payload) => {
-  const diary = await DiaryModel.findOneAndUpdate({ _id: diaryId }, payload, {
+export const updateDiaryById = async (diaryId, userId, payload) => {
+  const diary = await DiaryModel.findOneAndUpdate(
+    { _id: diaryId, owner: userId },
+    payload, {
     new: true,
     runValidators: true,
   })
-    .populate('category')
-    .populate('userId');
+    .populate('category');
 
   return diary;
 };

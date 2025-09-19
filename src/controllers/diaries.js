@@ -9,9 +9,12 @@ import {
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
 
-  const diary = await updateDiaryById(diaryId, req.body);
+  const diary = await updateDiaryById(diaryId, req.user._id, req.body);
 
-  if (!diary) return next(createHttpError(404, 'Diery not found'));
+  if (!diary) throw createHttpError(
+    403,
+    'You do not have permission to access this contact',
+  );
 
   res.json({
     status: 200,
