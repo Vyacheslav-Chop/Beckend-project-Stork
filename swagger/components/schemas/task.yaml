@@ -22,7 +22,7 @@ properties:
     type: boolean
     example: false
     description: Task completion status
-  userId:
+  owner:
     type: string
     example: '650f1c2e2e8b2c001e8b1234'
   createdAt:

@@ -18,10 +18,6 @@ export const getAllTasks = async ({ owner, isDone, order = 'asc' }) => {
 export const updateTaskStatus = async (taskId, owner, isDone) => {
   const task = await TaskModel.findOne({ _id: taskId, owner });
 
-  if (!task) {
-    throw new Error('Task not found!');
-  }
-
   task.isDone = !task.isDone;
 
   await task.save();
