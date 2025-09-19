@@ -35,6 +35,10 @@ paths:
     put:
       $ref: ../swagger/paths/users/updateAvatar.yaml
 
+  /api/users/{userId}:
+    patch:
+      $ref: ../swagger/paths/users/{userId}/patch.yaml
+
   /api/auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
