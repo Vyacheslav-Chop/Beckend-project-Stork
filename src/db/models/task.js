@@ -5,8 +5,6 @@ const taskSchema = new Schema(
     name: {
       type: String,
       required: true,
-      minlength: 1,
-      maxlength: 96,
     },
     date: {
       type: String,

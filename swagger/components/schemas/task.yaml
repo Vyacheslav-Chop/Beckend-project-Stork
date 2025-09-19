@@ -4,7 +4,7 @@ required:
   - name
   - date
   - isDone
-  - userId
+  - owner
 properties:
   _id:
     type: string
@@ -28,8 +28,8 @@ properties:
   createdAt:
     type: string
     format: date-time
-    example: '2025-09-17'
+    example: '2025-01-01T12:00:00.000Z'
   updatedAt:
     type: string
     format: date-time
-    example: '2025-09-17'
+    example: '2025-01-01T12:00:00.000Z'

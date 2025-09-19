@@ -3,46 +3,47 @@ tags:
 summary: Get public week information
 operationId: getPublicWeek
 description: Retrieve information about the 20th week (public access, no authentication required).
-arameters: []
+security: []
+parameters: []
 responses:
-'200':
-  description: Public week data successfully loaded
-  content:
-    application/json:
-      schema:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-        message:
-          type: string
-          example: 'The week has been successfully loaded.'
-        data:
+  '200':
+    description: Public week data successfully loaded
+    content:
+      application/json:
+        schema:
           type: object
           properties:
-            analogy:
-              type: string
-              example: 'Банан'
-            weekNumber:
+            status:
               type: integer
-              example: 20
-            babySize:
-              type: number
-              example: 25.6
-            babyWeight:
-              type: number
-              example: 300
-            image:
+              example: 200
+            message:
               type: string
-              example: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp'
-            babyActivity:
-              type: string
-              example: 'Ви вже чітко відчуваєте рухи дитини...'
-            momDailyTips:
-              type: string
-              example: 'Екватор! Половина шляху пройдена. Відзначте цю дату!'
-'404':
-  $ref: ../../components/responses/404.yaml
-'500':
-$ref: ../../components/responses/500.yaml
+              example: 'The week has been successfully loaded.'
+            data:
+              type: object
+              properties:
+                analogy:
+                  type: string
+                  example: 'Банан'
+                weekNumber:
+                  type: integer
+                  example: 20
+                babySize:
+                  type: number
+                  example: 25.6
+                babyWeight:
+                  type: number
+                  example: 300
+                image:
+                  type: string
+                  example: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp'
+                babyActivity:
+                  type: string
+                  example: 'Ви вже чітко відчуваєте рухи дитини...'
+                momDailyTips:
+                  type: string
+                  example: 'Екватор! Половина шляху пройдена. Відзначте цю дату!'
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

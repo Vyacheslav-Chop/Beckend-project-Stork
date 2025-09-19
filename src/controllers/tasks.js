@@ -2,10 +2,16 @@ import httpError from 'http-errors';
 import { createTask, updateTaskStatus, getAllTasks } from '../services/task.js';
 
 export const createTaskController = async (req, res, next) => {
-  const task = await createTask({ ...req.body, useId: req.user._id });
-  res
-    .status(201)
-    .json({ status: 200, message: 'Task created successfully', data: task });
+  const task = await createTask({
+    ...req.body,
+    owner: req.user._id,
+  });
+
+  res.status(201).json({
+    status: 201,
+    message: 'Task created successfully',
+    data: task,
+  });
 };
 
 export const getAllTasksController = async (req, res, next) => {
