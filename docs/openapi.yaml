@@ -69,6 +69,10 @@ paths:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
 
+  /api/tasks/{taskId}/status:
+    patch:
+      $ref: ../swagger/paths/tasks/{taskId}/status/patch.yaml
+
   /api/weeks/public:
     get:
       $ref: ../swagger/paths/weeks/getPublicWeek.yaml

@@ -14,9 +14,12 @@ import {
   getAllTasksController,
   updateTaskStatusController,
 } from '../controllers/tasks.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const taskRouter = Router();
 taskRouter.use('/', authenticate);
+
+taskRouter.use('/:taskId', isValidId('taskId'));
 
 taskRouter.post(
   '/',
