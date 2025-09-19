@@ -39,7 +39,7 @@ responses:
               type: string
               example: Task status updated successfully
             data:
-              $ref: '../../../../components/schemas/Task.yaml'
+              $ref: '../../../../components/schemas/task.yaml'
   '400':
     $ref: '../../../../components/responses/400.yaml'
   '401':
