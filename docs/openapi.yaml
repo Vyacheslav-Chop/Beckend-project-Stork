@@ -80,8 +80,11 @@ paths:
   /api/weeks/public:
     get:
       $ref: ../swagger/paths/weeks/getPublicWeek.yaml
+  /api/weeks/private:
+    get:
+      $ref: ../swagger/paths/weeks/getPrivateWeeks.yaml
 
-  /api/weeks/mother-body:
+  /api/weeks/mom-state:
     get:
       $ref: ../swagger/paths/weeks/getMomStates.yaml
 

@@ -24,7 +24,7 @@ weekRouter.get(
 
 weekRouter.get('/private', ctrlWrapper(getWeekPrivateController));
 weekRouter.get(
-  '/mother-body',
+  '/mom-state',
   validateQuery(weekParamSchema),
   ctrlWrapper(getWeeksMomStatesController),
 );
