@@ -11,10 +11,11 @@ export const updateDiaryByIdController = async (req, res, next) => {
 
   const diary = await updateDiaryById(diaryId, req.user._id, req.body);
 
-  if (!diary) throw createHttpError(
-    403,
-    'You do not have permission to access this contact',
-  );
+  if (!diary)
+    throw createHttpError(
+      403,
+      'You do not have permission to access this contact',
+    );
 
   res.json({
     status: 200,
@@ -35,9 +36,10 @@ export const deleteDiaryByIdController = async (req, res, next) => {
 
 export const getDiariesController = async (req, res, next) => {
   const userId = req.user._id;
+
   const { sortBy = 'createdAt', order = 'desc' } = req.validatedQuery || {};
 
-  const diaries = await getDiaries(userId, { sortBy, order });
+  const diaries = await getDiaries({ userId, sortBy, order });
 
   if (!diaries || diaries.length === 0) {
     return next(createHttpError(404, 'Diaries not found'));
