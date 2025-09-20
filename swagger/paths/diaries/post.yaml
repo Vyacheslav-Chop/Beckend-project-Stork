@@ -48,30 +48,7 @@ responses:
               type: string
               example: Successfully created a diary!
             data:
-              type: object
-              required:
-                - _id
-                - title
-                - description
-                - category
-                - userId
-              properties:
-                _id:
-                  type: string
-                  example: 64f2b5e8a9c123456789abcd
-                title:
-                  type: string
-                  example: My first diary
-                description:
-                  type: string
-                  example: This is a test diary
-                category:
-                  type: array
-                  items:
-                    $ref: ../../components/schemas/emotion.yaml
-                userId:
-                  type: string
-                  example: 64f2b5e8a9c123456789abcd
+              $ref: ../../components/schemas/diary.yaml
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':

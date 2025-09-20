@@ -24,9 +24,12 @@ requestBody:
             description: Diary title
             example: My first diary entry
           category:
-            type: string
-            description: Emotion category ObjectId
-            example: 6895bd86a5c677999ed2ae14
+            type: array
+            items:
+              type: string
+              example: 64f2b5e8a9c123456789abcd
+            minItems: 1
+            description: Array of emotion IDs (ObjectIds from the emotions collection). Can select multiple emotions.
           description:
             type: string
             description: Diary content
