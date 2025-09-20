@@ -5,15 +5,15 @@ content:
       type: object
       required:
         - status
-        - message
+        - title
         - data
       properties:
         status:
           type: integer
           example: 409
-        message:
+        title:
           type: string
-          example: Bad request
+          example: Сonflict
         data:
           type: object
           required:

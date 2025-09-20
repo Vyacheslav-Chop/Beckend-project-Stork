@@ -5,13 +5,13 @@ content:
       type: object
       required:
         - status
-        - message
+        - title
         - data
       properties:
         status:
           type: integer
           example: 404
-        message:
+        title:
           type: string
           example: NotFoundError
         data:
