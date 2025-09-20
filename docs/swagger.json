@@ -761,7 +761,38 @@
                       "example": "Successfully created a diary!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/diary"
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "title",
+                        "description",
+                        "category",
+                        "userId"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64f2b5e8a9c123456789abcd"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "My first diary"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "This is a test diary"
+                        },
+                        "category": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/emotion"
+                          }
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "64f2b5e8a9c123456789abcd"
+                        }
+                      }
                     }
                   }
                 }
@@ -1227,7 +1258,105 @@
         }
       }
     },
-    "/api/weeks/mother-body": {
+    "/api/weeks/private": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get private weeks information",
+        "operationId": "getPrivateWeeks",
+        "description": "Retrieve information about the private weeks based on the week number or fetch all weeks data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "weekNumber",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 42
+            },
+            "required": false,
+            "description": "Optional week number to override automatic calculation from due date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Week data successfully loaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved data for week 25"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "weekNumber": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "babySize": {
+                          "type": "number",
+                          "example": 25.6
+                        },
+                        "babyWeight": {
+                          "type": "number",
+                          "example": 300
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp"
+                        },
+                        "babyActivity": {
+                          "type": "string",
+                          "example": "Ви вже чітко відчуваєте рухи дитини..."
+                        },
+                        "momDailyTips": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "Екватор! Половина шляху пройдена..."
+                          }
+                        },
+                        "daysToBirth": {
+                          "type": "integer",
+                          "example": 140
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/weeks/mom-state": {
       "get": {
         "tags": [
           "Weeks"
