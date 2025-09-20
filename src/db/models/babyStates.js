@@ -30,5 +30,4 @@ const babyStatesSchema = new Schema({
   },
 });
 
-export const BabyStatesModel = model('babyStates', babyStatesSchema);
-
+export const BabyStatesModel = model('babystates', babyStatesSchema);
