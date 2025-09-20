@@ -21,7 +21,7 @@ tags:
     description: Operations for managing emotions
 servers:
   - url: http://localhost:3000
-  # - url: https://nodejs-hw-mongodb-c3yu.onrender.com
+  - url: https://beckend-project-stork.onrender.com
 paths:
   /api/emotions:
     get:

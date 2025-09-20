@@ -23,8 +23,8 @@ requestBody:
             type: string
             example: 'vldfmvvdfjgdfg'
 responses:
-  '201':
-    description: Successfully registered a user!
+  '200':
+    description: Successfully login a user!
     content:
       application/json:
         schema:
@@ -36,16 +36,16 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully registered a user!
+              example: Successfully login a user!
             data:
               type: object
               properties:
                 accessToken:
                   type: string
-                  example: "abc123XYZtoken456fake"
+                  example: 'abc123XYZtoken456fake'
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':
