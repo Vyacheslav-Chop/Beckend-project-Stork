@@ -8,13 +8,14 @@ import {
 
 export const updateDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
+  const owner = req.user._id;
 
-  const diary = await updateDiaryById(diaryId, req.user._id, req.body);
+  const diary = await updateDiaryById(diaryId, owner, req.body);
 
   if (!diary)
     throw createHttpError(
       403,
-      'You do not have permission to access this contact',
+      'You do not have permission to access this diary',
     );
 
   res.json({

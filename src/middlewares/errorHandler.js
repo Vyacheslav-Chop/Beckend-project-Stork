@@ -15,7 +15,7 @@ export const errorHandler = async (err, req, res, next) => {
   if (err.isJoi) {
     return res.status(400).json({
       status: 400,
-      message: 'Bad request',
+      title: 'Bad request',
       data: err.details.map((err) => ({
         path: err.path,
         message: err.message,
@@ -26,14 +26,14 @@ export const errorHandler = async (err, req, res, next) => {
   if (err instanceof MongooseError) {
     return res.status(500).json({
       status: 500,
-      message: 'MongooseError',
+      title: 'MongooseError',
       data: err.message,
     });
   }
 
   res.status(500).json({
     status: 500,
-    message: 'Something went wrong',
+    title: 'Something went wrong',
     data: err.message,
   });
 };

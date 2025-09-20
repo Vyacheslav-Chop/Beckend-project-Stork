@@ -5,13 +5,13 @@ content:
       type: object
       required:
         - status
-        - message
+        - title
         - data
       properties:
         status:
           type: integer
           example: 400
-        message:
+        title:
           type: string
           example: Bad request
         data:
@@ -22,7 +22,7 @@ content:
           properties:
             path:
               type: string
-              example: "field"
+              example: 'field'
             message:
               type: string
-              example: "Validation failed"
+              example: 'Validation failed'
