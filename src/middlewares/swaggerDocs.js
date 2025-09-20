@@ -6,7 +6,14 @@ export const swaggerDocs = () => {
   try {
     const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString());
 
-    return [...swaggerUi.serve, swaggerUi.setup(swaggerDoc)];
+    return [
+      ...swaggerUi.serve,
+      swaggerUi.setup(swaggerDoc, {
+        swaggerOptions: {
+          url: '/swagger.json',
+        },
+      }),
+    ];
   } catch (error) {
     return (req, res) =>
       res.status(500).json({
