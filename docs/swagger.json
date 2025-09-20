@@ -1,1 +1,1783 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "MomJourney API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "API for managing tasks, diaries, users, and authentication for the MomJourney app."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://beckend-project-stork.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Operations for user registration, login, and authentication management."
+    },
+    {
+      "name": "Diaries",
+      "description": "Operations for managing diaries."
+    },
+    {
+      "name": "Tasks",
+      "description": "Operations for managing tasks."
+    },
+    {
+      "name": "Users",
+      "description": "Operations for managing user profiles."
+    },
+    {
+      "name": "Weeks",
+      "description": "Operations related to weekly plans or summaries."
+    },
+    {
+      "name": "Emotions",
+      "description": "Operations for managing emotions"
+    }
+  ],
+  "paths": {
+    "/api/emotions": {
+      "get": {
+        "tags": [
+          "Emotions"
+        ],
+        "summary": "Get list of emotions",
+        "operationId": "getAllEmotions",
+        "description": "Retrieve a list of all emotions available in the system.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "A list of emotions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found emotions!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/emotion"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user",
+        "description": "Returns information about the currently authenticated user.",
+        "operationId": "getUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/users/avatar": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user avatar",
+        "operationId": "updateUserAvatar",
+        "description": "Updates the authenticated user's avatar by uploading a new image to Cloudinary.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "avatar"
+                ],
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The image file to upload as the user's avatar."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the user's avatar.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated avatar!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64a67e7ae7f10c88b598384"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@example.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/users/{userId}": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user by ID",
+        "description": "Updates user's profile data (name, email, babyGender, dueDate).",
+        "operationId": "updateUserById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Hanna"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "hanna@gmail.com"
+                  },
+                  "babyGender": {
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female",
+                      "unknown"
+                    ],
+                    "example": "female"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "20.10.2020"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User updated successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register user",
+        "operationId": "registerUser",
+        "description": "Register a new user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "User name",
+                    "type": "string",
+                    "example": "Ivan Ivanenko"
+                  },
+                  "email": {
+                    "description": "User email",
+                    "type": "string",
+                    "example": "ivanivanenko@example.com"
+                  },
+                  "password": {
+                    "description": "User password",
+                    "type": "string",
+                    "example": "vldfmvvdfjgdfg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully registered a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user",
+        "operationId": "loginUser",
+        "description": "Login user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User email",
+                    "type": "string",
+                    "example": "ivanivanenko@example.com"
+                  },
+                  "password": {
+                    "description": "User password",
+                    "type": "string",
+                    "example": "vldfmvvdfjgdfg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully login a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully login a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "abc123XYZtoken456fake"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh user session",
+        "operationId": "refreshSession",
+        "description": "Refreshes an existing session using a refresh token. Returns a new access token.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "48e4aaqcdd286b85465d5f5"
+            },
+            "description": "ID of the current session"
+          },
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "HYhjkhduyLKLUIuoKKLFGHJKLjklsdfgh"
+            },
+            "description": "Refresh token to renew the session"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session!",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Cookies set after successful login.",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": [
+                      "session_id=test321; Path=/; HttpOnly;",
+                      "refresh_token=get471; Path=/; HttpOnly;"
+                    ]
+                  }
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "sdfghjk852dfvgbn41sdfg52df4152"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout user",
+        "operationId": "logoutUser",
+        "description": "Logs out a user by deleting the current session.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65e4decdd286b30065d54af9"
+            },
+            "description": "ID of the current session"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully logged out. Session deleted."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/diaries": {
+      "get": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Get user's diary entries",
+        "operationId": "getDiary",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "description": "Field to sort the diaries by",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "updatedAt"
+              ],
+              "default": "createdAt"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "description": "Sort order (ascending or descending)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of diary entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully fetched diaries"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/diary"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Create diary",
+        "operationId": "createDiary",
+        "description": "Create a new diary entry. Private endpoint.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "description",
+                  "category"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "My pregnancy diary"
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "64f2b5e8a9c123456789abcd"
+                    },
+                    "minItems": 1,
+                    "description": "Array of emotion IDs (ObjectIds from the emotions collection). Can select multiple emotions."
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Today I felt the first baby kick."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a diary entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a diary!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/diary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/diaries/{diaryId}": {
+      "patch": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Update diary",
+        "operationId": "updateDiary",
+        "description": "Update an existing diary entry by its ID. Only the user who created the diary (userId) can update it.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "diaryId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Diary title",
+                    "example": "My first diary entry"
+                  },
+                  "category": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "64f2b5e8a9c123456789abcd"
+                    },
+                    "minItems": 1,
+                    "description": "Array of emotion IDs (ObjectIds from the emotions collection). Can select multiple emotions."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Diary content",
+                    "example": "Today I felt very productive and motivated."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated a diary entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated a diary!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/diary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Delete diary by id",
+        "operationId": "deleteDiary",
+        "description": "Deletes a diary by its ID. Only the owner can delete their dairy.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "diaryId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Diary successfully deleted. No content returned."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get all tasks",
+        "description": "Private endpoint to get all tasks.   Returns tasks sorted by `date` in ascending order by default.\n",
+        "operationId": "getAllTasks",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "isDone",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Optional filter by completion status.   When omitted, returns both completed and uncompleted tasks.\n",
+            "examples": {
+              "all": {
+                "summary": "All tasks",
+                "value": null
+              },
+              "onlyCompleted": {
+                "summary": "Only completed tasks",
+                "value": true
+              },
+              "onlyUncompleted": {
+                "summary": "Only uncompleted tasks",
+                "value": false
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            },
+            "description": "Sort order by `date`.   - `asc` = ascending (default)   - `desc` = descending\n",
+            "examples": {
+              "ascending": {
+                "summary": "Ascending",
+                "value": "asc"
+              },
+              "descending": {
+                "summary": "Descending",
+                "value": "desc"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tasks sorted by date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tasks fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/task"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "createTask",
+        "description": "Private endpoint to create a new task.",
+        "operationId": "createTask",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "date"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Buy milk",
+                    "description": "The name of the task"
+                  },
+                  "date": {
+                    "type": "string",
+                    "example": "19.09.2025",
+                    "description": "Date in format DD.MM.YYYY",
+                    "pattern": "^\\d{2}\\.\\d{2}\\.\\d{4}$"
+                  },
+                  "isDone": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Task completion status"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/task"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/tasks/{taskId}/status": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Toggle the status of a task",
+        "description": "Toggles the `isDone` field of a task.",
+        "operationId": "toggleTaskStatus",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the task to update",
+            "schema": {
+              "type": "string",
+              "example": "650f7f5d4a1c2b00123abcd1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Optional request body (can be empty)",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Task status updated successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/task"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/weeks/public": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get public week information",
+        "operationId": "getPublicWeek",
+        "description": "Retrieve information about the 20th week (public access, no authentication required).",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Public week data successfully loaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The week has been successfully loaded."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "analogy": {
+                          "type": "string",
+                          "example": "Банан"
+                        },
+                        "weekNumber": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "babySize": {
+                          "type": "number",
+                          "example": 25.6
+                        },
+                        "babyWeight": {
+                          "type": "number",
+                          "example": 300
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp"
+                        },
+                        "babyActivity": {
+                          "type": "string",
+                          "example": "Ви вже чітко відчуваєте рухи дитини..."
+                        },
+                        "momDailyTips": {
+                          "type": "string",
+                          "example": "Екватор! Половина шляху пройдена. Відзначте цю дату!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/weeks/mother-body": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get mom's body information",
+        "operationId": "getWeeksMomStates",
+        "description": "Retrieve information about the mom's body based on the week number or fetch all weeks data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "weekNumber",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 2
+            },
+            "description": "The week number to retrieve data for. If not provided, all weeks data will be returned."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved week data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved week data"
+                    },
+                    "data": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "weekNumber": {
+                              "type": "integer",
+                              "example": 2
+                            },
+                            "feelings": {
+                              "type": "object",
+                              "properties": {
+                                "states": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "example": [
+                                    "Прилив енергії",
+                                    "Підвищене лібідо",
+                                    "Овуляція"
+                                  ]
+                                },
+                                "sensationDescr": {
+                                  "type": "string",
+                                  "example": "Наприкінці цього тижня, швидше за все, відбудеться овуляція..."
+                                }
+                              }
+                            },
+                            "comfortTips": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "category": {
+                                    "type": "string",
+                                    "example": "Харчування"
+                                  },
+                                  "tip": {
+                                    "type": "string",
+                                    "example": "Продовжуйте збалансовано харчуватися..."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "weekNumber": {
+                                "type": "integer",
+                                "example": 2
+                              },
+                              "feelings": {
+                                "type": "object",
+                                "properties": {
+                                  "states": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "example": [
+                                      "Прилив енергії",
+                                      "Підвищене лібідо",
+                                      "Овуляція"
+                                    ]
+                                  },
+                                  "sensationDescr": {
+                                    "type": "string",
+                                    "example": "Наприкінці цього тижня, швидше за все, відбудеться овуляція..."
+                                  }
+                                }
+                              },
+                              "comfortTips": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "category": {
+                                      "type": "string",
+                                      "example": "Харчування"
+                                    },
+                                    "tip": {
+                                      "type": "string",
+                                      "example": "Продовжуйте збалансовано харчуватися..."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "emotion": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "6895bd86a5c677999ed2ae14"
+          },
+          "title": {
+            "type": "string",
+            "example": "Апатія"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "dueDate",
+          "babyGender",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "johndoe@example.com"
+          },
+          "dueDate": {
+            "type": "string",
+            "example": null
+          },
+          "babyGender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "example": null
+          },
+          "avatar": {
+            "type": "string",
+            "example": null
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-01T12:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-01T12:00:00.000Z"
+          }
+        }
+      },
+      "diary": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "description",
+          "category",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64da56b7de7f10c88b598123"
+          },
+          "title": {
+            "type": "string",
+            "example": "My first diary"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is a test diary"
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/emotion"
+            }
+          },
+          "owner": {
+            "type": "string",
+            "example": "64da56b7de7f10c88b598124"
+          }
+        }
+      },
+      "task": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "date",
+          "isDone",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650f1c2e2e8b2c001e8b4567"
+          },
+          "name": {
+            "type": "string",
+            "example": "Buy milk",
+            "description": "The name of the task"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-18",
+            "description": "Date in format YYYY-MM-DD"
+          },
+          "isDone": {
+            "type": "boolean",
+            "example": false,
+            "description": "Task completion status"
+          },
+          "owner": {
+            "type": "string",
+            "example": "650f1c2e2e8b2c001e8b1234"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-01T12:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-01T12:00:00.000Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad request due to validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Bad request"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "message"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "example": "field"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "title": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden  You do not have permission to access this contact",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 403
+                },
+                "title": {
+                  "type": "string",
+                  "example": "ForbiddenError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "title": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Сonflict"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed or invalid request data"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "title",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Internal server error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Something went wrong!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
