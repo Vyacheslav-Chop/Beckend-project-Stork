@@ -2,6 +2,7 @@ tags:
   - Users
 summary: Update user by ID
 description: Updates user's profile data (name, email, babyGender, dueDate).
+operationId: updateUserById
 security:
   - bearerAuth: []
 parameters:

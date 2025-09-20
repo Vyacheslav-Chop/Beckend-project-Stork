@@ -28,19 +28,29 @@ export const getWeeksMomStates = async (weekNumber) => {
   return weekData;
 };
 
-export const getPublicWeekData = async (weekNumber = 20) => {
-  const notAuthInfo = {
-    analogy: 'Банан',
-    weekNumber: 20,
-    babySize: 25.6,
-    babyWeight: 300,
-    image: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp',
-    babyActivity:
-      'Ви вже чітко відчуваєте рухи дитини. Це можуть бути поштовхи, перевертання, гикавка. Партнер теж може відчути їх, поклавши руку на живіт.',
-    momDailyTips: 'Екватор! Половина шляху пройдена. Відзначте цю дату!',
-  };
+export const getPublicWeekData = async () => {
+  const today = new Date();
+  const fiveWeeksLater = new Date(today);
+  fiveWeeksLater.setDate(today.getDate() + 7 * 37);
 
-  return notAuthInfo;
+  const publicWeek = calculateCurrentWeek(
+    { dueDate: fiveWeeksLater },
+    undefined,
+  );
+
+  const weekData = await BabyStatesModel.find({
+    weekNumber: publicWeek,
+  }).lean();
+
+  if (!weekData) {
+    throw createHttpError(404, 'Week data not found');
+  }
+
+  return {
+    ...weekData,
+    currentWeek: publicWeek,
+    isPersonalized: false,
+  };
 };
 
 export const getPrivateWeekData = async (user, weekFromQuery) => {
