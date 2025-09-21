@@ -43,3 +43,4 @@ diaryRouter.patch(
 diaryRouter.delete('/:diaryId', ctrlWrapper(deleteDiaryByIdController));
 
 export default diaryRouter;
+

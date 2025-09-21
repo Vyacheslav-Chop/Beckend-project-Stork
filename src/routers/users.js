@@ -8,15 +8,13 @@ import {
 } from '../controllers/users.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { updateUserSchema } from '../validation/user.js';
-import { isValidId } from '../middlewares/isValidId.js';
 import { upload } from '../middlewares/multer.js';
 
 const userRouter = Router();
 userRouter.use('/', authenticate);
 
 userRouter.patch(
-  '/:userId',
-  isValidId('userId'),
+  '/',
   validateBody(updateUserSchema),
   ctrlWrapper(updateUserByIdController),
 );

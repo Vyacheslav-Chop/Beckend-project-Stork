@@ -28,10 +28,14 @@ export const updateDiaryByIdController = async (req, res, next) => {
 export const deleteDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
   const owner = req.user._id;
+
   const diary = await deleteDiaryById(diaryId, owner);
 
-  if (!diary) return next(createHttpError(404, 'Diary not found'));
-
+    if (!diary) throw createHttpError(
+      403,
+      'You do not have permission to access this diary',
+    );
+  
   res.status(204).send();
 };
 
