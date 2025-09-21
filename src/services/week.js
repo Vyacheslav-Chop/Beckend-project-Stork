@@ -54,7 +54,7 @@ export const getPublicWeekData = async () => {
   };
 };
 
-export const getCurrentWeekData = async (userId) => {
+export const getPrivateWeekData = async (userId) => {
   const user = await User.findById(userId).lean();
 
   const date = user?.dueDate || user?.dueData;

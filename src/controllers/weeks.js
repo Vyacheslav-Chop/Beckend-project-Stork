@@ -2,9 +2,8 @@ import createHttpError from 'http-errors';
 import {
   getWeeksMomStates,
   getPublicWeekData,
-  // getPrivateWeekData,
+  getPrivateWeekData,
   getBabyStateByWeek,
-  getCurrentWeekData,
 } from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
@@ -55,9 +54,9 @@ export const getWeeksMomStatesController = async (req, res) => {
   });
 };
 
-export const pregnancyController = async (req, res) => {
+export const getPrivateWeekDataController = async (req, res) => {
   const userId = req.user.id;
-  const data = await getCurrentWeekData(userId);
+  const data = await getPrivateWeekData(userId);
 
   res.json({
     status: 200,
