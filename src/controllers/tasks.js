@@ -18,9 +18,9 @@ export const getAllTasksController = async (req, res, next) => {
   const owner = req.user._id;
   if (!owner) throw httpError(401, 'Unauthorized');
 
-  const { isDone, order } = req.validatedQuery ?? {};
+  const { isDone, order, date } = req.validatedQuery ?? {};
 
-  const tasks = await getAllTasks({ owner, isDone, order });
+  const tasks = await getAllTasks({ owner, isDone, order, date });
 
   res.json({
     status: 200,

@@ -20,7 +20,7 @@ tags:
   - name: Emotions
     description: Operations for managing emotions
 servers:
-  - url: http://localhost:3000
+  # - url: http://localhost:3000
   - url: https://beckend-project-stork.onrender.com
 paths:
   /api/emotions:
