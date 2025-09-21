@@ -36,7 +36,20 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/task.yaml'
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a task!
+            data:
+              $ref: '../../components/schemas/task.yaml'
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':

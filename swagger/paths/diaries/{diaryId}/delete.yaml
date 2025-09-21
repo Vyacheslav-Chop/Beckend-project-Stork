@@ -17,5 +17,5 @@ responses:
     description: 'Diary successfully deleted. No content returned.'
   '401':
     $ref: '../../../components/responses/401.yaml'
-  '404':
-    $ref: '../../../components/responses/404.yaml'
+  '403':
+    $ref: '../../../components/responses/403.yaml'
