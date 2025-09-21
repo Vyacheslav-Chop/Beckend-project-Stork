@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import { uploadUserPhoto, getUser, updateUserById } from '../services/user.js';
 
 export const updateUserByIdController = async (req, res, next) => {
-  const { userId } = req.params;
+  const userId = req.user._id;
 
   const user = await updateUserById(userId, req.body);
 
