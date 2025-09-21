@@ -9,18 +9,20 @@ export const updateUserSchema = Joi.object({
   name: nameValidation(),
   email: emailValidation(),
   babyGender: genderValidation(),
-  dueData: Joi.string()
-    .pattern(/^\d{2}\.\d{2}\.\d{4}$/)
+  dueDate: Joi.string()
+    .pattern(/^\d{4}\.\d{2}\.\d{2}$/)
     .custom((value, helpers) => {
-      const [day, month, year] = value.split('.').map(Number);
+      const [year, month, day] = value.split('.').map(Number);
       const date = new Date(year, month - 1, day);
+
       if (
-        date.getDate() !== day ||
+        date.getFullYear() !== year ||
         date.getMonth() !== month - 1 ||
-        date.getFullYear() !== year
+        date.getDate() !== day
       ) {
         return helpers.error('any.invalid');
       }
+
       return value;
-    }, 'valid DD.MM.YYYY date'),
+    }, 'valid YYYY.MM.DD date'),
 });

@@ -19,14 +19,14 @@ properties:
     example: 'johndoe@example.com'
   dueDate:
     type: string
-    example: null
+    example: '2026.02.15'
   babyGender:
     type: string
     enum: [male, female, unknown]
-    example: null
+    example: 'male'
   avatar:
     type: string
-    example: null
+    example: 'https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg'
   createdAt:
     type: string
     format: date-time

@@ -16,7 +16,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    dueData: {
+    dueDate: {
       type: String,
       default: null,
     },

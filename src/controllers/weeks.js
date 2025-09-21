@@ -2,8 +2,9 @@ import createHttpError from 'http-errors';
 import {
   getWeeksMomStates,
   getPublicWeekData,
-  getPrivateWeekData,
+  // getPrivateWeekData,
   getBabyStateByWeek,
+  getCurrentWeekData,
 } from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
@@ -35,10 +36,12 @@ export const getWeeksMomStatesController = async (req, res) => {
   if (weekNumber !== undefined) {
     week = Number(weekNumber);
 
-  if (!Number.isInteger(week) || week < 1 || week > 42) {
-    throw createHttpError(400, "weekNumber must be a number between 1 and 42");
+    if (!Number.isInteger(week) || week < 1 || week > 42) {
+      throw createHttpError(
+        400,
+        'weekNumber must be a number between 1 and 42',
+      );
     }
-    
   }
 
   const data = await getWeeksMomStates(week);
@@ -52,13 +55,9 @@ export const getWeeksMomStatesController = async (req, res) => {
   });
 };
 
-export const getWeekPrivateController = async (req, res) => {
-  const user = req.user;
-  if (!req.user) {
-    throw createHttpError(404, 'Week data not found');
-  }
-
-  const data = await getPrivateWeekData(user, Number(req.query.weekNumber));
+export const pregnancyController = async (req, res) => {
+  const userId = req.user.id;
+  const data = await getCurrentWeekData(userId);
 
   res.json({
     status: 200,

@@ -7,7 +7,7 @@ import {
   getWeeksMomStatesController,
   getWeekPublicController,
   getBabyStateByWeekController,
-  getWeekPrivateController,
+  pregnancyController,
 } from '../controllers/weeks.js';
 
 const weekRouter = Router();
@@ -22,7 +22,7 @@ weekRouter.get(
   ctrlWrapper(getBabyStateByWeekController),
 );
 
-weekRouter.get('/private', ctrlWrapper(getWeekPrivateController));
+weekRouter.get('/private', ctrlWrapper(pregnancyController));
 weekRouter.get(
   '/mom-state',
   validateQuery(weekParamSchema),
