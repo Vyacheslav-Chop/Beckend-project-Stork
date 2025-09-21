@@ -15,7 +15,7 @@ export const createTaskController = async (req, res, next) => {
 };
 
 export const getAllTasksController = async (req, res, next) => {
-  const owner = req.user?._id;
+  const owner = req.user._id;
   if (!owner) throw httpError(401, 'Unauthorized');
 
   const { isDone, order } = req.validatedQuery ?? {};
