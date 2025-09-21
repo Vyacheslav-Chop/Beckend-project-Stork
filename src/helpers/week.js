@@ -1,23 +1,30 @@
 const default_week = 20;
 const max_weeks = 42;
 
-export const calculateCurrentWeek = (user, weekFromQuery) => {
-  if (weekFromQuery && weekFromQuery >= 1 && weekFromQuery <= max_weeks) {
-    return weekFromQuery;
+export function calculateCurrentWeek(dueDate) {
+  if (!dueDate) return default_week;
+
+  let parsedDate;
+
+  if (typeof dueDate === 'string') {
+    const [year, month, day] = dueDate.split('.').map(Number);
+    parsedDate = new Date(year, month - 1, day);
+  } else {
+    parsedDate = new Date(dueDate);
   }
 
-  if (user.dueDate) {
-    const today = new Date();
-    const dueDate = new Date(user.dueDate);
-    const daysLeft = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
-    const weeksLeft = Math.floor(daysLeft / 7);
-    const currentWeek = max_weeks - weeksLeft;
+  if (isNaN(parsedDate.getTime())) return 0;
 
-    return Math.max(1, Math.min(currentWeek, max_weeks));
-  }
+  const conceptionDate = new Date(parsedDate);
+  conceptionDate.setDate(conceptionDate.getDate() - 280);
 
-  return user.week || default_week;
-};
+  const today = new Date();
+  const diffInMs = today.getTime() - conceptionDate.getTime();
+
+  const diffInWeeks = Math.ceil(diffInMs / (1000 * 60 * 60 * 24 * 7));
+
+  return diffInWeeks > 0 ? diffInWeeks : 0;
+}
 
 export const calculateDaysToBirth = (currentWeek, dueDate) => {
   if (dueDate) {
