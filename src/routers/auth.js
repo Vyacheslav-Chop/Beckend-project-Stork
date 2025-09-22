@@ -10,10 +10,13 @@ import {
   refreshUserSessionController,
   registerUserController,
   logoutUserController,
+  checkSessionController,
 } from '../controllers/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const authRouter = Router();
+
+authRouter.get('/session', ctrlWrapper(checkSessionController));
 
 authRouter.post(
   '/register',
@@ -28,7 +31,6 @@ authRouter.post(
 );
 
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
-
 
 authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 

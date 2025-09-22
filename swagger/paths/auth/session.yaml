@@ -1,0 +1,34 @@
+tags:
+  - Auth
+summary: Check user session
+operationId: checkSession
+description: 'Checks if the user is currently authenticated. Returns true if the session is valid, false otherwise.'
+security: []
+parameters:
+  - in: header
+    name: Authorization
+    required: false
+    schema:
+      type: string
+      example: 'Bearer <accessToken>'
+    description: 'Bearer token of the current session'
+
+responses:
+  '200':
+    description: 'Returns whether the user is authenticated.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            data:
+              type: boolean
+              example: true
+  '401':
+    $ref: '../../components/responses/401.yaml'
