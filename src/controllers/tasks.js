@@ -1,5 +1,6 @@
 import httpError from 'http-errors';
 import { createTask, updateTaskStatus, getAllTasks } from '../services/task.js';
+import { buildTasksFilter } from '../utils/buildTasksFilter.js';
 
 export const createTaskController = async (req, res, next) => {
   const task = await createTask({
@@ -15,12 +16,16 @@ export const createTaskController = async (req, res, next) => {
 };
 
 export const getAllTasksController = async (req, res, next) => {
-  const owner = req.user._id;
-  if (!owner) throw httpError(401, 'Unauthorized');
+if (!req.user?._id) throw httpError(401, 'Unauthorized');
 
-  const { isDone, order, date } = req.validatedQuery ?? {};
+  const filters = buildTasksFilter(req.validatedQuery);
+  filters.owner = req.user._id;
 
-  const tasks = await getAllTasks({ owner, isDone, order, date });
+  const tasks = await getAllTasks({
+    sortOrder: req.validatedQuery.sortOrder,
+    sortBy: req.validatedQuery.sortBy,
+    filters,
+  });
 
   res.json({
     status: 200,

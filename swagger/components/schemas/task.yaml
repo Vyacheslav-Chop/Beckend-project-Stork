@@ -16,7 +16,7 @@ properties:
   date:
     type: string
     format: date
-    example: '2025-09-18'
+    example: 2025-12-29T00:00:00.000Z
     description: Date in format YYYY-MM-DD
   isDone:
     type: boolean
