@@ -31,7 +31,7 @@ export const getWeeksMomStates = async (weekNumber) => {
 
 export const getPublicWeekData = async () => {
   const today = new Date();
-    const fiveWeeksLater = new Date(
+  const fiveWeeksLater = new Date(
     today.getTime() + 7 * 5 * 24 * 60 * 60 * 1000,
   );
 
@@ -45,10 +45,12 @@ export const getPublicWeekData = async () => {
   if (!weekData) {
     throw createHttpError(404, 'Week data not found');
   }
+  const daysToBirth = (42 - publicWeek) * 7;
 
   return {
-    data: weekData[0] || null,
+    weekData,
     currentWeek: publicWeek,
+    daysToBirth,
     isPersonalized: false,
   };
 };
