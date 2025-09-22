@@ -6,7 +6,6 @@ import { validateBody } from '../middlewares/validateBody.js';
 import {
   createTaskValidationSchema,
   getAllTasksValidationSchema,
-  updateTaskValidationSchema,
 } from '../validation/task.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
@@ -35,7 +34,6 @@ taskRouter.get(
 
 taskRouter.patch(
   '/:taskId/status',
-  validateBody(updateTaskValidationSchema),
   ctrlWrapper(updateTaskStatusController),
 );
 

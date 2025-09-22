@@ -31,15 +31,11 @@ export const getAllTasksController = async (req, res, next) => {
 
 export const updateTaskStatusController = async (req, res, next) => {
   const { taskId } = req.params;
-  const owner = req.user._id;
-  const task = await updateTaskStatus(taskId, owner);
 
-  if (!task) {
-    return res.status(404).json({
-      status: 404,
-      message: 'Task not found',
-    });
-  }
+  const owner = req.user._id;
+  if (!owner) throw httpError(401, 'Unauthorized');
+
+  const task = await updateTaskStatus(taskId, owner);
 
   res.status(200).json({
     status: 200,

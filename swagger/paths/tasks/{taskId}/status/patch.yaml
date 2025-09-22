@@ -15,15 +15,6 @@ parameters:
       type: string
       example: '650f7f5d4a1c2b00123abcd1'
 
-requestBody:
-  description: Optional request body (can be empty)
-  required: false
-  content:
-    application/json:
-      schema:
-        type: object
-        example: {}
-
 responses:
   '200':
     description: Task status updated successfully
