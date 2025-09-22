@@ -148,9 +148,9 @@
         "tags": [
           "Users"
         ],
-        "summary": "Update user by ID",
+        "summary": "Update user",
         "description": "Updates user's profile data (name, email, babyGender, dueDate).",
-        "operationId": "updateUserById",
+        "operationId": "updateUser",
         "security": [
           {
             "bearerAuth": []
