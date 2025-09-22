@@ -5,13 +5,6 @@ description: Updates user's profile data (name, email, babyGender, dueDate).
 operationId: updateUserById
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: userId
-    required: true
-    schema:
-      type: string
-    description: User ID
 requestBody:
   required: true
   content:
@@ -28,12 +21,12 @@ requestBody:
             example: 'hanna@gmail.com'
           babyGender:
             type: string
-            enum: [male, female, unknown]
+            enum: ['Дівчинка', 'Хлопчик', 'Ще не знаю']
             example: 'female'
           dueDate:
             type: string
-            format: date
-            example: '20.10.2020'
+            pattern: '^\d{4}\.\d{2}\.\d{2}$'
+            example: '2026.02.15'
 responses:
   '200':
     description: User updated successfully
@@ -53,12 +46,12 @@ responses:
               type: string
               example: User updated successfully
             data:
-              $ref: ../../../components/schemas/user.yaml
+              $ref: ../../components/schemas/user.yaml
   '400':
-    $ref: ../../../components/responses/400.yaml
+    $ref: ../../components/responses/400.yaml
   '401':
-    $ref: ../../../components/responses/401.yaml
+    $ref: ../../components/responses/401.yaml
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../components/responses/500.yaml'
