@@ -31,13 +31,12 @@ export const getWeeksMomStates = async (weekNumber) => {
 
 export const getPublicWeekData = async () => {
   const today = new Date();
-  const fiveWeeksLater = new Date(today);
-  fiveWeeksLater.setDate(today.getDate() + 7 * 37);
-
-  const publicWeek = calculateCurrentWeek(
-    { dueDate: fiveWeeksLater },
-    undefined,
+    const fiveWeeksLater = new Date(
+    today.getTime() + 7 * 5 * 24 * 60 * 60 * 1000,
   );
+
+  const diffInMs = fiveWeeksLater.getTime() - today.getTime();
+  const publicWeek = Math.ceil(diffInMs / (1000 * 60 * 60 * 24 * 7));
 
   const weekData = await BabyStatesModel.find({
     weekNumber: publicWeek,
@@ -48,7 +47,7 @@ export const getPublicWeekData = async () => {
   }
 
   return {
-    ...weekData,
+    data: weekData[0] || null,
     currentWeek: publicWeek,
     isPersonalized: false,
   };
