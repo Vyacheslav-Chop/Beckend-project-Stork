@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { TaskModel } from '../db/models/task.js';
 
 export const createTask = async (payload) => {
@@ -15,8 +16,14 @@ export const getAllTasks = async ({ owner, isDone, order = 'asc', date }) => {
   return tasks;
 };
 
-export const updateTaskStatus = async (taskId, owner, isDone) => {
+export const updateTaskStatus = async (taskId, owner) => {
   const task = await TaskModel.findOne({ _id: taskId, owner });
+
+  if (!task)
+    throw createHttpError(
+      404,
+      'Not found task!',
+    );
 
   task.isDone = !task.isDone;
 

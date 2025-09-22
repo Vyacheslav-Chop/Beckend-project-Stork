@@ -27,8 +27,3 @@ export const getAllTasksValidationSchema = Joi.object({
   date: dateValidation(),
 });
 
-export const updateTaskValidationSchema = Joi.object({
-  isDone: isDoneValidation()
-    .required()
-    .messages({ 'any.required': 'isDone is a required field' }),
-});
