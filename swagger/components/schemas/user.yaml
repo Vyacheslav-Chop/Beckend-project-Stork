@@ -18,15 +18,24 @@ properties:
     type: string
     example: 'johndoe@example.com'
   dueDate:
-    type: string
-    example: '2026.02.15'
+    oneOf:
+      - type: string
+        example: '2026.02.15'
+      - type: 'null'
+        example: null
   babyGender:
-    type: string
-    enum: [male, female, unknown]
-    example: 'male'
+    oneOf:
+      - type: string
+        enum: ["Дівчинка", "Хлопчик", "Ще не знаю"]
+        example: "Хлопчик"
+      - type: "null"
+        example: null
   avatar:
-    type: string
-    example: 'https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg'
+    oneOf:
+      - type: string
+        example: 'https://res.cloudinary.com/dbklkudk0/image/upload/v1691234567/avatar.jpg'
+      - type: 'null'
+        example: null
   createdAt:
     type: string
     format: date-time

@@ -29,15 +29,13 @@ paths:
 
   /api/users:
     get:
-      $ref: ../swagger/paths/users/getUser.yaml
+      $ref: ../swagger/paths/users/get.yaml
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
 
   /api/users/avatar:
     put:
-      $ref: ../swagger/paths/users/updateAvatar.yaml
-
-  /api/users/{userId}:
-    patch:
-      $ref: ../swagger/paths/users/{userId}/patch.yaml
+      $ref: ../swagger/paths/users/avatar/put.yaml
 
   /api/auth/register:
     post:
