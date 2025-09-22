@@ -2,16 +2,24 @@ import createHttpError from 'http-errors';
 import { TaskModel } from '../db/models/task.js';
 
 export const createTask = async (payload) => {
+  if (payload.date) {
+    const [year, month, day] = payload.date.split('.').map(Number);
+    payload.date = new Date(Date.UTC(year, month - 1, day));
+  }
+
   const task = await TaskModel.create(payload);
 
   return task;
 };
 
-export const getAllTasks = async ({ owner, isDone, order = 'asc', date }) => {
-  const outcome = { owner, ...(isDone !== undefined ? { isDone } : {}) };
-  const orderDirection = order === 'desc' ? -1 : 1;
+export const getAllTasks = async ({
+  sortBy = '_id',
+  sortOrder = 'asc',
+  filters = {},
+}) => {
+  const order = sortOrder === 'desc' ? -1 : 1;
 
-  const tasks = await TaskModel.find(outcome).sort({ date: orderDirection });
+  const tasks = await TaskModel.find(filters).sort({ [sortBy]: order });
 
   return tasks;
 };
@@ -19,11 +27,7 @@ export const getAllTasks = async ({ owner, isDone, order = 'asc', date }) => {
 export const updateTaskStatus = async (taskId, owner) => {
   const task = await TaskModel.findOne({ _id: taskId, owner });
 
-  if (!task)
-    throw createHttpError(
-      404,
-      'Not found task!',
-    );
+  if (!task) throw createHttpError(404, 'Not found task!');
 
   task.isDone = !task.isDone;
 

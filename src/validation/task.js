@@ -5,15 +5,13 @@ import {
   isDoneValidation,
 } from './helpers.js';
 
-// const curDate = new Date();
-
 export const createTaskValidationSchema = Joi.object({
   name: nameTaskValidation().messages({
     'string.min': 'Name should have a minimum length of {#limit}',
     'string.max': 'Name should have a maximum length of {#limit}',
     'any.required': 'Name is a required field',
   }),
-  date: dateValidation().messages({
+  date: dateValidation().required().messages({
     'string.pattern.base': 'Date must be in YYYY-MM-DD format',
     'any.required': 'Date is a required field',
     'string.min': 'Date cannot be before today',
@@ -22,8 +20,14 @@ export const createTaskValidationSchema = Joi.object({
 });
 
 export const getAllTasksValidationSchema = Joi.object({
-  isDone: Joi.boolean().optional(),
-  order: Joi.string().valid('asc', 'desc').default('asc'),
-  date: dateValidation(),
+  sortOrder: Joi.string().valid('asc', 'desc').default('asc'),
+  sortBy: Joi.string()
+    .valid('_id', 'name', 'date','createdAt', 'updatedAt')
+    .default('_id')
+    .messages({
+      'any.only':
+        '"sortBy" must be one of "_id", "name", "createdAt", "updatedAt"',
+    }),
+  isDone: Joi.bool(),
 });
 

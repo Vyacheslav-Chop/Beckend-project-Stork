@@ -2,8 +2,8 @@ tags:
   - Tasks
 summary: Get all tasks
 description: >
-  Private endpoint to get all tasks.  
-  Returns tasks sorted by `date` in ascending order by default.
+  Private endpoint to fetch all tasks of the authenticated user.
+  Supports optional filtering by completion status (`isDone`) and sorting by any task field.
 
 operationId: getAllTasks
 security:
@@ -15,38 +15,35 @@ parameters:
     required: false
     schema:
       type: boolean
-    description: >
-      Optional filter by completion status.  
-      When omitted, returns both completed and uncompleted tasks.
+    description: Optional filter by completion status.
     examples:
-      all:
-        summary: All tasks
-        value: null
-      onlyCompleted:
+      completed:
         summary: Only completed tasks
         value: true
-      onlyUncompleted:
+      uncompleted:
         summary: Only uncompleted tasks
         value: false
 
   - in: query
-    name: order
+    name: sortBy
+    required: false
+    schema:
+      type: string
+      enum: [_id, name, date, createdAt, updatedAt]
+      default: _id
+    description: Field to sort tasks by.
+
+  - in: query
+    name: sortOrder
     required: false
     schema:
       type: string
       enum: [asc, desc]
       default: asc
     description: >
-      Sort order by `date`.  
-      - `asc` = ascending (default)  
-      - `desc` = descending
-    examples:
-      ascending:
-        summary: Ascending
-        value: asc
-      descending:
-        summary: Descending
-        value: desc
+      Sort order:
+      - `asc` — ascending
+      - `desc` — descending
 
 responses:
   '200':
