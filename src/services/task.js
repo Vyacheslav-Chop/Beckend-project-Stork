@@ -6,7 +6,7 @@ export const createTask = async (payload) => {
   return task;
 };
 
-export const getAllTasks = async ({ owner, isDone, order = 'asc' }) => {
+export const getAllTasks = async ({ owner, isDone, order = 'asc', date }) => {
   const outcome = { owner, ...(isDone !== undefined ? { isDone } : {}) };
   const orderDirection = order === 'desc' ? -1 : 1;
 
