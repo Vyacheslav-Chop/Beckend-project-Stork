@@ -14,7 +14,12 @@ export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: 'https://beckend-project-stork.onrender.com',
+      credentials: true,
+    }),
+  );
   app.use(cookieParser());
 
   app.use(
@@ -28,7 +33,7 @@ export const setupServer = () => {
   app.use('/api-docs', swaggerDocs());
 
   app.use('/api', router);
-  
+
 
   app.use(notFoundHandler);
 
