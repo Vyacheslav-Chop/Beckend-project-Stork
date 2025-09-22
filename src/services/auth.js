@@ -50,7 +50,6 @@ export const refreshUserSession = async (sessionId, refreshToken) => {
   return newSession;
 };
 
-
 export const logoutUser = async (sessionId) => {
   await SessionModel.deleteOne({ _id: sessionId });
 };
@@ -66,4 +65,15 @@ export const loginUser = async (payload) => {
   await SessionModel.deleteOne({ userId: user._id });
 
   return SessionModel.create(createSession(user._id));
+};
+
+export const checkSession = async (token) => {
+  if (!token) return null;
+
+  const session = await SessionModel.findOne({
+    accessToken: token,
+    accessTokenValidUntil: { $gt: new Date() },
+  }).lean();
+
+  return session;
 };

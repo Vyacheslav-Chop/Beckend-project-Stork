@@ -4,6 +4,7 @@ import {
   refreshUserSession,
   registerUser,
   logoutUser,
+  checkSession,
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
@@ -52,4 +53,18 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+};
+
+export const checkSessionController =async (req, res) => {
+
+  const authHeader = req.get('Authorization');
+  const token = authHeader?.split(' ')[1];
+
+  const session = await checkSession(token);
+
+  res.json({
+    status: 200,
+    data: !!session,
+  });
+
 };
