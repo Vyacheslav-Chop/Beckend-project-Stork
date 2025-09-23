@@ -4,6 +4,7 @@ import {
   updateDiaryById,
   getDiaries,
   createDiary,
+  getDiaryById,
 } from '../services/diary.js';
 
 export const updateDiaryByIdController = async (req, res, next) => {
@@ -25,6 +26,22 @@ export const updateDiaryByIdController = async (req, res, next) => {
   });
 };
 
+
+export const getDiaryByIdController = async (req, res, next) => {
+  const { diaryId } = req.params;
+  const owner = req.user._id;
+
+  const diary = await getDiaryById(diaryId, owner);
+
+  if (!diary) throw createHttpError(404, "Diary not found");
+
+  res.json({
+    status: 200,
+    message: 'Successfully found a diary!',
+    data: diary,
+  });
+};
+
 export const deleteDiaryByIdController = async (req, res, next) => {
   const { diaryId } = req.params;
   const owner = req.user._id;
@@ -35,7 +52,7 @@ export const deleteDiaryByIdController = async (req, res, next) => {
       403,
       'You do not have permission to access this diary',
     );
-  
+
   res.status(204).send();
 };
 
