@@ -45,7 +45,7 @@ responses:
               properties:
                 accessToken:
                   type: string
-                  example: 'abc123XYZtoken456fake'
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDNkZmY1ZmQ4NTY0ZGI2ZjU3NzFlNmMiLCJpYXQiOjE2OTU1ODU0MDAsImV4cCI6MTY5NTU4NjMwMH0.vW3Xg3w-ExampleJWT'
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':
