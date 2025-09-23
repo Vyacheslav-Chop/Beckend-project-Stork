@@ -117,7 +117,7 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
@@ -890,6 +890,70 @@
           },
           "403": {
             "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Get diary by id",
+        "operationId": "getDiaryById",
+        "description": "Retrieves a diary by its ID. Only the owner can access their diary.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "diaryId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            },
+            "description": "ID of the diary to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the diary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found a diary!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/diary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }

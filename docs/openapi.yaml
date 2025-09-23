@@ -64,6 +64,8 @@ paths:
       $ref: ../swagger/paths/diaries/{diaryId}/patch.yaml
     delete:
       $ref: ../swagger/paths/diaries/{diaryId}/delete.yaml
+    get:
+      $ref: ../swagger/paths/diaries/{diaryId}/get.yaml
 
   /api/tasks:
     get:

@@ -13,6 +13,15 @@ export const updateDiaryById = async (diaryId, userId, payload) => {
   return diary;
 };
 
+export const getDiaryById = async (diaryId, userId) => {
+  const diary = await DiaryModel.findOne({
+    _id: diaryId,
+    owner: userId,
+  }).populate('category');
+
+  return diary;
+};
+
 export const deleteDiaryById = async (diaryId, owner) => {
   const diary = await DiaryModel.findOneAndDelete({
     _id: diaryId,
