@@ -53,10 +53,6 @@ paths:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
 
-  /api/auth/session:
-    get:
-      $ref: ../swagger/paths/auth/session.yaml
-
   /api/diaries:
     get:
       $ref: ../swagger/paths/diaries/get.yaml

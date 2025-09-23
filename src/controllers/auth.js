@@ -4,7 +4,6 @@ import {
   refreshUserSession,
   registerUser,
   logoutUser,
-  checkSession,
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
@@ -33,7 +32,6 @@ export const loginUserController = async (req, res) => {
 
 export const refreshUserSessionController = async (req, res) => {
   const session = await refreshUserSession(
-    req.cookies.sessionId,
     req.cookies.refreshToken,
   );
 
@@ -47,24 +45,10 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) await logoutUser(req.cookies.sessionId);
+  if (req.cookies.refreshToken) await logoutUser(req.cookies.refreshToken);
 
-  res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
   res.status(204).send();
 };
 
-export const checkSessionController =async (req, res) => {
-
-  const authHeader = req.get('Authorization');
-  const token = authHeader?.split(' ')[1];
-
-  const session = await checkSession(token);
-
-  res.json({
-    status: 200,
-    data: !!session,
-  });
-
-};

@@ -6,12 +6,12 @@ description: 'Logs out a user by deleting the current session.'
 security: []
 parameters:
   - in: cookie
-    name: sessionId
+    name: refreshToken
     required: true
     schema:
       type: string
-      example: '65e4decdd286b30065d54af9'
-    description: 'ID of the current session'
+      example: 'R8d9f3G7kP2xQ1vS6bZ4wN0yT5mL8jH3vA7cF2eX9qW1rY6sD0uB8nV4pK7tJ5'
+    description: 'Refresh token of the current session'
 responses:
   '204':
     description: 'Successfully logged out. Session deleted.'

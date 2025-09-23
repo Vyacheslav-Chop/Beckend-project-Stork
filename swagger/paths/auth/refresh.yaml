@@ -6,13 +6,6 @@ description: 'Refreshes an existing session using a refresh token. Returns a new
 security: []
 parameters:
   - in: cookie
-    name: sessionId
-    required: true
-    schema:
-      type: string
-      example: '48e4aaqcdd286b85465d5f5'
-    description: 'ID of the current session'
-  - in: cookie
     name: refreshToken
     required: true
     schema:
@@ -53,7 +46,7 @@ responses:
               properties:
                 accessToken:
                   type: string
-                  example: 'sdfghjk852dfvgbn41sdfg52df4152'
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDNkZmY1ZmQ4NTY0ZGI2ZjU3NzFlNmMiLCJpYXQiOjE2OTU1ODU0MDAsImV4cCI6MTY5NTU4NjMwMH0.vW3Xg3w-ExampleJWT
 
   '401':
     $ref: '../../components/responses/401.yaml'

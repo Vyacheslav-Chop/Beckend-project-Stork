@@ -439,7 +439,7 @@
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "example": "abc123XYZtoken456fake"
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDNkZmY1ZmQ4NTY0ZGI2ZjU3NzFlNmMiLCJpYXQiOjE2OTU1ODU0MDAsImV4cCI6MTY5NTU4NjMwMH0.vW3Xg3w-ExampleJWT"
                         }
                       }
                     }
@@ -467,16 +467,6 @@
         "description": "Refreshes an existing session using a refresh token. Returns a new access token.",
         "security": [],
         "parameters": [
-          {
-            "in": "cookie",
-            "name": "sessionId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "48e4aaqcdd286b85465d5f5"
-            },
-            "description": "ID of the current session"
-          },
           {
             "in": "cookie",
             "name": "refreshToken",
@@ -529,7 +519,7 @@
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "example": "sdfghjk852dfvgbn41sdfg52df4152"
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDNkZmY1ZmQ4NTY0ZGI2ZjU3NzFlNmMiLCJpYXQiOjE2OTU1ODU0MDAsImV4cCI6MTY5NTU4NjMwMH0.vW3Xg3w-ExampleJWT"
                         }
                       }
                     }
@@ -556,70 +546,18 @@
         "parameters": [
           {
             "in": "cookie",
-            "name": "sessionId",
+            "name": "refreshToken",
             "required": true,
             "schema": {
               "type": "string",
-              "example": "65e4decdd286b30065d54af9"
+              "example": "R8d9f3G7kP2xQ1vS6bZ4wN0yT5mL8jH3vA7cF2eX9qW1rY6sD0uB8nV4pK7tJ5"
             },
-            "description": "ID of the current session"
+            "description": "Refresh token of the current session"
           }
         ],
         "responses": {
           "204": {
             "description": "Successfully logged out. Session deleted."
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/api/auth/session": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Check user session",
-        "operationId": "checkSession",
-        "description": "Checks if the user is currently authenticated. Returns true if the session is valid, false otherwise.",
-        "security": [],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "Bearer <accessToken>"
-            },
-            "description": "Bearer token of the current session"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns whether the user is authenticated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "data": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
           },
           "401": {
             "$ref": "#/components/responses/401"

@@ -21,8 +21,8 @@ export const registerUser = async (payload) => {
   return user;
 };
 
-export const refreshUserSession = async (sessionId, refreshToken) => {
-  const session = await SessionModel.findOne({ _id: sessionId, refreshToken });
+export const refreshUserSession = async (refreshToken) => {
+  const session = await SessionModel.findOne({ refreshToken });
 
   if (!session) {
     throw createHttpError(401, 'Session not found');
@@ -32,26 +32,26 @@ export const refreshUserSession = async (sessionId, refreshToken) => {
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
-    await SessionModel.findByIdAndDelete(sessionId);
+    await SessionModel.findOneAndDelete({refreshToken});
     throw createHttpError(401, 'Session token expired');
   }
 
   const user = await User.findById(session.userId);
 
   if (!user) {
-    await SessionModel.findByIdAndDelete(sessionId);
+    await SessionModel.findOneAndDelete({refreshToken});
     throw createHttpError(401, 'Session not found');
   }
 
-  await SessionModel.findByIdAndDelete(sessionId);
+  await SessionModel.findOneAndDelete({refreshToken});
 
-  const newSession = SessionModel.create(createSession(user._id));
+  const newSession = await SessionModel.create(createSession(user._id));
 
   return newSession;
 };
 
-export const logoutUser = async (sessionId) => {
-  await SessionModel.deleteOne({ _id: sessionId });
+export const logoutUser = async (refreshToken) => {
+  await SessionModel.deleteOne({ refreshToken });
 };
 
 export const loginUser = async (payload) => {
@@ -67,13 +67,3 @@ export const loginUser = async (payload) => {
   return SessionModel.create(createSession(user._id));
 };
 
-export const checkSession = async (token) => {
-  if (!token) return null;
-
-  const session = await SessionModel.findOne({
-    accessToken: token,
-    accessTokenValidUntil: { $gt: new Date() },
-  }).lean();
-
-  return session;
-};
