@@ -124,12 +124,7 @@
                       "example": "User retrieved successfully"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "user": {
-                          "$ref": "#/components/schemas/user"
-                        }
-                      }
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }

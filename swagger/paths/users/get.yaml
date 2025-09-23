@@ -20,10 +20,7 @@ responses:
               type: string
               example: User retrieved successfully
             data:
-              type: object
-              properties:
-                user:
-                  $ref: '../../components/schemas/user.yaml'
+              $ref: '../../components/schemas/user.yaml'
   '401':
     $ref: ../../components/responses/401.yaml
   '404':
