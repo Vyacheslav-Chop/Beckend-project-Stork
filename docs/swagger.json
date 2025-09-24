@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://beckend-project-stork.onrender.com"
     }
   ],
@@ -473,7 +470,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "HYhjkhduyLKLUIuoKKLFGHJKLjklsdfgh"
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDRhYmNkZWYwMTIzNDU2Nzg5IiwiaWF0IjoxNjk0MDAwMDAwLCJleHAiOjE3MDAwMDAwMDB9.FAKE_SIGNATURE_EXAMPLE_1234567890"
             },
             "description": "Refresh token to renew the session"
           }
@@ -550,7 +547,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "R8d9f3G7kP2xQ1vS6bZ4wN0yT5mL8jH3vA7cF2eX9qW1rY6sD0uB8nV4pK7tJ5"
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDRhYmNkZWYwMTIzNDU2Nzg5IiwiaWF0IjoxNjk0MDAwMDAwLCJleHAiOjE3MDAwMDAwMDB9.FAKE_SIGNATURE_EXAMPLE_1234567890"
             },
             "description": "Refresh token of the current session"
           }
@@ -1216,7 +1213,6 @@
         "operationId": "getPublicWeek",
         "description": "Retrieve information about the 20th week (public access, no authentication required).",
         "security": [],
-        "parameters": [],
         "responses": {
           "200": {
             "description": "Public week data successfully loaded",
@@ -1235,34 +1231,27 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "weekData",
+                        "currentWeek",
+                        "daysToBirth",
+                        "isPersonalized"
+                      ],
                       "properties": {
-                        "analogy": {
-                          "type": "string",
-                          "example": "Банан"
+                        "weekData": {
+                          "$ref": "#/components/schemas/babySates"
                         },
-                        "weekNumber": {
+                        "currentWeek": {
                           "type": "integer",
-                          "example": 20
+                          "example": 5
                         },
-                        "babySize": {
-                          "type": "number",
-                          "example": 25.6
+                        "daysToBirth": {
+                          "type": "integer",
+                          "example": 259
                         },
-                        "babyWeight": {
-                          "type": "number",
-                          "example": 300
-                        },
-                        "image": {
-                          "type": "string",
-                          "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp"
-                        },
-                        "babyActivity": {
-                          "type": "string",
-                          "example": "Ви вже чітко відчуваєте рухи дитини..."
-                        },
-                        "momDailyTips": {
-                          "type": "string",
-                          "example": "Екватор! Половина шляху пройдена. Відзначте цю дату!"
+                        "isPersonalized": {
+                          "type": "boolean",
+                          "example": false
                         }
                       }
                     }
@@ -1287,28 +1276,15 @@
         ],
         "summary": "Get private weeks information",
         "operationId": "getPrivateWeeks",
-        "description": "Retrieve information about the private weeks based on the week number or fetch all weeks data.",
+        "description": "Retrieve personalized week information based on the user's due date stored in their profile.",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "weekNumber",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 42
-            },
-            "required": false,
-            "description": "Optional week number to override automatic calculation from due date"
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Week data successfully loaded",
+            "description": "Public week data successfully loaded",
             "content": {
               "application/json": {
                 "schema": {
@@ -1320,41 +1296,31 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully retrieved data for week 25"
+                      "example": "The week has been successfully loaded."
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "weekData",
+                        "currentWeek",
+                        "daysToBirth",
+                        "isPersonalized"
+                      ],
                       "properties": {
-                        "weekNumber": {
+                        "weekData": {
+                          "$ref": "#/components/schemas/babySates"
+                        },
+                        "currentWeek": {
                           "type": "integer",
-                          "example": 25
-                        },
-                        "babySize": {
-                          "type": "number",
-                          "example": 25.6
-                        },
-                        "babyWeight": {
-                          "type": "number",
-                          "example": 300
-                        },
-                        "image": {
-                          "type": "string",
-                          "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp"
-                        },
-                        "babyActivity": {
-                          "type": "string",
-                          "example": "Ви вже чітко відчуваєте рухи дитини..."
-                        },
-                        "momDailyTips": {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "example": "Екватор! Половина шляху пройдена..."
-                          }
+                          "example": 5
                         },
                         "daysToBirth": {
                           "type": "integer",
-                          "example": 140
+                          "example": 259
+                        },
+                        "isPersonalized": {
+                          "type": "boolean",
+                          "example": false
                         }
                       }
                     }
@@ -1378,7 +1344,7 @@
         }
       }
     },
-    "/api/weeks/mom-state": {
+    "/api/weeks/mom-state/{week}": {
       "get": {
         "tags": [
           "Weeks"
@@ -1393,14 +1359,16 @@
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "weekNumber",
-            "required": false,
+            "in": "path",
+            "name": "week",
+            "required": true,
             "schema": {
               "type": "integer",
+              "minimum": 1,
+              "maximum": 42,
               "example": 2
             },
-            "description": "The week number to retrieve data for. If not provided, all weeks data will be returned."
+            "description": "The week number to retrieve data for."
           }
         ],
         "responses": {
@@ -1425,101 +1393,7 @@
                       "example": "Successfully retrieved week data"
                     },
                     "data": {
-                      "oneOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "weekNumber": {
-                              "type": "integer",
-                              "example": 2
-                            },
-                            "feelings": {
-                              "type": "object",
-                              "properties": {
-                                "states": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  },
-                                  "example": [
-                                    "Прилив енергії",
-                                    "Підвищене лібідо",
-                                    "Овуляція"
-                                  ]
-                                },
-                                "sensationDescr": {
-                                  "type": "string",
-                                  "example": "Наприкінці цього тижня, швидше за все, відбудеться овуляція..."
-                                }
-                              }
-                            },
-                            "comfortTips": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "category": {
-                                    "type": "string",
-                                    "example": "Харчування"
-                                  },
-                                  "tip": {
-                                    "type": "string",
-                                    "example": "Продовжуйте збалансовано харчуватися..."
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "weekNumber": {
-                                "type": "integer",
-                                "example": 2
-                              },
-                              "feelings": {
-                                "type": "object",
-                                "properties": {
-                                  "states": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "example": [
-                                      "Прилив енергії",
-                                      "Підвищене лібідо",
-                                      "Овуляція"
-                                    ]
-                                  },
-                                  "sensationDescr": {
-                                    "type": "string",
-                                    "example": "Наприкінці цього тижня, швидше за все, відбудеться овуляція..."
-                                  }
-                                }
-                              },
-                              "comfortTips": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "category": {
-                                      "type": "string",
-                                      "example": "Харчування"
-                                    },
-                                    "tip": {
-                                      "type": "string",
-                                      "example": "Продовжуйте збалансовано харчуватися..."
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      ]
+                      "$ref": "#/components/schemas/momStates"
                     }
                   }
                 }
@@ -1721,6 +1595,143 @@
             "type": "string",
             "format": "date-time",
             "example": "2025-01-01T12:00:00.000Z"
+          }
+        }
+      },
+      "babySates": {
+        "type": "object",
+        "required": [
+          "_id",
+          "analogy",
+          "weekNumber",
+          "babySize",
+          "babyWeight",
+          "image",
+          "babyActivity",
+          "babyDevelopment",
+          "interestingFact",
+          "momDailyTips"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "analogy": {
+            "type": "string",
+            "example": "Tiny sunflower seed"
+          },
+          "weekNumber": {
+            "type": "integer",
+            "example": 7
+          },
+          "babySize": {
+            "type": "number",
+            "example": 1.2
+          },
+          "babyWeight": {
+            "type": "number",
+            "example": 0.5
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/images/pregnancy_week7.webp"
+          },
+          "babyActivity": {
+            "type": "string",
+            "example": "The baby starts to move its tiny limbs and the heart is fully formed."
+          },
+          "babyDevelopment": {
+            "type": "string",
+            "example": "The embryo is growing rapidly; the brain and spinal cord are developing."
+          },
+          "interestingFact": {
+            "type": "string",
+            "example": "Baby’s heart now beats around 150 times per minute."
+          },
+          "momDailyTips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Eat small, frequent meals to prevent nausea.",
+              "Keep healthy snacks by your bed for quick energy.",
+              "Stay hydrated, especially if you feel nauseous.",
+              "Gentle exercise can help with fatigue.",
+              "Take time to rest and manage stress.",
+              "Consult your doctor about vitamin supplements.",
+              "Ask for support from family and friends when needed."
+            ]
+          }
+        }
+      },
+      "momStates": {
+        "type": "object",
+        "required": [
+          "_id",
+          "weekNumber",
+          "feelings",
+          "comfortTips"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "abcdef1234567890abcdef12"
+          },
+          "weekNumber": {
+            "type": "integer",
+            "example": 4
+          },
+          "feelings": {
+            "type": "object",
+            "required": [
+              "states",
+              "sensationDescr"
+            ],
+            "properties": {
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Незмінний стан",
+                  "Легка чутливість",
+                  "Імплантація"
+                ]
+              },
+              "sensationDescr": {
+                "type": "string",
+                "example": "Ваша матка готується до імплантації заплідненої яйцеклітини. Ви можете відчувати невеликі зміни настрою або чутливість грудей."
+              }
+            }
+          },
+          "comfortTips": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "_id",
+                "category",
+                "tip"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "111aaa222bbb333ccc444ddd"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Харчування"
+                },
+                "tip": {
+                  "type": "string",
+                  "example": "Їжте маленькими порціями, уникайте смаженого і жирного."
+                }
+              }
+            }
           }
         }
       }

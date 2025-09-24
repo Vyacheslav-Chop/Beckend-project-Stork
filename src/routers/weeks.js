@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 import { weekParamSchema } from '../validation/week.js';
-import { validateQuery } from '../middlewares/validateQuery.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getWeeksMomStatesController,
@@ -9,6 +8,7 @@ import {
   getBabyStateByWeekController,
   getPrivateWeekDataController,
 } from '../controllers/weeks.js';
+import { validateParams } from '../middlewares/validateParams.js';
 
 const weekRouter = Router();
 
@@ -17,15 +17,15 @@ weekRouter.get('/public', ctrlWrapper(getWeekPublicController));
 weekRouter.use(authenticate);
 
 weekRouter.get(
-  '/baby-state',
-  validateQuery(weekParamSchema),
+  '/baby-state/:week',
+  validateParams(weekParamSchema),
   ctrlWrapper(getBabyStateByWeekController),
 );
 
 weekRouter.get('/private', ctrlWrapper(getPrivateWeekDataController));
 weekRouter.get(
-  '/mom-state',
-  validateQuery(weekParamSchema),
+  '/mom-state/:week',
+  validateParams(weekParamSchema),
   ctrlWrapper(getWeeksMomStatesController),
 );
 

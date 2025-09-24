@@ -1,15 +1,17 @@
 import createHttpError from 'http-errors';
 import { BabyStatesModel } from '../db/models/babyStates.js';
 import { MomStates } from '../db/models/momStates.js';
-import { calculateCurrentWeek, calculateDaysToBirth } from '../helpers/week.js';
+import {
+  calculateCurrentWeek,
+  calculateDaysToBirth,
+  calculateFiveWeeksLater,
+} from '../helpers/week.js';
 import { User } from '../db/models/user.js';
 
 export const getBabyStateByWeek = async (weekNumber) => {
   console.log('weekNumber:', weekNumber);
 
   const babyState = await BabyStatesModel.find({ weekNumber });
-
-  console.log('babyState:', babyState);
 
   if (!babyState) {
     throw createHttpError(404, `Not  found data for week ${weekNumber}`);
@@ -19,7 +21,7 @@ export const getBabyStateByWeek = async (weekNumber) => {
 
 export const getWeeksMomStates = async (weekNumber) => {
   const weekData = await MomStates.findOne({
-    weekNumber: Number(weekNumber),
+    weekNumber,
   });
 
   if (!weekData) {
@@ -30,17 +32,11 @@ export const getWeeksMomStates = async (weekNumber) => {
 };
 
 export const getPublicWeekData = async () => {
-  const today = new Date();
-  const fiveWeeksLater = new Date(
-    today.getTime() + 7 * 5 * 24 * 60 * 60 * 1000,
-  );
+  const publicWeek = calculateFiveWeeksLater();
 
-  const diffInMs = fiveWeeksLater.getTime() - today.getTime();
-  const publicWeek = Math.ceil(diffInMs / (1000 * 60 * 60 * 24 * 7));
-
-  const weekData = await BabyStatesModel.find({
+  const weekData = await BabyStatesModel.findOne({
     weekNumber: publicWeek,
-  }).lean();
+  });
 
   if (!weekData) {
     throw createHttpError(404, 'Week data not found');
@@ -56,21 +52,22 @@ export const getPublicWeekData = async () => {
 };
 
 export const getPrivateWeekData = async (userId) => {
-  const user = await User.findById(userId).lean();
+  const user = await User.findById(userId);
 
-  const date = user?.dueDate || user?.dueData;
+  const date =
+    user?.dueDate ?? new Date(Date.now() + 36 * 7 * 24 * 60 * 60 * 1000);
 
   const currentWeek = calculateCurrentWeek(date);
   const daysToBirth = calculateDaysToBirth(currentWeek, user.dueDate);
 
   const weekData = await BabyStatesModel.findOne({
     weekNumber: currentWeek,
-  }).lean();
+  });
 
   return {
     weekData,
     currentWeek,
     daysToBirth,
-    isPersonalized: true,
+    isPersonalized: !!user?.dueDate,
   };
 };

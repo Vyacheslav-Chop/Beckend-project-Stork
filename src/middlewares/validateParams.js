@@ -1,12 +1,8 @@
-export const validateParams = (schema) => {
-  return (req, res, next) => {
-    const { error } = schema.validate(req.params);
-    if (error) {
-      return res.status(400).json({
-        status: 400,
-        message: error.details[0].message,
-      });
-    }
-    next();
-  };
+export const validateParams = (schema) => async (req, res, next) => {
+  await schema.validateAsync(req.params, {
+    abortEarly: false,
+    convert: true,
+    allowUnknown: false,
+  });
+  next();
 };

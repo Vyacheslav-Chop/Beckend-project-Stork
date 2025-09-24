@@ -4,7 +4,6 @@ summary: Get public week information
 operationId: getPublicWeek
 description: Retrieve information about the 20th week (public access, no authentication required).
 security: []
-parameters: []
 responses:
   '200':
     description: Public week data successfully loaded
@@ -21,28 +20,23 @@ responses:
               example: 'The week has been successfully loaded.'
             data:
               type: object
+              required:
+                - weekData
+                - currentWeek
+                - daysToBirth
+                - isPersonalized
               properties:
-                analogy:
-                  type: string
-                  example: 'Банан'
-                weekNumber:
+                weekData:
+                  $ref: ../../components/schemas/babySates.yaml
+                currentWeek:
                   type: integer
-                  example: 20
-                babySize:
-                  type: number
-                  example: 25.6
-                babyWeight:
-                  type: number
-                  example: 300
-                image:
-                  type: string
-                  example: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp'
-                babyActivity:
-                  type: string
-                  example: 'Ви вже чітко відчуваєте рухи дитини...'
-                momDailyTips:
-                  type: string
-                  example: 'Екватор! Половина шляху пройдена. Відзначте цю дату!'
+                  example: 5
+                daysToBirth:
+                  type: integer
+                  example: 259
+                isPersonalized:
+                  type: boolean
+                  example: false
   '404':
     $ref: '../../components/responses/404.yaml'
   '500':
