@@ -33,7 +33,7 @@ paths:
       $ref: ../swagger/paths/users/patch.yaml
 
   /api/users/avatar:
-    put:
+    patch:
       $ref: ../swagger/paths/users/avatar/put.yaml
 
   /api/auth/register:
