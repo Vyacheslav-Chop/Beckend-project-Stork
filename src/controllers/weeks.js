@@ -6,9 +6,9 @@ import {
 } from '../services/week.js';
 
 export const getBabyStateByWeekController = async (req, res) => {
-  const { weekNumber } = req.query;
+  const { week } = req.params;
 
-  const babyState = await getBabyStateByWeek(weekNumber);
+  const babyState = await getBabyStateByWeek(week);
 
   res.json({
     status: 200,

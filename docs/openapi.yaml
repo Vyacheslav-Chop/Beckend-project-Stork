@@ -87,6 +87,9 @@ paths:
     get:
       $ref: ../swagger/paths/weeks/{week}/getMomStates.yaml
 
+  /api/weeks/baby-state/{week}:
+    get:
+      $ref: ../swagger/paths/weeks/{week}/getBabyStates.yaml
 components:
   securitySchemes:
     bearerAuth:

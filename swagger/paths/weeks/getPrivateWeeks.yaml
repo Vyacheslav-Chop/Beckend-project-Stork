@@ -28,7 +28,7 @@ responses:
                 - isPersonalized
               properties:
                 weekData:
-                  $ref: ../../components/schemas/babySates.yaml
+                  $ref: ../../components/schemas/babyStates.yaml
                 currentWeek:
                   type: integer
                   example: 5
