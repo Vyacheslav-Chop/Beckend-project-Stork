@@ -9,9 +9,8 @@ import {
 import { User } from '../db/models/user.js';
 
 export const getBabyStateByWeek = async (weekNumber) => {
-  console.log('weekNumber:', weekNumber);
 
-  const babyState = await BabyStatesModel.find({ weekNumber });
+  const babyState = await BabyStatesModel.findOne({ weekNumber });
 
   if (!babyState) {
     throw createHttpError(404, `Not  found data for week ${weekNumber}`);
