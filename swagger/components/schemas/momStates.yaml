@@ -1,0 +1,48 @@
+type: object
+required:
+  - _id
+  - weekNumber
+  - feelings
+  - comfortTips
+properties:
+  _id:
+    type: string
+    example: "abcdef1234567890abcdef12"
+  weekNumber:
+    type: integer
+    example: 4
+  feelings:
+    type: object
+    required:
+      - states
+      - sensationDescr
+    properties:
+      states:
+        type: array
+        items:
+          type: string
+        example:
+          - "Незмінний стан"
+          - "Легка чутливість"
+          - "Імплантація"
+      sensationDescr:
+        type: string
+        example: "Ваша матка готується до імплантації заплідненої яйцеклітини. Ви можете відчувати невеликі зміни настрою або чутливість грудей."
+  comfortTips:
+    type: array
+    items:
+      type: object
+      required:
+        - _id
+        - category
+        - tip
+      properties:
+        _id:
+          type: string
+          example: "111aaa222bbb333ccc444ddd"
+        category:
+          type: string
+          example: "Харчування"
+        tip:
+          type: string
+          example: "Їжте маленькими порціями, уникайте смаженого і жирного."

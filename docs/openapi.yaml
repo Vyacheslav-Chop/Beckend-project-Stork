@@ -20,7 +20,6 @@ tags:
   - name: Emotions
     description: Operations for managing emotions
 servers:
-  - url: http://localhost:3000
   - url: https://beckend-project-stork.onrender.com
 paths:
   /api/emotions:
@@ -84,9 +83,9 @@ paths:
     get:
       $ref: ../swagger/paths/weeks/getPrivateWeeks.yaml
 
-  /api/weeks/mom-state:
+  /api/weeks/mom-state/{week}:
     get:
-      $ref: ../swagger/paths/weeks/getMomStates.yaml
+      $ref: ../swagger/paths/weeks/{week}/getMomStates.yaml
 
 components:
   securitySchemes:

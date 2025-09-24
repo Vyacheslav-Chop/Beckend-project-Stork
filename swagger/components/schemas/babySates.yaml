@@ -1,0 +1,53 @@
+type: object
+required:
+  - _id
+  - analogy
+  - weekNumber
+  - babySize
+  - babyWeight
+  - image
+  - babyActivity
+  - babyDevelopment
+  - interestingFact
+  - momDailyTips
+properties:
+  _id:
+    type: string
+    example: '1234567890abcdef12345678'
+  analogy:
+    type: string
+    example: 'Tiny sunflower seed'
+  weekNumber:
+    type: integer
+    example: 7
+  babySize:
+    type: number
+    example: 1.2
+  babyWeight:
+    type: number
+    example: 0.5
+  image:
+    type: string
+    format: uri
+    example: 'https://example.com/images/pregnancy_week7.webp'
+  babyActivity:
+    type: string
+    example: 'The baby starts to move its tiny limbs and the heart is fully formed.'
+  babyDevelopment:
+    type: string
+    example: 'The embryo is growing rapidly; the brain and spinal cord are developing.'
+  interestingFact:
+    type: string
+    example: 'Baby’s heart now beats around 150 times per minute.'
+  momDailyTips:
+    type: array
+    items:
+      type: string
+    example:
+      - 'Eat small, frequent meals to prevent nausea.'
+      - 'Keep healthy snacks by your bed for quick energy.'
+      - 'Stay hydrated, especially if you feel nauseous.'
+      - 'Gentle exercise can help with fatigue.'
+      - 'Take time to rest and manage stress.'
+      - 'Consult your doctor about vitamin supplements.'
+      - 'Ask for support from family and friends when needed.'

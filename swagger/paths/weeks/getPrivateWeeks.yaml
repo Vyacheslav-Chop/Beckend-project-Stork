@@ -2,21 +2,12 @@ tags:
   - Weeks
 summary: Get private weeks information
 operationId: getPrivateWeeks
-description: Retrieve information about the private weeks based on the week number or fetch all weeks data.
+description: Retrieve personalized week information based on the user's due date stored in their profile.
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: weekNumber
-    schema:
-      type: integer
-      minimum: 1
-      maximum: 42
-    required: false
-    description: Optional week number to override automatic calculation from due date
 responses:
   '200':
-    description: Week data successfully loaded
+    description: Public week data successfully loaded
     content:
       application/json:
         schema:
@@ -27,33 +18,26 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully retrieved data for week 25'
+              example: 'The week has been successfully loaded.'
             data:
               type: object
+              required:
+                - weekData
+                - currentWeek
+                - daysToBirth
+                - isPersonalized
               properties:
-                weekNumber:
+                weekData:
+                  $ref: ../../components/schemas/babySates.yaml
+                currentWeek:
                   type: integer
-                  example: 25
-                babySize:
-                  type: number
-                  example: 25.6
-                babyWeight:
-                  type: number
-                  example: 300
-                image:
-                  type: string
-                  example: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af38.webp'
-                babyActivity:
-                  type: string
-                  example: 'Ви вже чітко відчуваєте рухи дитини...'
-                momDailyTips:
-                  type: array
-                  items:
-                    type: string
-                    example: 'Екватор! Половина шляху пройдена...'
+                  example: 5
                 daysToBirth:
                   type: integer
-                  example: 140
+                  example: 259
+                isPersonalized:
+                  type: boolean
+                  example: false
   '400':
     $ref: ../../components/responses/400.yaml
   '401':

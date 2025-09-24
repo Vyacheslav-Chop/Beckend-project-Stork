@@ -1,0 +1,45 @@
+tags:
+  - Weeks
+summary: Get mom's body information
+operationId: getWeeksMomStates
+description: Retrieve information about the mom's body based on the week number or fetch all weeks data.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: week
+    required: true
+    schema:
+      type: integer
+      minimum: 1
+      maximum: 42
+      example: 2
+    description: The week number to retrieve data for.
+responses:
+  '200':
+    description: Successfully retrieved week data.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved week data
+            data:
+              $ref: ../../../components/schemas/momStates.yaml
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

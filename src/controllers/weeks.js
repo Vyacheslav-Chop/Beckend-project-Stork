@@ -1,4 +1,3 @@
-import createHttpError from 'http-errors';
 import {
   getWeeksMomStates,
   getPublicWeekData,
@@ -29,27 +28,13 @@ export const getWeekPublicController = async (req, res) => {
 };
 
 export const getWeeksMomStatesController = async (req, res) => {
-  const { weekNumber } = req.query;
+  const { week } = req.params;
 
-  let week = null;
-  if (weekNumber !== undefined) {
-    week = Number(weekNumber);
-
-    if (!Number.isInteger(week) || week < 1 || week > 42) {
-      throw createHttpError(
-        400,
-        'weekNumber must be a number between 1 and 42',
-      );
-    }
-  }
-
-  const data = await getWeeksMomStates(week);
+  const data = await getWeeksMomStates(Number(week));
 
   res.json({
     status: 200,
-    message: week
-      ? `Successfully retrieved data for week ${week}`
-      : 'Successfully retrieved all weeks data',
+    message: `Successfully retrieved data for week ${week}`,
     data,
   });
 };

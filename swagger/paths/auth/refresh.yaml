@@ -10,7 +10,7 @@ parameters:
     required: true
     schema:
       type: string
-      example: 'HYhjkhduyLKLUIuoKKLFGHJKLjklsdfgh'
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDRhYmNkZWYwMTIzNDU2Nzg5IiwiaWF0IjoxNjk0MDAwMDAwLCJleHAiOjE3MDAwMDAwMDB9.FAKE_SIGNATURE_EXAMPLE_1234567890
     description: 'Refresh token to renew the session'
 
 responses:

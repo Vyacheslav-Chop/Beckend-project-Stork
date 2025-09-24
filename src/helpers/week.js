@@ -35,3 +35,15 @@ export const calculateDaysToBirth = (currentWeek, dueDate) => {
 
   return (max_weeks - currentWeek) * 7;
 };
+
+export const calculateFiveWeeksLater = () => {
+  const today = new Date();
+  const fiveWeeksLater = new Date(
+    today.getTime() + 7 * 5 * 24 * 60 * 60 * 1000,
+  );
+
+  const diffInMs = fiveWeeksLater.getTime() - today.getTime();
+  const publicWeek = Math.ceil(diffInMs / (1000 * 60 * 60 * 24 * 7));
+
+  return publicWeek;
+};
