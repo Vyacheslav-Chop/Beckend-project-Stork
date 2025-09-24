@@ -1239,7 +1239,7 @@
                       ],
                       "properties": {
                         "weekData": {
-                          "$ref": "#/components/schemas/babySates"
+                          "$ref": "#/components/schemas/babyStates"
                         },
                         "currentWeek": {
                           "type": "integer",
@@ -1308,7 +1308,7 @@
                       ],
                       "properties": {
                         "weekData": {
-                          "$ref": "#/components/schemas/babySates"
+                          "$ref": "#/components/schemas/babyStates"
                         },
                         "currentWeek": {
                           "type": "integer",
@@ -1394,6 +1394,77 @@
                     },
                     "data": {
                       "$ref": "#/components/schemas/momStates"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/weeks/baby-state/{week}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get baby development information",
+        "operationId": "getBabyStateByWeek",
+        "description": "Retrieve information about the baby's development based on the week number.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "week",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 42,
+              "example": 10
+            },
+            "description": "The week number to retrieve baby development data for."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved week data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved baby state for week 10"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/babyStates"
                     }
                   }
                 }
@@ -1598,7 +1669,7 @@
           }
         }
       },
-      "babySates": {
+      "babyStates": {
         "type": "object",
         "required": [
           "_id",
