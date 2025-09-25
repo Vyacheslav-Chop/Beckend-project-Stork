@@ -22,9 +22,8 @@ requestBody:
             description: The name of the task
           date:
             type: string
-            example: '19.09.2025'
-            description: Date in format DD.MM.YYYY
-            pattern: '^\d{2}\.\d{2}\.\d{4}$'
+            example: '2025.09.19'
+            description: Date in format YYYY.MM.DD
           isDone:
             type: boolean
             example: false

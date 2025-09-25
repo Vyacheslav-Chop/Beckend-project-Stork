@@ -6,7 +6,7 @@ import {
 } from './helpers.js';
 
 export const createTaskValidationSchema = Joi.object({
-  name: nameTaskValidation().messages({
+  name: nameTaskValidation().required().messages({
     'string.min': 'Name should have a minimum length of {#limit}',
     'string.max': 'Name should have a maximum length of {#limit}',
     'any.required': 'Name is a required field',
@@ -22,7 +22,7 @@ export const createTaskValidationSchema = Joi.object({
 export const getAllTasksValidationSchema = Joi.object({
   sortOrder: Joi.string().valid('asc', 'desc').default('asc'),
   sortBy: Joi.string()
-    .valid('_id', 'name', 'date','createdAt', 'updatedAt')
+    .valid('_id', 'name', 'date', 'createdAt', 'updatedAt')
     .default('_id')
     .messages({
       'any.only':
@@ -31,3 +31,14 @@ export const getAllTasksValidationSchema = Joi.object({
   isDone: Joi.bool(),
 });
 
+export const updateTaskValidationSchema = Joi.object({
+  name: nameTaskValidation().messages({
+    'string.min': 'Name should have a minimum length of {#limit}',
+    'string.max': 'Name should have a maximum length of {#limit}',
+    'any.required': 'Name is a required field',
+  }),
+  date: dateValidation().messages({
+    'string.pattern.base': 'Date must be in YYYY-MM-DD format',
+    'string.min': 'Date cannot be before today',
+  }),
+});

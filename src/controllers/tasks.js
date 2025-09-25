@@ -1,5 +1,5 @@
 import httpError from 'http-errors';
-import { createTask, updateTaskStatus, getAllTasks } from '../services/task.js';
+import { createTask, updateTaskStatus, getAllTasks, updateTask } from '../services/task.js';
 import { buildTasksFilter } from '../utils/buildTasksFilter.js';
 
 export const createTaskController = async (req, res, next) => {
@@ -34,6 +34,20 @@ if (!req.user?._id) throw httpError(401, 'Unauthorized');
   });
 };
 
+export const updateTaskController = async (req, res) => {
+  const { taskId } = req.params;
+  const owner = req.user._id;
+  if (!owner) throw httpError(401, 'Unauthorized');
+
+  const task = await updateTask(taskId, owner, req.body);
+
+  res.json({
+    status: 200,
+    message: "Successfully updated task!",
+    data: task,
+  });
+};
+
 export const updateTaskStatusController = async (req, res, next) => {
   const { taskId } = req.params;
 
@@ -44,7 +58,7 @@ export const updateTaskStatusController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Task updated successfully',
+    message: 'Task status updated successfully',
     data: task,
   });
 };
