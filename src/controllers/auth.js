@@ -47,7 +47,11 @@ export const refreshUserSessionController = async (req, res) => {
 export const logoutUserController = async (req, res) => {
   if (req.cookies.refreshToken) await logoutUser(req.cookies.refreshToken);
 
-  res.clearCookie('refreshToken');
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
 
   res.status(204).send();
 };

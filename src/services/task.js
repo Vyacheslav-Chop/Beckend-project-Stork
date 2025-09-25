@@ -24,6 +24,21 @@ export const getAllTasks = async ({
   return tasks;
 };
 
+export const updateTask = async (taskId, userId, payload) => {
+  const task = await TaskModel.findOneAndUpdate(
+    { _id: taskId, owner: userId },
+    payload,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!task) throw createHttpError(404, 'Not found task!');
+
+  return task;
+};
+
 export const updateTaskStatus = async (taskId, owner) => {
   const task = await TaskModel.findOne({ _id: taskId, owner });
 

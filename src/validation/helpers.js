@@ -6,15 +6,9 @@ export const nameValidation = () => Joi.string().min(3).max(32);
 export const emailValidation = () => Joi.string().email().max(64);
 export const passwordValidation = () => Joi.string().min(8).max(128);
 
-export const nameTaskValidation = () => Joi.string().min(1).max(96).required();
+export const nameTaskValidation = () => Joi.string().min(1).max(96);
 export const dateValidation = () =>
-  Joi.string()
-    .pattern(/^\d{4}\.\d{2}\.\d{2}$/)
-    .required()
-    .messages({
-      'string.pattern.base': 'Date must be in YYYY.MM.DD format',
-      'any.required': 'Date is required',
-    });
+  Joi.string().pattern(/^\d{4}\.\d{2}\.\d{2}$/);
 
 export const isDoneValidation = () => Joi.boolean().default(false);
 
