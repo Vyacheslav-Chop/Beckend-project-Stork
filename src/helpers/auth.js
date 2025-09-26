@@ -30,7 +30,9 @@ export const setupSession = (res, session) => {
     sameSite: 'lax',
     expires: session.refreshTokenValidUntil,
     path: '/',
-    maxAge: Math.floor((session.refreshTokenValidUntil.getTime() - Date.now()) / 1000),
+    maxAge: Math.floor(
+      (session.refreshTokenValidUntil.getTime() - Date.now()) / 1000,
+    ),
   });
 
   res.cookie('accessToken', session.accessToken, {
