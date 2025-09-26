@@ -27,7 +27,8 @@ export const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     expires: session.refreshTokenValidUntil,
+    path: '/',
   });
 };
