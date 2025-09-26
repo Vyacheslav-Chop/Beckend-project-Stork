@@ -2,7 +2,7 @@ tags:
   - Auth
 summary: Refresh user session
 operationId: refreshSession
-description: 'Refreshes an existing session using a refresh token. Returns a new access token.'
+description: 'Refreshes an existing session using a refresh token. Sets new cookies with updated tokens.'
 security: []
 parameters:
   - in: cookie
@@ -15,17 +15,17 @@ parameters:
 
 responses:
   '200':
-    description: 'Successfully refreshed a session!'
+    description: 'Successfully refreshed a session! Tokens are set in cookies.'
     headers:
       Set-Cookie:
-        description: Cookies set after successful login.
+        description: Cookies set after successful refresh.
         schema:
           type: array
           items:
             type: string
             example:
-              - session_id=test321; Path=/; HttpOnly;
-              - refresh_token=get471; Path=/; HttpOnly;
+              - refreshToken=eyJ...; Path=/; HttpOnly; Secure; SameSite=Lax
+              - accessToken=eyJ...; Path=/; HttpOnly; Secure; SameSite=Lax
     content:
       application/json:
         schema:
@@ -33,7 +33,6 @@ responses:
           required:
             - status
             - message
-            - data
           properties:
             status:
               type: integer
@@ -41,12 +40,6 @@ responses:
             message:
               type: string
               example: 'Successfully refreshed a session!'
-            data:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDNkZmY1ZmQ4NTY0ZGI2ZjU3NzFlNmMiLCJpYXQiOjE2OTU1ODU0MDAsImV4cCI6MTY5NTU4NjMwMH0.vW3Xg3w-ExampleJWT
 
   '401':
     $ref: '../../components/responses/401.yaml'
