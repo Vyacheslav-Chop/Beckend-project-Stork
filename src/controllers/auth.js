@@ -7,7 +7,9 @@ import {
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const { user, session } = await registerUser(req.body);
+
+  setupSession(res, session);
 
   res.status(201).json({
     status: 201,
@@ -31,9 +33,7 @@ export const loginUserController = async (req, res) => {
 };
 
 export const refreshUserSessionController = async (req, res) => {
-  const session = await refreshUserSession(
-    req.cookies.refreshToken,
-  );
+  const session = await refreshUserSession(req.cookies.refreshToken);
 
   setupSession(res, session);
 
@@ -55,4 +55,3 @@ export const logoutUserController = async (req, res) => {
 
   res.status(204).send();
 };
-

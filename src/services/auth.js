@@ -18,7 +18,11 @@ export const registerUser = async (payload) => {
     password: encyptedPassword,
   });
 
-  return user;
+  const session = await SessionModel.create(createSession(user._id));
+  console.log("Create session:", session);
+
+
+  return { user, session };
 };
 
 export const refreshUserSession = async (refreshToken) => {
@@ -32,18 +36,18 @@ export const refreshUserSession = async (refreshToken) => {
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
-    await SessionModel.findOneAndDelete({refreshToken});
+    await SessionModel.findOneAndDelete({ refreshToken });
     throw createHttpError(401, 'Session token expired');
   }
 
   const user = await User.findById(session.userId);
 
   if (!user) {
-    await SessionModel.findOneAndDelete({refreshToken});
+    await SessionModel.findOneAndDelete({ refreshToken });
     throw createHttpError(401, 'Session not found');
   }
 
-  await SessionModel.findOneAndDelete({refreshToken});
+  await SessionModel.findOneAndDelete({ refreshToken });
 
   const newSession = await SessionModel.create(createSession(user._id));
 
@@ -66,4 +70,3 @@ export const loginUser = async (payload) => {
 
   return SessionModel.create(createSession(user._id));
 };
-
