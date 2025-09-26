@@ -26,16 +26,16 @@ export const createSession = (userId) => {
 export const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'none',
     expires: session.refreshTokenValidUntil,
     path: '/',
   });
 
   res.cookie('accessToken', session.accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'none',
     expires: session.accessTokenValidUntil,
     path: '/',
   });
