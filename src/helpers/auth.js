@@ -32,4 +32,15 @@ export const setupSession = (res, session) => {
     path: '/',
     maxAge: Math.floor((session.refreshTokenValidUntil.getTime() - Date.now()) / 1000),
   });
+
+  res.cookie('accessToken', session.accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    expires: session.accessTokenValidUntil,
+    path: '/',
+    maxAge: Math.floor(
+      (session.accessTokenValidUntil.getTime() - Date.now()) / 1000,
+    ),
+  });
 };
