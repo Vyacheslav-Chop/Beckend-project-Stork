@@ -19,9 +19,7 @@ export const registerUser = async (payload) => {
   });
 
   const session = await SessionModel.create(createSession(user._id));
-  console.log("Create session:", session);
-
-
+  
   return { user, session };
 };
 

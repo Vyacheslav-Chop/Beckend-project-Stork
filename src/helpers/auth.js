@@ -26,7 +26,7 @@ export const createSession = (userId) => {
 export const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     expires: session.refreshTokenValidUntil,
   });
