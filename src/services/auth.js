@@ -19,7 +19,7 @@ export const registerUser = async (payload) => {
   });
 
   const session = await SessionModel.create(createSession(user._id));
-  
+
   return { user, session };
 };
 

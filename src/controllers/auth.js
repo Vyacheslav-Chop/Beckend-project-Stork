@@ -26,6 +26,9 @@ export const loginUserController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };
 
@@ -37,30 +40,17 @@ export const refreshUserSessionController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };
 
 export const logoutUserController = async (req, res) => {
- const { refreshToken, accessToken } = req.cookies;
+  if (req.cookies.refreshToken) await logoutUser(req.cookies.refreshToken);
 
- if (refreshToken) {
-   await logoutUser(refreshToken);
- }
- res.clearCookie('refreshToken', {
-   httpOnly: true,
-   secure: process.env.NODE_ENV === 'production',
-   sameSite: 'lax',
-   path: '/',
- });
-
- if (accessToken) {
-   res.clearCookie('accessToken', {
-     httpOnly: true,
-     secure: process.env.NODE_ENV === 'production',
-     sameSite: 'lax',
-     path: '/',
-   });
- }
+  res.clearCookie('refreshToken');
+  res.clearCookie('accessToken');
 
   res.status(204).send();
 };
