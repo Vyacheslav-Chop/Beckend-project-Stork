@@ -24,19 +24,16 @@ export const createSession = (userId) => {
 };
 
 export const setupSession = (res, session) => {
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    expires: session.refreshTokenValidUntil,
-    path: '/',
-  });
-
   res.cookie('accessToken', session.accessToken, {
     httpOnly: true,
     secure: true,
-    sameSite: 'none',
     expires: session.accessTokenValidUntil,
-    path: '/',
+
+  });
+
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    secure: true,
+    expires: session.refreshTokenValidUntil,
   });
 };
