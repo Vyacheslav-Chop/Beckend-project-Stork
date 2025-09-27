@@ -22,7 +22,7 @@ export const createTaskValidationSchema = Joi.object({
 export const getAllTasksValidationSchema = Joi.object({
   sortOrder: Joi.string().valid('asc', 'desc').default('asc'),
   sortBy: Joi.string()
-    .valid('_id', 'name', 'date', 'createdAt', 'updatedAt')
+    .valid('_id', 'name', 'date', 'isDone','createdAt', 'updatedAt')
     .default('_id')
     .messages({
       'any.only':
