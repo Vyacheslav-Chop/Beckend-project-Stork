@@ -63,10 +63,6 @@ export const getDiariesController = async (req, res, next) => {
 
   const diaries = await getDiaries({ userId, sortBy, order });
 
-  if (!diaries || diaries.length === 0) {
-    return next(createHttpError(404, 'Diaries not found'));
-  }
-
   res.json({
     status: 200,
     message: 'Successfully fetched diaries',
