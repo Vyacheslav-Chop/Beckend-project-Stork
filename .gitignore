@@ -6,7 +6,7 @@
 .DS_Store
 .idea
 
-/temp/**
+!/temp/.gitkeep
 
 
 pullrequest-list.txt
