@@ -7,7 +7,7 @@ const JWT_REFRESH_SECRET = getEnvVar('JWT_REFRESH_SECRET');
 
 export const createSession = (userId) => {
   const accessToken = jwt.sign({ sub: userId }, JWT_ACCESS_SECRET, {
-    expiresIn: '15m',
+    expiresIn: '2h',
   });
 
   const refreshToken = jwt.sign({ sub: userId }, JWT_REFRESH_SECRET, {
@@ -28,7 +28,6 @@ export const setupSession = (res, session) => {
     httpOnly: true,
     secure: true,
     expires: session.accessTokenValidUntil,
-
   });
 
   res.cookie('refreshToken', session.refreshToken, {
