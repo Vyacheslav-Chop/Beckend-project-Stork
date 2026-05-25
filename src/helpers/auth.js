@@ -7,7 +7,7 @@ const JWT_REFRESH_SECRET = getEnvVar('JWT_REFRESH_SECRET');
 
 export const createSession = (userId) => {
   const accessToken = jwt.sign({ sub: userId }, JWT_ACCESS_SECRET, {
-    expiresIn: '2h',
+    expiresIn: '15m',
   });
 
   const refreshToken = jwt.sign({ sub: userId }, JWT_REFRESH_SECRET, {
